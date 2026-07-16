@@ -12,6 +12,8 @@ test-results/
 !.env.example
 supabase/.branches/
 supabase/.temp/
+supabase/.cache/
+supabase/.env
 *.log
 .DS_Store
 .idea/
