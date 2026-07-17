@@ -6,7 +6,9 @@ import { useState } from 'react';
 import { FormField, PasswordField, SubmitButton, FormAlert, AuthDivider } from '@medbookpro/ui';
 import { InlineLink } from '@/components/inline-link';
 import { signInSchema, type SignInInput } from '@medbookpro/shared';
-import { mockAuthService } from '@/lib/auth/mock-auth-service';
+import { getAuthErrorMessage } from '@/lib/auth/auth-errors';
+import { getSafeNextPath } from '@/lib/auth/safe-redirect';
+import { getSupabaseAuthService } from '@/lib/auth/supabase-auth-service';
 import { AuthLayout } from '@/components/auth-layout';
 
 export default function SignInPage() {
@@ -28,14 +30,14 @@ export default function SignInPage() {
     setSuccessMessage(null);
 
     try {
-      const response = await mockAuthService.signIn({
+      await getSupabaseAuthService().signIn({
         email: data.email,
         password: data.password,
-        rememberMe: data.rememberMe,
+        nextPath: getSafeNextPath(new URLSearchParams(window.location.search).get('next')),
       });
-      setSuccessMessage(response.message);
+      window.location.assign(getSafeNextPath(new URLSearchParams(window.location.search).get('next')));
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
+      setErrorMessage(getAuthErrorMessage(error));
     } finally {
       setIsLoading(false);
     }

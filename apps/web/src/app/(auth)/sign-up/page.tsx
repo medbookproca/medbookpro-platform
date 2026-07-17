@@ -6,7 +6,8 @@ import { useState } from 'react';
 import { FormField, PasswordField, SubmitButton, FormAlert, PasswordRequirements } from '@medbookpro/ui';
 import { InlineLink } from '@/components/inline-link';
 import { signUpSchema, type SignUpInput } from '@medbookpro/shared';
-import { mockAuthService } from '@/lib/auth/mock-auth-service';
+import { getAuthErrorMessage } from '@/lib/auth/auth-errors';
+import { getSupabaseAuthService } from '@/lib/auth/supabase-auth-service';
 import { AuthLayout } from '@/components/auth-layout';
 
 export default function SignUpPage() {
@@ -31,15 +32,16 @@ export default function SignUpPage() {
     setSuccessMessage(null);
 
     try {
-      const response = await mockAuthService.signUp({
+      const response = await getSupabaseAuthService().signUp({
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
         password: data.password,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/app`,
       });
       setSuccessMessage(response.message);
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
+      setErrorMessage(getAuthErrorMessage(error));
     } finally {
       setIsLoading(false);
     }
