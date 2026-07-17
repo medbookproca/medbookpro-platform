@@ -4,6 +4,8 @@ This plan follows Phase 2A architecture documentation. Each phase requires revie
 
 ## Phase 2B — Organization and location onboarding
 
+Implemented on `feature/organization-location-onboarding`: the first onboarding transaction extends the identity schema, preserves `clinics` as the compatibility grouping required by existing foreign keys, provisions the existing owner system role, records idempotent requests, and denies direct client provisioning inserts. Application routing and the `/onboarding` form use shared Zod validation and redirect to `/app` only after the RPC commits. Local Supabase execution remains an environment-dependent validation step; hosted deployment is not part of this phase.
+
 - **Migrations:** add approved organization display/locale/currency/onboarding fields; normalize location fields; decide treatment of `clinics`.
 - **RLS:** preserve organization ownership; add owner/admin-only onboarding writes; test cross-tenant inserts and updates.
 - **Application services:** create organization, create location, archive location, transfer ownership primitives.

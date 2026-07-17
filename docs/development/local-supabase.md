@@ -1,10 +1,8 @@
-# Local Supabase
+# Local Supabase workflow
 
-This repository uses Supabase locally only for the identity database foundation. No hosted project is linked and no production credentials are required.
+MedBookPro’s SQL migrations and pgTAP tests are intended to run against the repository’s local Supabase project only. Do not link to, reset, push to, or apply migrations against the hosted project during development.
 
-## CLI and Docker
-
-Install the Supabase CLI using the official platform instructions and ensure Docker Desktop is running. Verify with `supabase --version` and `docker info`.
+## Commands
 
 From the repository root:
 
@@ -12,13 +10,15 @@ From the repository root:
 supabase start
 supabase db reset
 supabase test db
-supabase stop
+supabase status
 ```
 
-`supabase start` launches local services from `supabase/config.toml`. `supabase db reset` reapplies immutable migrations and local seed data. The seed contains only permission and system-role catalogue data; tests create synthetic `.invalid` identities inside a rolled-back transaction.
+`supabase db reset` is acceptable only for the local Docker-backed project. It is not a production recovery command. The seed contains only deterministic fictional authorization fixtures and no credentials, patient data, or real clinic data.
 
-Do not run `supabase link`, `supabase db push`, or any command targeting a hosted project for this task. Local generated state, temporary branches, credentials, and service keys must remain ignored and uncommitted.
+## Migration review
 
-## Secrets
+Migrations are immutable after reaching a shared environment. Schema changes must be committed as forward-only reviewed migrations. Dashboard-created changes must be converted into reviewed repository migrations before they are shared. Production data must never be used for local development.
 
-Use CLI-generated local values only. Never commit `supabase status` secrets, database passwords, service-role keys, or hosted project identifiers. Production PHI and real user data are prohibited in local development.
+Phase 2B adds the organization onboarding transaction, its idempotency ledger, constraints, indexes, grants, and RLS changes. Hosted deployment is intentionally not performed. Future changes must include database isolation tests, including anonymous denial, cross-organization denial, suspended-membership denial, and security-definer boundary tests.
+
+Canadian project governance, privacy review, retention, residency, and support-access decisions remain required before hosted deployment.
