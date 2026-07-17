@@ -1,3 +1,3 @@
 # Supabase tests
 
-Future database tests must include Row Level Security policy coverage and must use safe local fixtures, never production data.
+Database tests use safe local fixtures and must include Row Level Security policy coverage. Run them with `supabase test db`. Never use production data or service-role access as evidence that browser RLS isolation works.

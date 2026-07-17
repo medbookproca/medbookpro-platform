@@ -1,0 +1,25 @@
+project_id = "medbookpro-local"
+
+[db]
+major_version = 15
+port = 54332
+
+[db.seed]
+enabled = true
+sql_paths = ['./seed/seed.sql']
+
+[api]
+enabled = true
+port = 54331
+
+[studio]
+port = 54333
+
+[local_smtp]
+port = 54334
+
+[analytics]
+port = 54337
+
+[auth]
+enabled = true
