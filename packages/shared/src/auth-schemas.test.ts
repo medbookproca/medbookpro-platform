@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { signInSchema, signUpSchema, passwordSchema, resetPasswordSchema } from './auth-schemas';
+import { acceptInvitationSchema, forgotPasswordSchema, passwordSchema, resetPasswordSchema, signInSchema, signUpSchema } from './auth-schemas';
 
 describe('Authentication Schemas', () => {
   describe('passwordSchema', () => {
@@ -130,6 +130,47 @@ describe('Authentication Schemas', () => {
         confirmPassword: 'NewPassword123!',
       });
       expect(result.password).toBe('NewPassword123!');
+    });
+  });
+
+  describe('forgotPasswordSchema', () => {
+    it('rejects invalid email', () => {
+      expect(() =>
+        forgotPasswordSchema.parse({
+          email: 'invalid-email',
+        })
+      ).toThrow();
+    });
+
+    it('accepts valid email', () => {
+      const result = forgotPasswordSchema.parse({
+        email: 'user@example.com',
+      });
+      expect(result.email).toBe('user@example.com');
+    });
+  });
+
+  describe('acceptInvitationSchema', () => {
+    it('requires password confirmation match', () => {
+      expect(() =>
+        acceptInvitationSchema.parse({
+          firstName: 'Jane',
+          lastName: 'Smith',
+          password: 'ValidPassword123!',
+          confirmPassword: 'DifferentPassword123!',
+        })
+      ).toThrow();
+    });
+
+    it('accepts valid invitation data', () => {
+      const result = acceptInvitationSchema.parse({
+        firstName: 'Jane',
+        lastName: 'Smith',
+        password: 'ValidPassword123!',
+        confirmPassword: 'ValidPassword123!',
+      });
+      expect(result.firstName).toBe('Jane');
+      expect(result.lastName).toBe('Smith');
     });
   });
 });

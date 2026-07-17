@@ -25,12 +25,28 @@ test.describe('Authentication Routes', () => {
     await expect(page.locator('button[type="submit"]')).toContainText('Send Reset Link');
   });
 
+  test('forgot-password submission shows neutral response', async ({ page }) => {
+    await page.goto('/forgot-password');
+    await page.locator('input[type="email"]').fill('someone@example.com');
+    await page.locator('button[type="submit"]').click();
+    await expect(page.getByText('If an account exists for this email address, a reset link will be sent.')).toBeVisible();
+  });
+
   test('reset-password page loads', async ({ page }) => {
     await page.goto('/reset-password');
     await expect(page.locator('h1')).toContainText('Create New Password');
     const passwordInputs = page.locator('input[type="password"]');
     expect(await passwordInputs.count()).toBe(2); // New password and confirm
     await expect(page.locator('button[type="submit"]')).toContainText('Reset Password');
+  });
+
+  test('reset-password validation shows mismatch error', async ({ page }) => {
+    await page.goto('/reset-password');
+    const passwordInputs = page.locator('input[type="password"]');
+    await passwordInputs.nth(0).fill('ValidPassword123!');
+    await passwordInputs.nth(1).fill('MismatchPassword123!');
+    await page.locator('button[type="submit"]').click();
+    await expect(page.getByText('Passwords do not match')).toBeVisible();
   });
 
   test('verify-email page loads', async ({ page }) => {
@@ -41,6 +57,17 @@ test.describe('Authentication Routes', () => {
   test('invitations accept page loads', async ({ page }) => {
     await page.goto('/invitations/accept');
     await expect(page.locator('h1')).toContainText('Accept Invitation');
+  });
+
+  test('invitation acceptance flow submits and shows success state', async ({ page }) => {
+    await page.goto('/invitations/accept');
+    await page.getByLabel('First Name').fill('Alex');
+    await page.getByLabel('Last Name').fill('Carey');
+    const passwordInputs = page.locator('input[type="password"]');
+    await passwordInputs.nth(0).fill('ValidPassword123!');
+    await passwordInputs.nth(1).fill('ValidPassword123!');
+    await page.locator('button[type="submit"]').click();
+    await expect(page.getByText('Invitation accepted')).toBeVisible();
   });
 
   test('sign-in form validation', async ({ page }) => {
@@ -56,7 +83,7 @@ test.describe('Authentication Routes', () => {
     // Try to submit without filling
     await page.locator('button[type="submit"]').click();
     // Check that validation errors appear
-    await expect(page.locator('text=required')).toBeVisible();
+    await expect(page.getByText('First name is required')).toBeVisible();
   });
 
   test('sign-in page has accessibility features', async ({ page }) => {
