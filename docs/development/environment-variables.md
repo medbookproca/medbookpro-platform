@@ -1,3 +1,17 @@
 # Environment variables
 
-`.env.example` lists the current names. `NEXT_PUBLIC_*` values may be exposed to the browser. `SUPABASE_SERVICE_ROLE_KEY` must never be exposed to browser code and is reserved for trusted server environments in a future implementation. Real values must not be committed.
+Copy `.env.example` to `.env` for local work. Real values must never be committed.
+
+## Browser-safe values
+
+- `NEXT_PUBLIC_APP_URL` identifies the local application URL for documentation and future configuration.
+- `NEXT_PUBLIC_SUPABASE_URL` is the Supabase project URL.
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is the public publishable key used by `@supabase/ssr` and `@supabase/supabase-js`.
+
+The URL and publishable key are intentionally browser-safe. The application validates them at client/server factory creation time and does not print their values.
+
+## Prohibited values
+
+Do not add `SUPABASE_SERVICE_ROLE_KEY`, a secret key, database password, JWT signing secret, or SMTP credential to browser code or `.env.example`. Service-role usage is not required in this phase and, if introduced in a future trusted server-only phase, must remain outside client modules and browser bundles.
+
+For tests, use obvious local stubs such as `https://example.supabase.co` and `sb_publishable_test`; never use hosted project credentials or personal data.

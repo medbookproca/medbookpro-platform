@@ -2,9 +2,9 @@
 
 ## Overview
 
-This document describes the authentication user interface foundation for MedBookPro. This is a UI-focused, frontend-only implementation designed to establish the visual and interaction patterns for authentication flows.
+This document describes the authentication UI and Phase 1 Supabase Auth integration for MedBookPro. The existing form contracts and accessibility behavior are preserved while email/password sign-in and sign-up now use the typed Supabase adapter.
 
-**Important**: This implementation uses mock authentication. No real sessions are created, no tokens are generated, and no passwords are stored.
+**Important**: Sign-in and sign-up use Supabase Auth with cookie sessions. Password reset, invitation acceptance, and the verification-state demonstration remain mock-only and are explicitly out of scope for this phase.
 
 ## Routes
 
@@ -213,11 +213,13 @@ Enforced on all password fields:
 }
 ```
 
-## Mock Authentication Service
+## Authentication service boundary
 
 Located at `apps/web/src/lib/auth/mock-auth-service.ts`
 
-The mock service implements a clear interface that will be replaced by a real Supabase-backed implementation:
+`apps/web/src/lib/auth/auth-service.ts` defines the production service contract and Supabase adapter behavior. `apps/web/src/lib/auth/supabase-auth-service.ts` lazily supplies the browser client to that adapter. The existing mock service remains available for the intentionally unimplemented password-reset and invitation UI tests; production sign-in and sign-up no longer import it.
+
+The mock service implements the remaining UI-only contract:
 
 ```typescript
 class MockAuthService {
@@ -229,7 +231,7 @@ class MockAuthService {
 }
 ```
 
-### Important Characteristics
+### Mock characteristics
 
 - **No real authentication**: Methods simulate network delay but don't create sessions
 - **No tokens**: No JWT, no access tokens, no refresh tokens generated
