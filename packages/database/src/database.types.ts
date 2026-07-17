@@ -268,13 +268,20 @@ export type Database = {
           archived_by: string | null
           city: string | null
           clinic_id: string
+          code: string | null
           country_code: string
           created_at: string
+          email: string | null
           id: string
+          location_type: string
           name: string
+          operational_status: string
           organization_id: string
+          phone: string | null
           postal_code: string | null
           province: string | null
+          province_or_state: string | null
+          public_booking_enabled: boolean
           status: string
           timezone: string | null
           updated_at: string
@@ -286,13 +293,20 @@ export type Database = {
           archived_by?: string | null
           city?: string | null
           clinic_id: string
+          code?: string | null
           country_code?: string
           created_at?: string
+          email?: string | null
           id?: string
+          location_type?: string
           name: string
+          operational_status?: string
           organization_id: string
+          phone?: string | null
           postal_code?: string | null
           province?: string | null
+          province_or_state?: string | null
+          public_booking_enabled?: boolean
           status?: string
           timezone?: string | null
           updated_at?: string
@@ -304,13 +318,20 @@ export type Database = {
           archived_by?: string | null
           city?: string | null
           clinic_id?: string
+          code?: string | null
           country_code?: string
           created_at?: string
+          email?: string | null
           id?: string
+          location_type?: string
           name?: string
+          operational_status?: string
           organization_id?: string
+          phone?: string | null
           postal_code?: string | null
           province?: string | null
+          province_or_state?: string | null
+          public_booking_enabled?: boolean
           status?: string
           timezone?: string | null
           updated_at?: string
@@ -598,16 +619,73 @@ export type Database = {
           },
         ]
       }
+      organization_onboarding_attempts: {
+        Row: {
+          created_at: string
+          id: string
+          idempotency_key: string
+          location_id: string
+          organization_id: string
+          request_id: string
+          requested_by_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          idempotency_key: string
+          location_id: string
+          organization_id: string
+          request_id?: string
+          requested_by_user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          idempotency_key?: string
+          location_id?: string
+          organization_id?: string
+          request_id?: string
+          requested_by_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_onboarding_attempts_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_onboarding_attempts_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_onboarding_attempts_requested_by_user_id_fkey"
+            columns: ["requested_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           archived_at: string | null
           archived_by: string | null
           created_at: string
+          created_by_user_id: string | null
           default_country_code: string
+          default_currency: string
+          default_locale: string
           default_timezone: string
+          display_name: string | null
           id: string
           legal_name: string | null
           name: string
+          onboarding_status: string
           slug: string
           status: string
           updated_at: string
@@ -616,11 +694,16 @@ export type Database = {
           archived_at?: string | null
           archived_by?: string | null
           created_at?: string
+          created_by_user_id?: string | null
           default_country_code?: string
+          default_currency?: string
+          default_locale?: string
           default_timezone?: string
+          display_name?: string | null
           id?: string
           legal_name?: string | null
           name: string
+          onboarding_status?: string
           slug: string
           status?: string
           updated_at?: string
@@ -629,11 +712,16 @@ export type Database = {
           archived_at?: string | null
           archived_by?: string | null
           created_at?: string
+          created_by_user_id?: string | null
           default_country_code?: string
+          default_currency?: string
+          default_locale?: string
           default_timezone?: string
+          display_name?: string | null
           id?: string
           legal_name?: string | null
           name?: string
+          onboarding_status?: string
           slug?: string
           status?: string
           updated_at?: string
@@ -642,6 +730,13 @@ export type Database = {
           {
             foreignKeyName: "organizations_archived_by_fkey"
             columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organizations_created_by_user_id_fkey"
+            columns: ["created_by_user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -839,6 +934,21 @@ export type Database = {
         }
         Returns: string
       }
+      create_organization_with_first_location: {
+        Args: {
+          p_idempotency_key: string
+          p_location: Json
+          p_organization: Json
+        }
+        Returns: {
+          location_id: string
+          location_name: string
+          membership_id: string
+          organization_display_name: string
+          organization_id: string
+          request_id: string
+        }[]
+      }
       current_profile_id: { Args: never; Returns: string }
       has_active_membership: {
         Args: { target_organization_id: string }
@@ -859,6 +969,10 @@ export type Database = {
       has_permission: {
         Args: { required_permission: string; target_organization_id: string }
         Returns: boolean
+      }
+      normalize_organization_slug: {
+        Args: { input_name: string }
+        Returns: string
       }
     }
     Enums: {
@@ -995,4 +1109,3 @@ export const Constants = {
     Enums: {},
   },
 } as const
-
