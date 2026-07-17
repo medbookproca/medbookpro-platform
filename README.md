@@ -8,7 +8,7 @@ Initial platform workspace. Supabase directories are governance boundaries only,
 
 ## Prerequisites
 
-- Node.js 20.9 or newer
+- Node.js 22.13 or newer
 - pnpm 11
 
 ## Installation and commands
