@@ -1,9 +1,13 @@
 import { Card } from '@medbookpro/ui';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { signOutAction } from './actions';
+import { redirect } from 'next/navigation';
 
 export default async function AppPage() {
   const user = await requireAuthenticatedUser('/app');
+  const organization = await getActiveOrganizationContext(user.id);
+  if (!organization) redirect('/onboarding');
 
   return (
     <main className="min-h-screen bg-slate-50 px-6 py-16 text-slate-950">
@@ -13,6 +17,8 @@ export default async function AppPage() {
         <Card className="mt-8">
           <p className="text-lg text-slate-700">Your Supabase session is active.</p>
           <p className="mt-2 text-sm text-slate-600">Signed in as {user.email ?? 'the authenticated user'}.</p>
+          <p className="mt-2 text-sm text-slate-600">Organization: {organization.organizationName}</p>
+          {organization.locationName && <p className="mt-1 text-sm text-slate-600">Location: {organization.locationName}</p>}
           <form action={signOutAction} className="mt-6">
             <button
               type="submit"
