@@ -679,6 +679,74 @@ export type Database = {
           },
         ];
       };
+      organization_holidays: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          holiday_date: string;
+          id: string;
+          location_id: string | null;
+          name: string;
+          organization_id: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          holiday_date: string;
+          id?: string;
+          location_id?: string | null;
+          name: string;
+          organization_id: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          holiday_date?: string;
+          id?: string;
+          location_id?: string | null;
+          name?: string;
+          organization_id?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'organization_holiday_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'organization_holidays_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'organization_holidays_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'organization_holidays_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       organization_memberships: {
         Row: {
           accepted_at: string | null;
@@ -905,6 +973,269 @@ export type Database = {
           updated_at?: string;
         };
         Relationships: [];
+      };
+      practitioner_availability_blocks: {
+        Row: {
+          capacity_hint: number;
+          created_at: string;
+          created_by: string | null;
+          end_time: string;
+          id: string;
+          location_id: string | null;
+          mode: string;
+          organization_id: string;
+          practitioner_id: string;
+          service_id: string | null;
+          start_time: string;
+          template_id: string;
+          updated_at: string;
+          updated_by: string | null;
+          weekday: number;
+        };
+        Insert: {
+          capacity_hint?: number;
+          created_at?: string;
+          created_by?: string | null;
+          end_time: string;
+          id?: string;
+          location_id?: string | null;
+          mode?: string;
+          organization_id: string;
+          practitioner_id: string;
+          service_id?: string | null;
+          start_time: string;
+          template_id: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          weekday: number;
+        };
+        Update: {
+          capacity_hint?: number;
+          created_at?: string;
+          created_by?: string | null;
+          end_time?: string;
+          id?: string;
+          location_id?: string | null;
+          mode?: string;
+          organization_id?: string;
+          practitioner_id?: string;
+          service_id?: string | null;
+          start_time?: string;
+          template_id?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          weekday?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'availability_block_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'availability_block_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'availability_block_service_fk';
+            columns: ['service_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'services';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'availability_block_template_fk';
+            columns: ['template_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioner_availability_templates';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_blocks_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_blocks_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_blocks_template_id_fkey';
+            columns: ['template_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioner_availability_templates';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_blocks_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      practitioner_availability_templates: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          effective_from: string | null;
+          effective_to: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+          practitioner_id: string;
+          status: string;
+          timezone: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          effective_from?: string | null;
+          effective_to?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+          practitioner_id: string;
+          status?: string;
+          timezone: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          effective_from?: string | null;
+          effective_to?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          practitioner_id?: string;
+          status?: string;
+          timezone?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'availability_template_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_templates_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_templates_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_availability_templates_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      practitioner_breaks: {
+        Row: {
+          block_id: string;
+          created_at: string;
+          created_by: string | null;
+          end_time: string;
+          id: string;
+          label: string;
+          organization_id: string;
+          practitioner_id: string;
+          start_time: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          block_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          end_time: string;
+          id?: string;
+          label: string;
+          organization_id: string;
+          practitioner_id: string;
+          start_time: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          block_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          end_time?: string;
+          id?: string;
+          label?: string;
+          organization_id?: string;
+          practitioner_id?: string;
+          start_time?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'practitioner_break_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_breaks_block_id_fkey';
+            columns: ['block_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioner_availability_blocks';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_breaks_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_breaks_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_breaks_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       practitioner_credentials: {
         Row: {
@@ -1163,6 +1494,87 @@ export type Database = {
           },
         ];
       };
+      practitioner_location_availability: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          end_time: string;
+          id: string;
+          location_id: string;
+          mode: string;
+          organization_id: string;
+          practitioner_id: string;
+          start_time: string;
+          updated_at: string;
+          updated_by: string | null;
+          weekday: number;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          end_time: string;
+          id?: string;
+          location_id: string;
+          mode?: string;
+          organization_id: string;
+          practitioner_id: string;
+          start_time: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          weekday: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          end_time?: string;
+          id?: string;
+          location_id?: string;
+          mode?: string;
+          organization_id?: string;
+          practitioner_id?: string;
+          start_time?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          weekday?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'practitioner_location_availability_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_location_availability_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_location_availability_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_location_availability_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_location_availability_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       practitioner_public_profiles: {
         Row: {
           accepting_new_clients: boolean;
@@ -1258,6 +1670,103 @@ export type Database = {
           },
         ];
       };
+      practitioner_schedule_overrides: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          end_time: string | null;
+          id: string;
+          kind: string;
+          location_id: string | null;
+          mode: string;
+          organization_id: string;
+          override_date: string;
+          practitioner_id: string;
+          reason: string | null;
+          service_id: string | null;
+          start_time: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          end_time?: string | null;
+          id?: string;
+          kind: string;
+          location_id?: string | null;
+          mode?: string;
+          organization_id: string;
+          override_date: string;
+          practitioner_id: string;
+          reason?: string | null;
+          service_id?: string | null;
+          start_time?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          end_time?: string | null;
+          id?: string;
+          kind?: string;
+          location_id?: string | null;
+          mode?: string;
+          organization_id?: string;
+          override_date?: string;
+          practitioner_id?: string;
+          reason?: string | null;
+          service_id?: string | null;
+          start_time?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'practitioner_override_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_override_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_override_service_fk';
+            columns: ['service_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'services';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_schedule_overrides_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_schedule_overrides_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_schedule_overrides_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       practitioner_service_assignments: {
         Row: {
           created_at: string;
@@ -1346,6 +1855,97 @@ export type Database = {
           },
         ];
       };
+      practitioner_service_availability: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          end_time: string;
+          id: string;
+          location_id: string | null;
+          mode: string;
+          organization_id: string;
+          practitioner_id: string;
+          service_id: string;
+          start_time: string;
+          updated_at: string;
+          updated_by: string | null;
+          weekday: number;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          end_time: string;
+          id?: string;
+          location_id?: string | null;
+          mode?: string;
+          organization_id: string;
+          practitioner_id: string;
+          service_id: string;
+          start_time: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          weekday: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          end_time?: string;
+          id?: string;
+          location_id?: string | null;
+          mode?: string;
+          organization_id?: string;
+          practitioner_id?: string;
+          service_id?: string;
+          start_time?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          weekday?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'practitioner_service_availability_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_service_availability_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_service_availability_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_service_availability_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_service_availability_service_fk';
+            columns: ['service_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'services';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_service_availability_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       practitioner_specialty_assignments: {
         Row: {
           created_at: string;
@@ -1417,6 +2017,83 @@ export type Database = {
           },
           {
             foreignKeyName: 'practitioner_specialty_assignments_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      practitioner_time_off: {
+        Row: {
+          all_day: boolean;
+          category: string;
+          created_at: string;
+          created_by: string | null;
+          end_date: string;
+          id: string;
+          organization_id: string;
+          practitioner_id: string;
+          reason: string | null;
+          start_date: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          all_day?: boolean;
+          category: string;
+          created_at?: string;
+          created_by?: string | null;
+          end_date: string;
+          id?: string;
+          organization_id: string;
+          practitioner_id: string;
+          reason?: string | null;
+          start_date: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          all_day?: boolean;
+          category?: string;
+          created_at?: string;
+          created_by?: string | null;
+          end_date?: string;
+          id?: string;
+          organization_id?: string;
+          practitioner_id?: string;
+          reason?: string | null;
+          start_date?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'practitioner_time_off_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_time_off_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_time_off_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'practitioner_time_off_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
             referencedRelation: 'profiles';
@@ -1782,6 +2459,16 @@ export type Database = {
           organization_name: string;
         }[];
       };
+      add_practitioner_break: {
+        Args: {
+          p_block_id: string;
+          p_end_time: string;
+          p_label: string;
+          p_organization_id: string;
+          p_start_time: string;
+        };
+        Returns: string;
+      };
       add_practitioner_credential: {
         Args: {
           p_credential_type: string;
@@ -1798,6 +2485,21 @@ export type Database = {
         Returns: {
           credential_id: string;
         }[];
+      };
+      add_practitioner_schedule_override: {
+        Args: {
+          p_end_time?: string;
+          p_kind: string;
+          p_location_id?: string;
+          p_mode?: string;
+          p_organization_id: string;
+          p_override_date: string;
+          p_practitioner_id: string;
+          p_reason?: string;
+          p_service_id?: string;
+          p_start_time?: string;
+        };
+        Returns: string;
       };
       append_audit_event: {
         Args: {
@@ -1818,6 +2520,29 @@ export type Database = {
           user_agent: string;
         };
         Returns: string;
+      };
+      append_availability_segments: {
+        Args: {
+          p_block_id?: string;
+          p_date: string;
+          p_end_time: string;
+          p_location_id: string;
+          p_mode: string;
+          p_result: Json;
+          p_service_id: string;
+          p_source: string;
+          p_start_time: string;
+          p_timezone: string;
+        };
+        Returns: Json;
+      };
+      availability_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
+      cancel_practitioner_time_off: {
+        Args: { p_time_off_id: string };
+        Returns: boolean;
       };
       cancel_staff_invitation: {
         Args: { p_invitation_id: string; p_reason?: string };
@@ -1861,6 +2586,27 @@ export type Database = {
         Returns: {
           practitioner_id: string;
         }[];
+      };
+      create_practitioner_availability_schedule: {
+        Args: {
+          p_blocks: Json;
+          p_name: string;
+          p_organization_id: string;
+          p_practitioner_id: string;
+          p_timezone: string;
+        };
+        Returns: string;
+      };
+      create_practitioner_time_off: {
+        Args: {
+          p_category: string;
+          p_end_date: string;
+          p_organization_id: string;
+          p_practitioner_id: string;
+          p_reason?: string;
+          p_start_date: string;
+        };
+        Returns: string;
       };
       create_staff_invitation: {
         Args: {
@@ -1924,6 +2670,28 @@ export type Database = {
         Args: { input_name: string };
         Returns: string;
       };
+      preview_practitioner_availability: {
+        Args: {
+          p_end_date: string;
+          p_location_id?: string;
+          p_practitioner_id: string;
+          p_service_id?: string;
+          p_start_date: string;
+        };
+        Returns: Json;
+      };
+      remove_practitioner_availability_schedule: {
+        Args: { p_template_id: string };
+        Returns: boolean;
+      };
+      remove_practitioner_break: {
+        Args: { p_break_id: string };
+        Returns: boolean;
+      };
+      remove_practitioner_schedule_override: {
+        Args: { p_override_id: string };
+        Returns: boolean;
+      };
       resend_staff_invitation: {
         Args: { p_invitation_id: string };
         Returns: {
@@ -1936,11 +2704,27 @@ export type Database = {
         Args: { p_language_codes?: string[]; p_practitioner_id: string };
         Returns: boolean;
       };
+      set_practitioner_location_availability: {
+        Args: {
+          p_organization_id: string;
+          p_practitioner_id: string;
+          p_rows: Json;
+        };
+        Returns: boolean;
+      };
       set_practitioner_locations: {
         Args: {
           p_location_ids?: string[];
           p_practitioner_id: string;
           p_primary_location_id?: string;
+        };
+        Returns: boolean;
+      };
+      set_practitioner_service_availability: {
+        Args: {
+          p_organization_id: string;
+          p_practitioner_id: string;
+          p_rows: Json;
         };
         Returns: boolean;
       };
@@ -1971,6 +2755,26 @@ export type Database = {
       };
       update_membership_status: {
         Args: { p_membership_id: string; p_reason?: string; p_status: string };
+        Returns: boolean;
+      };
+      update_organization_holiday: {
+        Args: {
+          p_holiday_date: string;
+          p_holiday_id: string;
+          p_location_id?: string;
+          p_name: string;
+          p_organization_id: string;
+          p_status?: string;
+        };
+        Returns: string;
+      };
+      update_practitioner_availability_schedule: {
+        Args: {
+          p_blocks: Json;
+          p_name: string;
+          p_template_id: string;
+          p_timezone: string;
+        };
         Returns: boolean;
       };
       update_practitioner_credential: {

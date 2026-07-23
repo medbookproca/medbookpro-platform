@@ -8,3 +8,4 @@ export * from './auth-schemas';
 export * from './onboarding-schemas';
 export * from './staff-schemas';
 export * from './practitioner-schemas';
+export * from './availability-schemas';

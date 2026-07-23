@@ -136,4 +136,13 @@ test.describe('Authentication Routes', () => {
     await page.goto('/app/practitioners/00000000-0000-0000-0000-000000000001');
     await expect(page).toHaveURL(/\/sign-in\?next=/);
   });
+
+  test('practitioner availability routes remain protected', async ({
+    page,
+  }) => {
+    await page.goto(
+      '/app/practitioners/00000000-0000-0000-0000-000000000001/availability',
+    );
+    await expect(page).toHaveURL(/\/sign-in\?next=/);
+  });
 });
