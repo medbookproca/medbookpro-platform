@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { logDiagnostic } from './observability';
+import { getSafeErrorDetails, logDiagnostic } from './observability';
 
 describe('diagnostic logging', () => {
   it('redacts sensitive field names before writing structured output', () => {
@@ -15,5 +15,17 @@ describe('diagnostic logging', () => {
       expect.stringContaining('secret-value'),
     );
     spy.mockRestore();
+  });
+});
+
+describe('safe error details', () => {
+  it('redacts credentials from development diagnostics', () => {
+    expect(
+      getSafeErrorDetails(
+        new Error('request failed Bearer secret-token eyJsecret'),
+      ),
+    ).toEqual({
+      message: 'request failed Bearer [REDACTED] [REDACTED]',
+    });
   });
 });
