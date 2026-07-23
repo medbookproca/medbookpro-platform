@@ -1,0 +1,17 @@
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+
+function value(formData: FormData, key: string) { return String(formData.get(key) ?? '').trim(); }
+async function organization() { const user = await requireAuthenticatedUser('/app/integrations'); const context = await getActiveOrganizationContext(user.id); if (!context) throw new Error('No active organization is available.'); return context; }
+
+export async function createApiKeyAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('create_api_key', { p_name: value(formData, 'name'), p_permissions: value(formData, 'permissions').split(',').map((item) => item.trim()).filter(Boolean), p_rotation_date: value(formData, 'rotationDate') || undefined }); if (error) throw error; revalidatePath('/app/integrations/api-keys'); }
+export async function revokeApiKeyAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('revoke_api_key', { p_api_key_id: value(formData, 'apiKeyId') }); if (error) throw error; revalidatePath('/app/integrations/api-keys'); }
+export async function rotateApiKeyAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('rotate_key', { p_api_key_id: value(formData, 'apiKeyId'), p_rotation_date: value(formData, 'rotationDate') || undefined }); if (error) throw error; revalidatePath('/app/integrations/api-keys'); }
+export async function createConnectionAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('create_connection_placeholder', { p_provider_key: value(formData, 'providerKey'), p_name: value(formData, 'name'), p_external_account_placeholder: value(formData, 'externalAccount') || undefined }); if (error) throw error; revalidatePath('/app/integrations/settings'); revalidatePath('/app/integrations'); }
+export async function recordWebhookAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('record_webhook', { p_connection_id: value(formData, 'connectionId'), p_direction: value(formData, 'direction'), p_event_type: value(formData, 'eventType'), p_endpoint_placeholder: value(formData, 'endpoint') || undefined, p_payload_placeholder: {} }); if (error) throw error; revalidatePath('/app/integrations/webhooks'); }
+export async function queueIntegrationJobAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('queue_job', { p_job_type: value(formData, 'jobType'), p_payload_metadata: {}, p_connection_id: value(formData, 'connectionId') || undefined, p_run_after: undefined }); if (error) throw error; revalidatePath('/app/integrations/jobs'); }
+export async function retryIntegrationJobAction(formData: FormData): Promise<void> { await organization(); const supabase = await createClient(); const { error } = await supabase.rpc('retry_job', { p_job_id: value(formData, 'jobId') }); if (error) throw error; revalidatePath('/app/integrations/jobs'); }

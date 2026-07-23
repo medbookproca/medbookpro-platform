@@ -1,0 +1,5 @@
+import { Card } from '@medbookpro/ui';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+
+export default async function IntegrationProvidersPage() { await requireAuthenticatedUser('/app/integrations/providers'); const supabase = await createClient(); const { data, error } = await supabase.from('integration_providers').select('provider_key,display_name,provider_type,active').eq('active', true).order('display_name'); if (error) throw error; return <main className="min-h-screen bg-slate-50 px-6 py-12"><div className="mx-auto max-w-5xl"><h1 className="text-4xl font-semibold">Provider directory</h1><p className="mt-3 text-slate-600">Supported abstractions are catalogued without live integrations.</p><div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{data?.map((provider) => <Card key={provider.provider_key}><p className="font-semibold">{provider.display_name}</p><p className="mt-2 text-sm text-slate-600">{provider.provider_type} · placeholder only</p></Card>)}</div></div></main>; }
