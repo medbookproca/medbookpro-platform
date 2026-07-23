@@ -74,11 +74,15 @@ select is(public.has_permission('10000000-0000-0000-0000-000000000001', 'organiz
 select throws_ok($$insert into public.clinics (organization_id, name, slug) values ('10000000-0000-0000-0000-000000000002', 'Cross Tenant', 'cross-tenant')$$, '42501', null, 'tenant administrator cannot cross organization boundary');
 
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000001', true);
-update public.organization_memberships set status = 'suspended', suspended_at = timezone('utc', now()) where id = '40000000-0000-0000-0000-000000000001';
+select public.update_membership_status('40000000-0000-0000-0000-000000000003', 'suspended', 'identity test');
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000003', true);
 select is((select count(*)::integer from public.organizations), 0, 'suspended membership loses access');
 
-select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000002', true);
-update public.organization_memberships set status = 'revoked', revoked_at = timezone('utc', now()) where id = '40000000-0000-0000-0000-000000000002';
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000001', true);
+select public.update_membership_status('40000000-0000-0000-0000-000000000003', 'active', 'identity test');
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000001', true);
+select public.update_membership_status('40000000-0000-0000-0000-000000000003', 'removed', 'identity test');
+select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000003', true);
 select is((select count(*)::integer from public.organizations), 0, 'revoked membership loses access');
 
 select has_column('public', 'invitations', 'token_digest', 'invitations store a digest field');
