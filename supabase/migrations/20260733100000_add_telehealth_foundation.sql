@@ -70,6 +70,19 @@ create or replace function public.telehealth_permission(target_organization_id u
 returns boolean language sql stable security definer set search_path=pg_catalog,public,auth
 as $$ select public.has_permission(target_organization_id,'telehealth.'||required_action) $$;
 
+create or replace function public.update_telehealth_provider_settings(p_provider text,p_display_name text,p_enabled boolean)
+returns uuid language plpgsql security definer set search_path=pg_catalog,public,auth
+as $$
+declare caller_id uuid:=public.current_profile_id(); org_id uuid; setting_id uuid;
+begin
+  select organization_id into org_id from public.organization_memberships where profile_id=caller_id and status='active' order by created_at limit 1;
+  if caller_id is null or org_id is null or not public.telehealth_permission(org_id,'manage') then raise exception using errcode='42501',message='TELEHEALTH_SETTINGS_FORBIDDEN'; end if;
+  insert into public.telehealth_provider_settings(organization_id,provider,display_name,enabled,updated_by,created_by) values(org_id,p_provider,p_display_name,p_enabled,caller_id,caller_id)
+  on conflict(organization_id,provider) do update set display_name=excluded.display_name,enabled=excluded.enabled,updated_by=caller_id,updated_at=timezone('utc',now()) returning id into setting_id;
+  insert into public.audit_events(actor_profile_id,organization_id,action,entity_type,entity_id,metadata) values(caller_id,org_id,'telehealth.provider_settings_updated','telehealth_provider_settings',setting_id,jsonb_build_object('provider',p_provider,'enabled',p_enabled));
+  return setting_id;
+end $$;
+
 create or replace function public.create_telehealth_session(p_organization_id uuid,p_location_id uuid,p_appointment_id uuid,p_patient_id uuid,p_practitioner_id uuid,p_scheduled_start timestamptz,p_scheduled_end timestamptz,p_provider_placeholder text default 'custom_provider')
 returns uuid language plpgsql security definer set search_path=pg_catalog,public,auth
 as $$
@@ -176,7 +189,7 @@ begin
 end $$;
 
 revoke all on function public.telehealth_permission(uuid,text) from public;
-grant execute on function public.telehealth_permission(uuid,text),public.create_telehealth_session(uuid,uuid,uuid,uuid,uuid,timestamptz,timestamptz,text),public.get_telehealth_session(uuid),public.join_waiting_room(uuid),public.admit_patient(uuid),public.start_session(uuid),public.end_session(uuid),public.cancel_session(uuid,text),public.list_upcoming_sessions(timestamptz,timestamptz),public.record_session_event(uuid,text,jsonb) to authenticated;
+grant execute on function public.telehealth_permission(uuid,text),public.update_telehealth_provider_settings(text,text,boolean),public.create_telehealth_session(uuid,uuid,uuid,uuid,uuid,timestamptz,timestamptz,text),public.get_telehealth_session(uuid),public.join_waiting_room(uuid),public.admit_patient(uuid),public.start_session(uuid),public.end_session(uuid),public.cancel_session(uuid,text),public.list_upcoming_sessions(timestamptz,timestamptz),public.record_session_event(uuid,text,jsonb) to authenticated;
 
 do $$ declare table_name text; begin
  foreach table_name in array array['telehealth_sessions','telehealth_participants','telehealth_waiting_room','telehealth_chat_placeholder','telehealth_provider_settings','telehealth_session_events'] loop

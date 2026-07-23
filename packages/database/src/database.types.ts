@@ -8552,6 +8552,14 @@ export type Database = {
         };
         Returns: string;
       };
+      update_telehealth_provider_settings: {
+        Args: {
+          p_display_name: string;
+          p_enabled: boolean;
+          p_provider: string;
+        };
+        Returns: string;
+      };
       update_templates: {
         Args: {
           p_body: string;

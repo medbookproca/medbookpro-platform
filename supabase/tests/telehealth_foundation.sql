@@ -1,6 +1,6 @@
 begin;
 
-select plan(16);
+select plan(17);
 select has_table('telehealth_sessions','public');
 select has_table('telehealth_participants','public');
 select has_table('telehealth_waiting_room','public');
@@ -14,6 +14,7 @@ select has_function('public','admit_patient',array['uuid']);
 select has_function('public','start_session',array['uuid']);
 select has_function('public','end_session',array['uuid']);
 select has_function('public','cancel_session',array['uuid','text']);
+select has_function('public','update_telehealth_provider_settings',array['text','text','boolean']);
 select has_function('public','list_upcoming_sessions',array['timestamp with time zone','timestamp with time zone']);
 select ok((select relrowsecurity from pg_class where oid='public.telehealth_sessions'::regclass),'telehealth sessions enable RLS');
 select ok(exists(select 1 from pg_policies where schemaname='public' and tablename='telehealth_sessions' and policyname='telehealth_sessions_insert_denied'),'direct telehealth writes denied');
