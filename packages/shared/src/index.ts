@@ -12,3 +12,4 @@ export * from './availability-schemas';
 export * from './appointment-schemas';
 export * from './clinical-schemas';
 export * from './patient-schemas';
+export * from './communications-schemas';
