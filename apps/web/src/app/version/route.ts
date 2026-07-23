@@ -4,9 +4,6 @@ import { getReleaseMetadata } from '@/lib/release-metadata';
 export function GET() {
   return NextResponse.json({
     service: 'medbookpro-web',
-    status: 'ok',
-    environment: process.env.NODE_ENV,
-    timestamp: new Date().toISOString(),
-    release: getReleaseMetadata().version,
+    ...getReleaseMetadata(),
   });
 }

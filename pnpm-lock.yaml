@@ -71,6 +71,9 @@ importers:
         specifier: ^3.25.76
         version: 3.25.76
     devDependencies:
+      '@next/eslint-plugin-next':
+        specifier: 15.5.20
+        version: 15.5.20
       '@types/react':
         specifier: ^19.0.8
         version: 19.2.17
