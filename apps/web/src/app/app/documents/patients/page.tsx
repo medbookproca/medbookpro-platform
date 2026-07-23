@@ -1,0 +1,6 @@
+import { Card } from '@medbookpro/ui';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+
+export default async function PatientDocumentsPage() { const user = await requireAuthenticatedUser('/app/documents/patients'); const context = await getActiveOrganizationContext(user.id); if (!context) return null; const supabase = await createClient(); const { data, error } = await supabase.from('patients').select('id,patient_number,first_name,last_name').eq('organization_id', context.organizationId).order('last_name'); if (error) throw error; return <main className="min-h-screen bg-slate-50 px-6 py-12"><div className="mx-auto max-w-4xl"><h1 className="text-4xl font-semibold">Patient documents</h1><div className="mt-8 grid gap-4 sm:grid-cols-2">{data?.map((patient) => <Card key={patient.id}><p className="font-semibold">{patient.first_name} {patient.last_name}</p><p className="text-sm text-slate-600">{patient.patient_number}</p><p className="mt-2 text-sm text-slate-500">Use the patient document RPC to load isolated metadata.</p></Card>)}</div></div></main>; }

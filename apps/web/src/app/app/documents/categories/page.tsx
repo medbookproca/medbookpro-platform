@@ -1,0 +1,6 @@
+import { Card } from '@medbookpro/ui';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+
+export default async function DocumentCategoriesPage() { const user = await requireAuthenticatedUser('/app/documents/categories'); const context = await getActiveOrganizationContext(user.id); if (!context) return null; const supabase = await createClient(); const { data, error } = await supabase.from('document_categories').select('category_key,name,description,active').eq('organization_id', context.organizationId).order('name'); if (error) throw error; return <main className="min-h-screen bg-slate-50 px-6 py-12"><div className="mx-auto max-w-4xl"><h1 className="text-4xl font-semibold">Document categories</h1><p className="mt-3 text-slate-600">Organization-scoped categories seeded with the approved foundation list.</p><div className="mt-8 grid gap-4 sm:grid-cols-2">{data?.map((category) => <Card key={category.category_key}><p className="font-semibold">{category.name}</p><p className="text-sm text-slate-600">{category.category_key} · {category.active ? 'Active' : 'Inactive'}</p></Card>)}</div></div></main>; }
