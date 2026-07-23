@@ -124,7 +124,7 @@ export async function updateMembershipStatusAction(formData: FormData): Promise<
     const { error } = await supabase.rpc('update_membership_status', {
       p_membership_id: input.membershipId,
       p_status: input.status,
-      p_reason: input.reason || null,
+      p_reason: input.reason || undefined,
     });
     if (error) throw error;
     revalidatePath('/app/settings/staff');

@@ -8,7 +8,9 @@ export interface OrganizationContext {
   locationName: string | null;
 }
 
-export async function getActiveOrganizationContext(userId: string): Promise<OrganizationContext | null> {
+export async function getActiveOrganizationContext(
+  userId: string,
+): Promise<OrganizationContext | null> {
   const supabase = await createClient();
   const { data: membership, error: membershipError } = await supabase
     .from('organization_memberships')
@@ -22,7 +24,7 @@ export async function getActiveOrganizationContext(userId: string): Promise<Orga
   if (membershipError || !membership) return null;
   const { data: organization, error: organizationError } = await supabase
     .from('organizations')
-    .select('id, display_name')
+    .select('id, name, display_name')
     .eq('id', membership.organization_id)
     .eq('status', 'active')
     .maybeSingle();
@@ -37,5 +39,9 @@ export async function getActiveOrganizationContext(userId: string): Promise<Orga
     .limit(1)
     .maybeSingle();
 
-  return { organizationId: organization.id, organizationName: organization.display_name, locationName: location?.name ?? null };
+  return {
+    organizationId: organization.id,
+    organizationName: organization.display_name ?? organization.name,
+    locationName: location?.name ?? null,
+  };
 }
