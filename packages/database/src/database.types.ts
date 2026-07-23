@@ -3481,6 +3481,206 @@ export type Database = {
           },
         ];
       };
+      patient_portal_accounts: {
+        Row: {
+          auth_user_id: string | null;
+          created_at: string;
+          email: string;
+          email_verified_at: string | null;
+          failed_login_attempts: number;
+          id: string;
+          last_login_at: string | null;
+          locked_until: string | null;
+          mfa_configured_at: string | null;
+          mfa_enabled: boolean;
+          organization_id: string;
+          password_reset_requested_at: string | null;
+          patient_id: string;
+          sso_placeholder: string | null;
+          status: string;
+          updated_at: string;
+        };
+        Insert: {
+          auth_user_id?: string | null;
+          created_at?: string;
+          email: string;
+          email_verified_at?: string | null;
+          failed_login_attempts?: number;
+          id?: string;
+          last_login_at?: string | null;
+          locked_until?: string | null;
+          mfa_configured_at?: string | null;
+          mfa_enabled?: boolean;
+          organization_id: string;
+          password_reset_requested_at?: string | null;
+          patient_id: string;
+          sso_placeholder?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Update: {
+          auth_user_id?: string | null;
+          created_at?: string;
+          email?: string;
+          email_verified_at?: string | null;
+          failed_login_attempts?: number;
+          id?: string;
+          last_login_at?: string | null;
+          locked_until?: string | null;
+          mfa_configured_at?: string | null;
+          mfa_enabled?: boolean;
+          organization_id?: string;
+          password_reset_requested_at?: string | null;
+          patient_id?: string;
+          sso_placeholder?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_portal_accounts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_accounts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_accounts_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      patient_portal_events: {
+        Row: {
+          account_id: string | null;
+          event_type: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+          patient_id: string;
+        };
+        Insert: {
+          account_id?: string | null;
+          event_type: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+          patient_id: string;
+        };
+        Update: {
+          account_id?: string | null;
+          event_type?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+          patient_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_portal_events_account_fk';
+            columns: ['account_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patient_portal_accounts';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_events_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      patient_portal_sessions: {
+        Row: {
+          account_id: string;
+          created_at: string;
+          device_placeholder: string | null;
+          expires_at: string;
+          id: string;
+          last_seen_at: string | null;
+          organization_id: string;
+          revoked_at: string | null;
+        };
+        Insert: {
+          account_id: string;
+          created_at?: string;
+          device_placeholder?: string | null;
+          expires_at: string;
+          id?: string;
+          last_seen_at?: string | null;
+          organization_id: string;
+          revoked_at?: string | null;
+        };
+        Update: {
+          account_id?: string;
+          created_at?: string;
+          device_placeholder?: string | null;
+          expires_at?: string;
+          id?: string;
+          last_seen_at?: string | null;
+          organization_id?: string;
+          revoked_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_portal_sessions_account_id_fkey';
+            columns: ['account_id'];
+            isOneToOne: false;
+            referencedRelation: 'patient_portal_accounts';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_sessions_account_org_fk';
+            columns: ['account_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patient_portal_accounts';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_sessions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_portal_sessions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
       patient_referrals: {
         Row: {
           created_at: string;
@@ -3651,6 +3851,58 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'profiles';
             referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_saved_settings: {
+        Row: {
+          created_at: string;
+          id: string;
+          organization_id: string;
+          patient_id: string;
+          setting_key: string;
+          setting_value: Json;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          organization_id: string;
+          patient_id: string;
+          setting_key: string;
+          setting_value?: Json;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          organization_id?: string;
+          patient_id?: string;
+          setting_key?: string;
+          setting_value?: Json;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_saved_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_saved_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_saved_settings_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
           },
         ];
       };
@@ -6130,6 +6382,15 @@ export type Database = {
       };
     };
     Functions: {
+      accept_consent: {
+        Args: {
+          p_consent_date: string;
+          p_consent_type: string;
+          p_document_reference?: string;
+          p_version: string;
+        };
+        Returns: boolean;
+      };
       accept_staff_invitation: {
         Args: { p_token: string };
         Returns: {
@@ -6314,6 +6575,10 @@ export type Database = {
       };
       cancel_practitioner_time_off: {
         Args: { p_time_off_id: string };
+        Returns: boolean;
+      };
+      cancel_request: {
+        Args: { p_appointment_id: string; p_reason?: string };
         Returns: boolean;
       };
       cancel_staff_invitation: {
@@ -6577,6 +6842,14 @@ export type Database = {
         };
         Returns: Json;
       };
+      get_patient_appointments: {
+        Args: { p_from_date?: string; p_to_date?: string };
+        Returns: Json;
+      };
+      get_patient_billing: { Args: never; Returns: Json };
+      get_patient_communications: { Args: never; Returns: Json };
+      get_patient_consents: { Args: never; Returns: Json };
+      get_patient_dashboard: { Args: never; Returns: Json };
       get_patient_growth: {
         Args: {
           p_from_date?: string;
@@ -6585,6 +6858,8 @@ export type Database = {
         };
         Returns: Json;
       };
+      get_patient_preferences: { Args: never; Returns: Json };
+      get_patient_profile: { Args: never; Returns: Json };
       get_practitioner_activity: {
         Args: {
           p_from_date?: string;
@@ -6653,8 +6928,22 @@ export type Database = {
       };
       normalize_patient_name: { Args: { value: string }; Returns: string };
       normalize_patient_phone: { Args: { value: string }; Returns: string };
+      patient_login_placeholder: { Args: { p_email: string }; Returns: Json };
       patient_permission: {
         Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
+      patient_portal_organization_id: { Args: never; Returns: string };
+      patient_portal_patient_id: { Args: never; Returns: string };
+      patient_update_preferences: {
+        Args: {
+          p_appointment_reminders: boolean;
+          p_email_enabled: boolean;
+          p_marketing_opt_in: boolean;
+          p_preferred_language: string;
+          p_quiet_hours?: Json;
+          p_sms_enabled: boolean;
+        };
         Returns: boolean;
       };
       preview_conflicts: {
@@ -6730,6 +7019,20 @@ export type Database = {
         Args: { required_action?: string; target_organization_id: string };
         Returns: boolean;
       };
+      request_appointment: {
+        Args: {
+          p_appointment_type: string;
+          p_duration_minutes: number;
+          p_location_id: string;
+          p_notes?: string;
+          p_organization_id: string;
+          p_practitioner_id: string;
+          p_scheduled_start: string;
+          p_service_id: string;
+          p_timezone: string;
+        };
+        Returns: string;
+      };
       request_report_export: {
         Args: {
           p_filters?: Json;
@@ -6738,6 +7041,15 @@ export type Database = {
           p_report_key: string;
         };
         Returns: Json;
+      };
+      reschedule_request: {
+        Args: {
+          p_appointment_id: string;
+          p_duration_minutes: number;
+          p_scheduled_start: string;
+          p_timezone: string;
+        };
+        Returns: boolean;
       };
       resend_staff_invitation: {
         Args: { p_invitation_id: string };
@@ -6998,6 +7310,15 @@ export type Database = {
           p_identifier_value: string;
           p_is_primary?: boolean;
           p_issuing_jurisdiction?: string;
+        };
+        Returns: boolean;
+      };
+      update_patient_profile: {
+        Args: {
+          p_email: string;
+          p_phone: string;
+          p_preferred_language: string;
+          p_preferred_name: string;
         };
         Returns: boolean;
       };
