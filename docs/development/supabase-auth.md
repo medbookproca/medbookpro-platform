@@ -39,6 +39,10 @@ The existing sign-in schema and form call `signInWithPassword`. Invalid credenti
 
 Unit tests cover environment parsing, safe redirect rules, callback error-path validation, error mapping, and the Supabase adapter with a controlled typed test double. Playwright continues to test page rendering, validation, loading-safe form behavior, and navigation without real credentials or email delivery. A future local Supabase integration suite may be added without contacting production.
 
+## Local configuration
+
+Run `supabase status` and copy the local `API_URL` and `PUBLISHABLE_KEY` into `apps/web/.env.local` as `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Do not use the root `.env.local`, the legacy `NEXT_PUBLIC_SUPABASE_ANON_KEY`, a hosted project URL, or a service-role key for normal signup, sign-in, middleware, or onboarding.
+
 ## Dashboard configuration
 
 When a development Supabase project is approved, configure these manually in the Supabase Dashboard:

@@ -29,7 +29,7 @@ pnpm test:e2e
 
 ## Environment handling
 
-Copy `.env.example` to a local `.env`. Only `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` are used by the browser/server Auth clients. Service-role keys are not required and must never be imported into browser code. Never commit real values.
+Copy `apps/web/.env.example` to `apps/web/.env.local`. Next.js loads the application workspace file, not the ignored root `.env.local`. Only `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` are used by the browser/server Auth clients. Service-role keys are not required and must never be imported into browser code. Never commit real values.
 
 Authenticated users without an active organization membership use `/onboarding` to create an organization and first location atomically. See [organization onboarding](docs/development/organization-onboarding.md) and [local Supabase](docs/development/local-supabase.md). The onboarding flow uses the authenticated session and trusted RPC only; it does not use the service-role key.
 

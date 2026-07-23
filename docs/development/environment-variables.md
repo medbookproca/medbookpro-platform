@@ -1,6 +1,6 @@
 # Environment variables
 
-Copy `.env.example` to `.env` for local work. Real values must never be committed.
+Copy `apps/web/.env.example` to `apps/web/.env.local` for the Next.js app. Next.js resolves `.env.local` relative to `apps/web`, not the monorepo root. Real values must never be committed; both root and app-level `.env.local` files are ignored.
 
 ## Browser-safe values
 
