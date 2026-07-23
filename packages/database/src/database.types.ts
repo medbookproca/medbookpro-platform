@@ -941,6 +941,768 @@ export type Database = {
           },
         ];
       };
+      patient_consents: {
+        Row: {
+          consent_date: string;
+          consent_type: string;
+          created_at: string;
+          created_by: string | null;
+          document_reference: string | null;
+          id: string;
+          organization_id: string;
+          patient_id: string;
+          updated_at: string;
+          updated_by: string | null;
+          version: string;
+          withdrawn: boolean;
+        };
+        Insert: {
+          consent_date: string;
+          consent_type: string;
+          created_at?: string;
+          created_by?: string | null;
+          document_reference?: string | null;
+          id?: string;
+          organization_id: string;
+          patient_id: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          version: string;
+          withdrawn?: boolean;
+        };
+        Update: {
+          consent_date?: string;
+          consent_type?: string;
+          created_at?: string;
+          created_by?: string | null;
+          document_reference?: string | null;
+          id?: string;
+          organization_id?: string;
+          patient_id?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          version?: string;
+          withdrawn?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_consents_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_consents_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_consents_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_consents_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_contacts: {
+        Row: {
+          address: string | null;
+          alternate_phone: string | null;
+          city: string | null;
+          country: string;
+          created_at: string;
+          created_by: string | null;
+          email: string | null;
+          email_allowed: boolean;
+          id: string;
+          marketing_opt_in: boolean;
+          organization_id: string;
+          patient_id: string;
+          phone: string | null;
+          phone_allowed: boolean;
+          postal_code: string | null;
+          preferred_contact_method: string;
+          province: string | null;
+          reminder_preference: string | null;
+          sms_allowed: boolean;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          address?: string | null;
+          alternate_phone?: string | null;
+          city?: string | null;
+          country?: string;
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          email_allowed?: boolean;
+          id?: string;
+          marketing_opt_in?: boolean;
+          organization_id: string;
+          patient_id: string;
+          phone?: string | null;
+          phone_allowed?: boolean;
+          postal_code?: string | null;
+          preferred_contact_method?: string;
+          province?: string | null;
+          reminder_preference?: string | null;
+          sms_allowed?: boolean;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          address?: string | null;
+          alternate_phone?: string | null;
+          city?: string | null;
+          country?: string;
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          email_allowed?: boolean;
+          id?: string;
+          marketing_opt_in?: boolean;
+          organization_id?: string;
+          patient_id?: string;
+          phone?: string | null;
+          phone_allowed?: boolean;
+          postal_code?: string | null;
+          preferred_contact_method?: string;
+          province?: string | null;
+          reminder_preference?: string | null;
+          sms_allowed?: boolean;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_contacts_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_contacts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_contacts_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_contacts_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_duplicate_flags: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          match_reason: string;
+          matched_patient_id: string;
+          organization_id: string;
+          patient_id: string;
+          resolved_at: string | null;
+          resolved_by: string | null;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          match_reason: string;
+          matched_patient_id: string;
+          organization_id: string;
+          patient_id: string;
+          resolved_at?: string | null;
+          resolved_by?: string | null;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          match_reason?: string;
+          matched_patient_id?: string;
+          organization_id?: string;
+          patient_id?: string;
+          resolved_at?: string | null;
+          resolved_by?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_duplicate_flag_matched_fk';
+            columns: ['matched_patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_duplicate_flag_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_duplicate_flags_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_duplicate_flags_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_duplicate_flags_resolved_by_fkey';
+            columns: ['resolved_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_emergency_contacts: {
+        Row: {
+          address: string | null;
+          alternate_phone: string | null;
+          created_at: string;
+          created_by: string | null;
+          email: string | null;
+          id: string;
+          is_primary: boolean;
+          name: string;
+          organization_id: string;
+          patient_id: string;
+          phone: string;
+          relationship: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          address?: string | null;
+          alternate_phone?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          id?: string;
+          is_primary?: boolean;
+          name: string;
+          organization_id: string;
+          patient_id: string;
+          phone: string;
+          relationship: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          address?: string | null;
+          alternate_phone?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          id?: string;
+          is_primary?: boolean;
+          name?: string;
+          organization_id?: string;
+          patient_id?: string;
+          phone?: string;
+          relationship?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_emergency_contact_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_emergency_contacts_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_emergency_contacts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_emergency_contacts_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_identifiers: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          identifier_last4: string;
+          identifier_type: string;
+          identifier_value: string;
+          is_primary: boolean;
+          issuing_jurisdiction: string | null;
+          organization_id: string;
+          patient_id: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          identifier_last4: string;
+          identifier_type: string;
+          identifier_value: string;
+          is_primary?: boolean;
+          issuing_jurisdiction?: string | null;
+          organization_id: string;
+          patient_id: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          identifier_last4?: string;
+          identifier_type?: string;
+          identifier_value?: string;
+          is_primary?: boolean;
+          issuing_jurisdiction?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_identifiers_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_identifiers_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_identifiers_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_identifiers_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_insurance: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          insurer_name: string;
+          member_number: string | null;
+          notes: string | null;
+          organization_id: string;
+          patient_id: string;
+          policy_number: string | null;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          insurer_name: string;
+          member_number?: string | null;
+          notes?: string | null;
+          organization_id: string;
+          patient_id: string;
+          policy_number?: string | null;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          insurer_name?: string;
+          member_number?: string | null;
+          notes?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          policy_number?: string | null;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_insurance_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_insurance_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_insurance_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_insurance_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_referrals: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          organization_id: string;
+          patient_id: string;
+          referral_date: string | null;
+          referral_notes: string | null;
+          referral_source: string | null;
+          referred_by: string | null;
+          referred_by_practitioner_id: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          organization_id: string;
+          patient_id: string;
+          referral_date?: string | null;
+          referral_notes?: string | null;
+          referral_source?: string | null;
+          referred_by?: string | null;
+          referred_by_practitioner_id?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          organization_id?: string;
+          patient_id?: string;
+          referral_date?: string | null;
+          referral_notes?: string | null;
+          referral_source?: string | null;
+          referred_by?: string | null;
+          referred_by_practitioner_id?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_referral_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_referral_practitioner_fk';
+            columns: ['referred_by_practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_referrals_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_referrals_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_referrals_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_relationships: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          notes: string | null;
+          organization_id: string;
+          patient_id: string;
+          related_patient_id: string;
+          relationship_type: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          notes?: string | null;
+          organization_id: string;
+          patient_id: string;
+          related_patient_id: string;
+          relationship_type: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          notes?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          related_patient_id?: string;
+          relationship_type?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_relationship_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_relationship_related_fk';
+            columns: ['related_patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_relationships_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_relationships_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_relationships_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patients: {
+        Row: {
+          accessibility_notes: string | null;
+          archived_at: string | null;
+          archived_by: string | null;
+          biological_sex: string;
+          created_at: string;
+          created_by: string | null;
+          date_of_birth: string;
+          first_name: string;
+          gender_identity: string | null;
+          id: string;
+          interpreter_required: boolean;
+          last_name: string;
+          legal_name: string | null;
+          marital_status: string;
+          middle_name: string | null;
+          non_clinical_notes: string | null;
+          normalized_name: string;
+          occupation: string | null;
+          organization_id: string;
+          patient_number: string;
+          photo_reference: string | null;
+          preferred_language: string;
+          preferred_name: string | null;
+          pronouns: string | null;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          accessibility_notes?: string | null;
+          archived_at?: string | null;
+          archived_by?: string | null;
+          biological_sex: string;
+          created_at?: string;
+          created_by?: string | null;
+          date_of_birth: string;
+          first_name: string;
+          gender_identity?: string | null;
+          id?: string;
+          interpreter_required?: boolean;
+          last_name: string;
+          legal_name?: string | null;
+          marital_status: string;
+          middle_name?: string | null;
+          non_clinical_notes?: string | null;
+          normalized_name: string;
+          occupation?: string | null;
+          organization_id: string;
+          patient_number: string;
+          photo_reference?: string | null;
+          preferred_language: string;
+          preferred_name?: string | null;
+          pronouns?: string | null;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          accessibility_notes?: string | null;
+          archived_at?: string | null;
+          archived_by?: string | null;
+          biological_sex?: string;
+          created_at?: string;
+          created_by?: string | null;
+          date_of_birth?: string;
+          first_name?: string;
+          gender_identity?: string | null;
+          id?: string;
+          interpreter_required?: boolean;
+          last_name?: string;
+          legal_name?: string | null;
+          marital_status?: string;
+          middle_name?: string | null;
+          non_clinical_notes?: string | null;
+          normalized_name?: string;
+          occupation?: string | null;
+          organization_id?: string;
+          patient_number?: string;
+          photo_reference?: string | null;
+          preferred_language?: string;
+          preferred_name?: string | null;
+          pronouns?: string | null;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patients_archived_by_fkey';
+            columns: ['archived_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patients_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patients_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patients_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       permissions: {
         Row: {
           action: string;
@@ -2459,6 +3221,38 @@ export type Database = {
           organization_name: string;
         }[];
       };
+      add_patient_emergency_contact: {
+        Args: {
+          p_address?: string;
+          p_alternate_phone?: string;
+          p_email?: string;
+          p_is_primary?: boolean;
+          p_name: string;
+          p_patient_id: string;
+          p_phone: string;
+          p_relationship: string;
+        };
+        Returns: string;
+      };
+      add_patient_identifier: {
+        Args: {
+          p_identifier_type: string;
+          p_identifier_value: string;
+          p_is_primary?: boolean;
+          p_issuing_jurisdiction?: string;
+          p_patient_id: string;
+        };
+        Returns: string;
+      };
+      add_patient_relationship: {
+        Args: {
+          p_notes?: string;
+          p_patient_id: string;
+          p_related_patient_id: string;
+          p_relationship_type: string;
+        };
+        Returns: string;
+      };
       add_practitioner_break: {
         Args: {
           p_block_id: string;
@@ -2548,6 +3342,10 @@ export type Database = {
         Args: { p_invitation_id: string; p_reason?: string };
         Returns: boolean;
       };
+      change_patient_status: {
+        Args: { p_patient_id: string; p_reason?: string; p_status: string };
+        Returns: boolean;
+      };
       change_practitioner_status: {
         Args: {
           p_practitioner_id: string;
@@ -2569,6 +3367,35 @@ export type Database = {
           organization_display_name: string;
           organization_id: string;
           request_id: string;
+        }[];
+      };
+      create_patient: {
+        Args: {
+          p_accessibility_notes: string;
+          p_biological_sex: string;
+          p_date_of_birth: string;
+          p_email?: string;
+          p_first_name: string;
+          p_gender_identity: string;
+          p_interpreter_required: boolean;
+          p_last_name: string;
+          p_legal_name: string;
+          p_marital_status: string;
+          p_middle_name: string;
+          p_non_clinical_notes: string;
+          p_occupation: string;
+          p_organization_id: string;
+          p_patient_number: string;
+          p_phone?: string;
+          p_photo_reference: string;
+          p_preferred_language: string;
+          p_preferred_name: string;
+          p_pronouns: string;
+          p_status?: string;
+        };
+        Returns: {
+          duplicate_count: number;
+          patient_id: string;
         }[];
       };
       create_practitioner: {
@@ -2670,6 +3497,24 @@ export type Database = {
         Args: { input_name: string };
         Returns: string;
       };
+      normalize_patient_name: { Args: { value: string }; Returns: string };
+      normalize_patient_phone: { Args: { value: string }; Returns: string };
+      patient_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
+      preview_duplicate_matches: {
+        Args: {
+          p_date_of_birth: string;
+          p_email?: string;
+          p_first_name: string;
+          p_last_name: string;
+          p_middle_name: string;
+          p_organization_id: string;
+          p_phone?: string;
+        };
+        Returns: Json;
+      };
       preview_practitioner_availability: {
         Args: {
           p_end_date: string;
@@ -2767,6 +3612,87 @@ export type Database = {
           p_status?: string;
         };
         Returns: string;
+      };
+      update_patient: {
+        Args: {
+          p_accessibility_notes: string;
+          p_biological_sex: string;
+          p_date_of_birth: string;
+          p_first_name: string;
+          p_gender_identity: string;
+          p_interpreter_required: boolean;
+          p_last_name: string;
+          p_legal_name: string;
+          p_marital_status: string;
+          p_middle_name: string;
+          p_non_clinical_notes: string;
+          p_occupation: string;
+          p_patient_id: string;
+          p_photo_reference: string;
+          p_preferred_language: string;
+          p_preferred_name: string;
+          p_pronouns: string;
+        };
+        Returns: boolean;
+      };
+      update_patient_communication_preferences: {
+        Args: {
+          p_email_allowed: boolean;
+          p_marketing_opt_in: boolean;
+          p_patient_id: string;
+          p_phone_allowed: boolean;
+          p_preferred_contact_method: string;
+          p_reminder_preference: string;
+          p_sms_allowed: boolean;
+        };
+        Returns: boolean;
+      };
+      update_patient_consents: {
+        Args: { p_consents: Json; p_patient_id: string };
+        Returns: boolean;
+      };
+      update_patient_contact: {
+        Args: {
+          p_address: string;
+          p_alternate_phone: string;
+          p_city: string;
+          p_country: string;
+          p_email: string;
+          p_email_allowed: boolean;
+          p_marketing_opt_in: boolean;
+          p_patient_id: string;
+          p_phone: string;
+          p_phone_allowed: boolean;
+          p_postal_code: string;
+          p_preferred_contact_method: string;
+          p_province: string;
+          p_reminder_preference: string;
+          p_sms_allowed: boolean;
+        };
+        Returns: boolean;
+      };
+      update_patient_emergency_contact: {
+        Args: {
+          p_address?: string;
+          p_alternate_phone?: string;
+          p_contact_id: string;
+          p_email?: string;
+          p_is_primary?: boolean;
+          p_name: string;
+          p_phone: string;
+          p_relationship: string;
+        };
+        Returns: boolean;
+      };
+      update_patient_identifier: {
+        Args: {
+          p_identifier_id: string;
+          p_identifier_type: string;
+          p_identifier_value: string;
+          p_is_primary?: boolean;
+          p_issuing_jurisdiction?: string;
+        };
+        Returns: boolean;
       };
       update_practitioner_availability_schedule: {
         Args: {
