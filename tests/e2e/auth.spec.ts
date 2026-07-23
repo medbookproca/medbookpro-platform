@@ -161,6 +161,11 @@ test.describe('Authentication Routes', () => {
     await expect(page).toHaveURL(/\/sign-in\?next=/);
   });
 
+  test('services management route remains protected', async ({ page }) => {
+    await page.goto('/app/services');
+    await expect(page).toHaveURL(/\/sign-in\?next=/);
+  });
+
   test('appointment detail routes remain protected', async ({ page }) => {
     await page.goto('/app/appointments/00000000-0000-0000-0000-000000000001');
     await expect(page).toHaveURL(/\/sign-in\?next=/);

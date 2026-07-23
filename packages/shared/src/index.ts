@@ -20,3 +20,4 @@ export * from './document-schemas';
 export * from './telehealth-schemas';
 export * from './integration-schemas';
 export * from './ai-schemas';
+export * from './service-schemas';
