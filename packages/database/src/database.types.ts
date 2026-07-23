@@ -74,6 +74,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'appointment_buffers_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       appointment_recurrence_placeholders: {
@@ -118,6 +125,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointment_recurrence_placeholders_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
         ];
       };
@@ -174,6 +188,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'appointment_status_history_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       appointment_waitlist_placeholders: {
@@ -224,6 +245,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointment_waitlist_placeholders_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'appointment_waitlist_practitioner_fk';
@@ -341,6 +369,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'appointments_patient_fk';
@@ -462,6 +497,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'audit_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       billing_events: {
@@ -509,6 +551,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'billing_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
         ];
       };
@@ -569,6 +618,13 @@ export type Database = {
             isOneToOne: true;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'billing_profiles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: true;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'billing_profiles_tax_profile_fk';
@@ -658,6 +714,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'care_plans_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'care_plans_patient_fk';
             columns: ['patient_id', 'organization_id'];
             isOneToOne: false;
@@ -733,6 +796,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'clinical_attachments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'clinical_attachments_uploaded_by_fkey';
             columns: ['uploaded_by'];
             isOneToOne: false;
@@ -805,6 +875,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'clinical_diagnoses_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'clinical_diagnoses_patient_fk';
@@ -888,6 +965,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'clinical_forms_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'clinical_forms_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -960,6 +1044,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'clinical_procedures_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'clinical_procedures_patient_fk';
@@ -1036,6 +1127,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'clinics_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       credit_notes: {
@@ -1100,6 +1198,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'credit_notes_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       discount_rules: {
@@ -1156,6 +1261,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'discount_rules_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'discount_rules_updated_by_fkey';
@@ -1218,6 +1330,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'encounter_status_history_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
         ];
       };
@@ -1293,6 +1412,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'encounters_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'encounters_patient_fk';
             columns: ['patient_id', 'organization_id'];
             isOneToOne: false;
@@ -1362,6 +1488,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'invitation_location_scopes_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       invitation_role_assignments: {
@@ -1400,6 +1533,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invitation_role_assignments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'invitation_role_assignments_role_id_fkey';
@@ -1504,6 +1644,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'invitations_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'invitations_target_profile_id_fkey';
             columns: ['target_profile_id'];
             isOneToOne: false;
@@ -1563,6 +1710,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invoice_items_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
         ];
       };
@@ -1667,6 +1821,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invoices_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'invoices_patient_fk';
@@ -1789,6 +1950,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'locations_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       membership_clinic_scopes: {
@@ -1851,6 +2019,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'membership_clinic_scopes_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
         ];
       };
@@ -1918,6 +2093,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'membership_location_scopes_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       membership_roles: {
@@ -1978,6 +2160,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'membership_roles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'membership_roles_role_id_fkey';
             columns: ['role_id'];
             isOneToOne: false;
@@ -2033,6 +2222,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_deliveries_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'notification_deliveries_queue_id_fkey';
@@ -2101,6 +2297,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'notification_events_patient_fk';
@@ -2208,6 +2411,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'notification_queue_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'notification_queue_patient_fk';
             columns: ['patient_id', 'organization_id'];
             isOneToOne: false;
@@ -2295,6 +2505,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'notification_templates_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'notification_templates_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -2363,6 +2580,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'organization_holidays_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'organization_holidays_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -2424,6 +2648,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'organization_memberships_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'organization_memberships_profile_id_fkey';
@@ -2494,6 +2725,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'organization_notification_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: true;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'organization_notification_settings_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -2544,6 +2782,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'organization_onboarding_attempts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'organization_onboarding_attempts_requested_by_user_id_fkey';
@@ -2685,6 +2930,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'patient_consents_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'patient_consents_patient_fk';
             columns: ['patient_id', 'organization_id'];
             isOneToOne: false;
@@ -2786,6 +3038,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'patient_contacts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'patient_contacts_patient_fk';
             columns: ['patient_id', 'organization_id'];
             isOneToOne: false;
@@ -2866,6 +3125,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_duplicate_flags_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'patient_duplicate_flags_resolved_by_fkey';
@@ -2951,6 +3217,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'patient_emergency_contacts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'patient_emergency_contacts_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -3019,6 +3292,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_identifiers_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'patient_identifiers_patient_fk';
@@ -3093,6 +3373,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_insurance_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'patient_insurance_patient_fk';
@@ -3170,6 +3457,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_notification_preferences_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'patient_notification_preferences_patient_fk';
@@ -3260,6 +3554,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'patient_referrals_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'patient_referrals_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -3336,6 +3637,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_relationships_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'patient_relationships_updated_by_fkey';
@@ -3457,6 +3765,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'patients_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'patients_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -3514,6 +3829,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payment_allocations_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'payment_allocations_payment_fk';
@@ -3584,6 +3906,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'payments_patient_fk';
@@ -3723,6 +4052,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_availability_blocks_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_availability_blocks_template_id_fkey';
             columns: ['template_id'];
             isOneToOne: false;
@@ -3804,6 +4140,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_availability_templates_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_availability_templates_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -3880,6 +4223,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_breaks_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'practitioner_breaks_updated_by_fkey';
@@ -3980,6 +4330,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_credentials_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_credentials_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4050,6 +4407,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_languages_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'practitioner_languages_updated_by_fkey';
@@ -4139,6 +4503,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_location_assignments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_location_assignments_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4211,6 +4582,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_location_availability_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'practitioner_location_availability_practitioner_fk';
@@ -4315,6 +4693,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_public_profiles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_public_profiles_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4412,6 +4797,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_schedule_overrides_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_schedule_overrides_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4500,6 +4892,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_service_assignments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_service_assignments_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4575,6 +4974,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_service_availability_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'practitioner_service_availability_practitioner_fk';
@@ -4669,6 +5075,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioner_specialty_assignments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioner_specialty_assignments_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4737,6 +5150,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'practitioner_time_off_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'practitioner_time_off_practitioner_fk';
@@ -4830,6 +5250,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'practitioners_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'practitioners_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -4912,11 +5339,83 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'receipts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'receipts_payment_fk';
             columns: ['payment_id', 'organization_id'];
             isOneToOne: false;
             referencedRelation: 'payments';
             referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      report_saved_filters: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          filters: Json;
+          id: string;
+          name: string;
+          organization_id: string;
+          report_key: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          filters?: Json;
+          id?: string;
+          name: string;
+          organization_id: string;
+          report_key: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          filters?: Json;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          report_key?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'report_saved_filters_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'report_saved_filters_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'report_saved_filters_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'report_saved_filters_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
           },
         ];
       };
@@ -5021,6 +5520,13 @@ export type Database = {
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'roles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
         ];
       };
       services: {
@@ -5074,6 +5580,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'organizations';
             referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'services_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
           {
             foreignKeyName: 'services_updated_by_fkey';
@@ -5147,6 +5660,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'soap_notes_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'soap_notes_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -5214,6 +5734,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'specialties_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'specialties_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -5278,6 +5805,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'tax_profiles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
             foreignKeyName: 'tax_profiles_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
@@ -5288,7 +5822,312 @@ export type Database = {
       };
     };
     Views: {
-      [_ in never]: never;
+      vw_appointment_statistics: {
+        Row: {
+          activity_date: string | null;
+          appointment_count: number | null;
+          location_id: string | null;
+          organization_id: string | null;
+          practitioner_id: string | null;
+          status: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointments_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      vw_clinical_activity: {
+        Row: {
+          activity_date: string | null;
+          encounter_count: number | null;
+          organization_id: string | null;
+          practitioner_id: string | null;
+          status: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'encounters_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'encounters_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'encounters_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      vw_communication_summary: {
+        Row: {
+          activity_date: string | null;
+          channel: string | null;
+          delivery_count: number | null;
+          notification_count: number | null;
+          organization_id: string | null;
+          status: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_queue_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_queue_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      vw_dashboard_summary: {
+        Row: {
+          active_appointments: number | null;
+          active_patients: number | null;
+          clinical_encounters: number | null;
+          organization_id: string | null;
+          organization_name: string | null;
+          outstanding_invoices: number | null;
+          pending_notifications: number | null;
+          recorded_payments: number | null;
+        };
+        Insert: {
+          active_appointments?: never;
+          active_patients?: never;
+          clinical_encounters?: never;
+          organization_id?: string | null;
+          organization_name?: string | null;
+          outstanding_invoices?: never;
+          pending_notifications?: never;
+          recorded_payments?: never;
+        };
+        Update: {
+          active_appointments?: never;
+          active_patients?: never;
+          clinical_encounters?: never;
+          organization_id?: string | null;
+          organization_name?: string | null;
+          outstanding_invoices?: never;
+          pending_notifications?: never;
+          recorded_payments?: never;
+        };
+        Relationships: [];
+      };
+      vw_invoice_status: {
+        Row: {
+          balance: number | null;
+          invoice_count: number | null;
+          organization_id: string | null;
+          status: string | null;
+          total: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'invoices_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invoices_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      vw_patient_growth: {
+        Row: {
+          new_patient_count: number | null;
+          organization_id: string | null;
+          period_start: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patients_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patients_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      vw_payment_summary: {
+        Row: {
+          amount: number | null;
+          method: string | null;
+          organization_id: string | null;
+          payment_count: number | null;
+          payment_date: string | null;
+          status: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'payments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      vw_practitioner_activity: {
+        Row: {
+          activity_date: string | null;
+          appointment_count: number | null;
+          display_name: string | null;
+          encounter_count: number | null;
+          location_id: string | null;
+          organization_id: string | null;
+          practitioner_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointments_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      vw_revenue_summary: {
+        Row: {
+          balance: number | null;
+          discount: number | null;
+          invoice_count: number | null;
+          organization_id: string | null;
+          period_start: string | null;
+          subtotal: number | null;
+          tax: number | null;
+          total: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'invoices_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invoices_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      vw_staff_activity: {
+        Row: {
+          action: string | null;
+          activity_date: string | null;
+          actor_profile_id: string | null;
+          event_count: number | null;
+          organization_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'audit_events_actor_profile_id_fkey';
+            columns: ['actor_profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'audit_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'audit_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
     };
     Functions: {
       accept_staff_invitation: {
@@ -5703,6 +6542,67 @@ export type Database = {
         Returns: boolean;
       };
       generate_receipt: { Args: { p_payment_id: string }; Returns: string };
+      get_billing_summary: {
+        Args: {
+          p_from_date?: string;
+          p_organization_id: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
+      get_clinical_summary: {
+        Args: {
+          p_from_date?: string;
+          p_organization_id: string;
+          p_practitioner_id?: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
+      get_communication_summary: {
+        Args: {
+          p_from_date?: string;
+          p_organization_id: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
+      get_dashboard_summary: {
+        Args: {
+          p_from_date?: string;
+          p_location_id?: string;
+          p_organization_id: string;
+          p_practitioner_id?: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
+      get_patient_growth: {
+        Args: {
+          p_from_date?: string;
+          p_organization_id: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
+      get_practitioner_activity: {
+        Args: {
+          p_from_date?: string;
+          p_location_id?: string;
+          p_organization_id: string;
+          p_practitioner_id?: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
+      get_revenue_summary: {
+        Args: {
+          p_from_date?: string;
+          p_organization_id: string;
+          p_to_date?: string;
+        };
+        Returns: Json;
+      };
       get_staff_invitation_preview: {
         Args: { p_token: string };
         Returns: {
@@ -5826,6 +6726,19 @@ export type Database = {
         Args: { p_override_id: string };
         Returns: boolean;
       };
+      reporting_permission: {
+        Args: { required_action?: string; target_organization_id: string };
+        Returns: boolean;
+      };
+      request_report_export: {
+        Args: {
+          p_filters?: Json;
+          p_format: string;
+          p_organization_id: string;
+          p_report_key: string;
+        };
+        Returns: Json;
+      };
       resend_staff_invitation: {
         Args: { p_invitation_id: string };
         Returns: {
@@ -5835,6 +6748,16 @@ export type Database = {
         }[];
       };
       retry_notification: { Args: { p_queue_id: string }; Returns: boolean };
+      save_report_filter: {
+        Args: {
+          p_filters: Json;
+          p_id: string;
+          p_name: string;
+          p_organization_id: string;
+          p_report_key: string;
+        };
+        Returns: string;
+      };
       send_mock_notification: { Args: { p_queue_id: string }; Returns: string };
       set_practitioner_languages: {
         Args: { p_language_codes?: string[]; p_practitioner_id: string };

@@ -1,0 +1,7 @@
+import { Card } from '@medbookpro/ui';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+import { ReportNav } from '../report-nav';
+
+export default async function CommunicationReportPage() { const user = await requireAuthenticatedUser('/app/reports/communications'); const org = await getActiveOrganizationContext(user.id); if (!org) return null; const supabase = await createClient(); const { data } = await supabase.from('vw_communication_summary').select('activity_date, channel, status, notification_count, delivery_count').eq('organization_id', org.organizationId).order('activity_date', { ascending: false }).limit(100); return <main className="min-h-screen bg-slate-50 px-6 py-12 text-slate-950"><div className="mx-auto max-w-6xl"><h1 className="text-4xl font-semibold tracking-tight">Communication delivery summary</h1><ReportNav /><Card className="mt-8"><div className="space-y-3">{(data ?? []).map((row) => <p className="rounded border p-3" key={`${row.activity_date}-${row.channel}-${row.status}`}>{row.activity_date} · {row.channel} · {row.status} · notifications {row.notification_count} · deliveries {row.delivery_count}</p>)}{!data?.length && <p className="text-sm text-slate-600">No communication activity recorded.</p>}</div></Card></div></main>; }
