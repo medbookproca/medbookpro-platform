@@ -6,6 +6,7 @@ export interface OrganizationContext {
   organizationId: string;
   organizationName: string;
   locationName: string | null;
+  roleKeys: string[];
 }
 
 export async function getActiveOrganizationContext(
@@ -14,7 +15,7 @@ export async function getActiveOrganizationContext(
   const supabase = await createClient();
   const { data: membership, error: membershipError } = await supabase
     .from('organization_memberships')
-    .select('organization_id')
+    .select('id, organization_id')
     .eq('profile_id', userId)
     .eq('status', 'active')
     .order('created_at', { ascending: true })
@@ -39,9 +40,24 @@ export async function getActiveOrganizationContext(
     .limit(1)
     .maybeSingle();
 
+  const { data: assignedRoles } = await supabase
+    .from('membership_roles')
+    .select('role_id')
+    .eq('membership_id', membership.id)
+    .eq('organization_id', organization.id);
+  const roleIds = (assignedRoles ?? []).map((role) => role.role_id);
+  const { data: roles } = roleIds.length
+    ? await supabase
+        .from('roles')
+        .select('key')
+        .in('id', roleIds)
+        .eq('status', 'active')
+    : { data: [] };
+
   return {
     organizationId: organization.id,
     organizationName: organization.display_name ?? organization.name,
     locationName: location?.name ?? null,
+    roleKeys: (roles ?? []).map((role) => role.key),
   };
 }
