@@ -85,7 +85,7 @@ where r.key = 'organization.admin'
     'organizations.read', 'organizations.manage', 'clinics.read', 'clinics.create', 'clinics.manage', 'clinics.archive',
     'locations.read', 'locations.create', 'locations.manage', 'locations.archive', 'staff.read', 'staff.invite',
     'staff.manage', 'staff.suspend', 'roles.read', 'roles.manage', 'permissions.read', 'services.read', 'services.manage',
-    'reports.read', 'reports.export', 'audit.read', 'settings.read', 'settings.manage'
+    'reports.read', 'reports.export', 'audit.read', 'settings.read', 'settings.manage', 'clinical.read', 'clinical.create', 'clinical.update', 'clinical.complete', 'clinical.amend', 'clinical.archive'
   )
 on conflict do nothing;
 
@@ -94,7 +94,7 @@ select r.id, p.id
 from public.roles r
 cross join public.permissions p
 where r.key = 'clinic.admin'
-  and p.key in ('organizations.read', 'clinics.read', 'clinics.manage', 'locations.read', 'locations.create', 'locations.manage', 'locations.archive', 'staff.read', 'staff.invite', 'staff.manage', 'staff.suspend', 'roles.read', 'services.read', 'services.manage', 'reports.read', 'audit.read', 'settings.read')
+  and p.key in ('organizations.read', 'clinics.read', 'clinics.manage', 'locations.read', 'locations.create', 'locations.manage', 'locations.archive', 'staff.read', 'staff.invite', 'staff.manage', 'staff.suspend', 'roles.read', 'services.read', 'services.manage', 'reports.read', 'audit.read', 'settings.read', 'clinical.read', 'clinical.create', 'clinical.update', 'clinical.complete', 'clinical.amend', 'clinical.archive')
 on conflict do nothing;
 
 insert into public.role_permissions (role_id, permission_id)
@@ -110,7 +110,7 @@ select r.id, p.id
 from public.roles r
 cross join public.permissions p
 where r.key = 'receptionist'
-  and p.key in ('organizations.read', 'clinics.read', 'locations.read', 'staff.read', 'appointments.read', 'appointments.create', 'appointments.manage', 'appointments.cancel', 'services.read', 'communications.read', 'settings.read')
+  and p.key in ('organizations.read', 'clinics.read', 'locations.read', 'staff.read', 'appointments.read', 'appointments.create', 'appointments.manage', 'appointments.cancel', 'services.read', 'communications.read', 'settings.read', 'clinical.read', 'clinical.create', 'clinical.update')
 on conflict do nothing;
 
 insert into public.role_permissions (role_id, permission_id)
@@ -118,7 +118,7 @@ select r.id, p.id
 from public.roles r
 cross join public.permissions p
 where r.key = 'practitioner'
-  and p.key in ('organizations.read', 'clinics.read', 'locations.read', 'appointments.read', 'appointments.manage', 'patients.read', 'patients.read_demographics', 'patients.read_clinical', 'services.read')
+  and p.key in ('organizations.read', 'clinics.read', 'locations.read', 'appointments.read', 'appointments.manage', 'patients.read', 'patients.read_demographics', 'patients.read_clinical', 'services.read', 'clinical.read', 'clinical.create', 'clinical.update', 'clinical.complete', 'clinical.amend')
 on conflict do nothing;
 
 insert into public.role_permissions (role_id, permission_id)
