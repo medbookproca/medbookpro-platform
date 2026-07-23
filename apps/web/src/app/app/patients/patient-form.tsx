@@ -1,17 +1,28 @@
-import { createPatientAction, type PatientActionResult } from './actions';
+'use client';
 
-const submit = async (formData: FormData): Promise<void> => {
-  await (
-    createPatientAction as (data: FormData) => Promise<PatientActionResult>
-  )(formData);
-};
+import { useActionState } from 'react';
+import { FormAlert } from '@medbookpro/ui';
+import { PendingSubmitButton } from '@/components/pending-submit-button';
+import { createPatientAction, type PatientActionResult } from './actions';
 
 const fieldClass =
   'mt-1 block w-full rounded border border-slate-300 px-3 py-2';
 
 export function PatientForm() {
+  const [state, formAction] = useActionState<PatientActionResult, FormData>(
+    (_, formData) => createPatientAction(formData),
+    {},
+  );
+
   return (
-    <form action={submit} className="space-y-6">
+    <form action={formAction} className="space-y-6">
+      {state.error ? (
+        <FormAlert
+          type="error"
+          title="Patient could not be created"
+          message={state.error}
+        />
+      ) : null}
       <fieldset>
         <legend className="text-lg font-semibold">Identity</legend>
         <div className="mt-3 grid gap-4 sm:grid-cols-2">
@@ -148,9 +159,9 @@ export function PatientForm() {
           <option value="inactive">Inactive</option>
         </select>
       </label>
-      <button className="rounded bg-blue-700 px-4 py-2 font-medium text-white">
+      <PendingSubmitButton pendingText="Creating patient...">
         Create patient
-      </button>
+      </PendingSubmitButton>
     </form>
   );
 }

@@ -1,6 +1,10 @@
 'use client';
 
 import { createPractitionerAction } from '../actions';
+import { useActionState } from 'react';
+import { FormAlert } from '@medbookpro/ui';
+import { PendingSubmitButton } from '@/components/pending-submit-button';
+import type { PractitionerActionResult } from '../actions';
 
 export function PractitionerForm({
   locations,
@@ -11,11 +15,19 @@ export function PractitionerForm({
   specialties: Array<{ id: string; name: string }>;
   memberships: Array<{ id: string; label: string }>;
 }) {
-  const action = async (formData: FormData) => {
-    await createPractitionerAction(formData);
-  };
+  const [state, formAction] = useActionState<
+    PractitionerActionResult,
+    FormData
+  >((_, formData) => createPractitionerAction(formData), {});
   return (
-    <form action={action} className="space-y-6">
+    <form action={formAction} className="space-y-6">
+      {state.error ? (
+        <FormAlert
+          type="error"
+          title="Practitioner could not be created"
+          message={state.error}
+        />
+      ) : null}
       <div className="grid gap-4 md:grid-cols-2">
         <label className="text-sm font-medium">
           Display name
@@ -125,9 +137,9 @@ export function PractitionerForm({
           ))}
         </div>
       </fieldset>
-      <button className="rounded bg-blue-700 px-4 py-2 font-medium text-white">
+      <PendingSubmitButton pendingText="Creating practitioner...">
         Create practitioner
-      </button>
+      </PendingSubmitButton>
     </form>
   );
 }

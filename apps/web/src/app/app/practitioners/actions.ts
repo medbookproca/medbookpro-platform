@@ -19,13 +19,16 @@ import { redirect } from 'next/navigation';
 import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
+import { getSafeActionError } from '@/lib/action-errors';
 
 export type PractitionerActionResult = { error?: string; success?: string };
 
 function safeError(error: unknown) {
-  return error instanceof Error
-    ? error.message
-    : 'The practitioner request could not be completed.';
+  return getSafeActionError(
+    error,
+    'practitioner.mutation.failed',
+    'The practitioner request could not be completed.',
+  );
 }
 
 async function requireOrganization() {
@@ -66,7 +69,13 @@ export async function createPractitionerAction(
     if (error) throw error;
     practitionerId = data?.[0]?.practitioner_id;
   } catch (error) {
-    return { error: safeError(error) };
+    return {
+      error: getSafeActionError(
+        error,
+        'practitioner.create.failed',
+        'The practitioner could not be created. Review the information and try again.',
+      ),
+    };
   }
   if (!practitionerId) return { error: 'The practitioner was not created.' };
   redirect(`/app/practitioners/${practitionerId}`);
@@ -94,7 +103,13 @@ export async function updatePractitionerAction(
     revalidatePath(`/app/practitioners/${input.practitionerId}`);
     return { success: 'Practitioner profile updated.' };
   } catch (error) {
-    return { error: safeError(error) };
+    return {
+      error: getSafeActionError(
+        error,
+        'practitioner.update.failed',
+        'The practitioner profile could not be updated.',
+      ),
+    };
   }
 }
 
