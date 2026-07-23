@@ -1,0 +1,7 @@
+import { Card } from '@medbookpro/ui';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+import { admitPatientAction } from '../actions';
+
+export default async function TelehealthWaitingRoomPage() { const user = await requireAuthenticatedUser('/app/telehealth/waiting-room'); const context = await getActiveOrganizationContext(user.id); if (!context) return null; const supabase = await createClient(); const { data, error } = await supabase.from('telehealth_waiting_room').select('id,session_id,patient_id,status,patient_joined_at,admitted_at').eq('organization_id', context.organizationId).order('patient_joined_at'); if (error) throw error; return <main className="min-h-screen bg-slate-50 px-6 py-12"><div className="mx-auto max-w-4xl"><h1 className="text-4xl font-semibold">Waiting room</h1><p className="mt-3 text-slate-600">Metadata-only patient arrival and admission workflow.</p><div className="mt-8 space-y-4">{data?.map((entry) => <Card key={entry.id}><p className="font-semibold">Patient {entry.patient_id}</p><p className="text-sm text-slate-600">{entry.status} · joined {entry.patient_joined_at ?? 'not joined'}</p><form action={admitPatientAction} className="mt-3"><input type="hidden" name="sessionId" value={entry.session_id} /><button className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white" type="submit">Admit patient</button></form></Card>)}</div></div></main>; }

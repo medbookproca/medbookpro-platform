@@ -6633,6 +6633,467 @@ export type Database = {
           },
         ];
       };
+      telehealth_chat_placeholder: {
+        Row: {
+          attachments_placeholder: Json;
+          id: string;
+          messages_count: number;
+          organization_id: string;
+          session_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          attachments_placeholder?: Json;
+          id?: string;
+          messages_count?: number;
+          organization_id: string;
+          session_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          attachments_placeholder?: Json;
+          id?: string;
+          messages_count?: number;
+          organization_id?: string;
+          session_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'telehealth_chat_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_chat_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_chat_placeholder_session_id_organization_id_fkey';
+            columns: ['session_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'telehealth_sessions';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      telehealth_participants: {
+        Row: {
+          admitted: boolean;
+          created_at: string;
+          id: string;
+          joined_at: string | null;
+          left_at: string | null;
+          organization_id: string;
+          participant_type: string;
+          patient_id: string | null;
+          practitioner_id: string | null;
+          session_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          admitted?: boolean;
+          created_at?: string;
+          id?: string;
+          joined_at?: string | null;
+          left_at?: string | null;
+          organization_id: string;
+          participant_type: string;
+          patient_id?: string | null;
+          practitioner_id?: string | null;
+          session_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          admitted?: boolean;
+          created_at?: string;
+          id?: string;
+          joined_at?: string | null;
+          left_at?: string | null;
+          organization_id?: string;
+          participant_type?: string;
+          patient_id?: string | null;
+          practitioner_id?: string | null;
+          session_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'telehealth_participants_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_participants_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_participants_patient_id_organization_id_fkey';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_participants_practitioner_id_organization_id_fkey';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_participants_session_id_organization_id_fkey';
+            columns: ['session_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'telehealth_sessions';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      telehealth_provider_settings: {
+        Row: {
+          configuration_placeholder: Json;
+          created_at: string;
+          created_by: string | null;
+          display_name: string | null;
+          enabled: boolean;
+          id: string;
+          organization_id: string;
+          provider: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          configuration_placeholder?: Json;
+          created_at?: string;
+          created_by?: string | null;
+          display_name?: string | null;
+          enabled?: boolean;
+          id?: string;
+          organization_id: string;
+          provider: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          configuration_placeholder?: Json;
+          created_at?: string;
+          created_by?: string | null;
+          display_name?: string | null;
+          enabled?: boolean;
+          id?: string;
+          organization_id?: string;
+          provider?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'telehealth_provider_settings_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_provider_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_provider_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_provider_settings_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      telehealth_session_events: {
+        Row: {
+          actor_patient_id: string | null;
+          actor_profile_id: string | null;
+          event_type: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+          session_id: string;
+        };
+        Insert: {
+          actor_patient_id?: string | null;
+          actor_profile_id?: string | null;
+          event_type: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+          session_id: string;
+        };
+        Update: {
+          actor_patient_id?: string | null;
+          actor_profile_id?: string | null;
+          event_type?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+          session_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'telehealth_session_events_actor_patient_id_organization_id_fkey';
+            columns: ['actor_patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_session_events_actor_profile_id_fkey';
+            columns: ['actor_profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_session_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_session_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_session_events_session_id_organization_id_fkey';
+            columns: ['session_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'telehealth_sessions';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      telehealth_sessions: {
+        Row: {
+          actual_end: string | null;
+          actual_start: string | null;
+          appointment_id: string | null;
+          created_at: string;
+          created_by: string | null;
+          host_url_placeholder: string | null;
+          id: string;
+          location_id: string | null;
+          meeting_identifier_placeholder: string | null;
+          meeting_url_placeholder: string | null;
+          organization_id: string;
+          patient_id: string;
+          practitioner_id: string;
+          provider_placeholder: string | null;
+          recording_placeholder: string | null;
+          scheduled_end: string;
+          scheduled_start: string;
+          status: string;
+          transcript_placeholder: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          actual_end?: string | null;
+          actual_start?: string | null;
+          appointment_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          host_url_placeholder?: string | null;
+          id?: string;
+          location_id?: string | null;
+          meeting_identifier_placeholder?: string | null;
+          meeting_url_placeholder?: string | null;
+          organization_id: string;
+          patient_id: string;
+          practitioner_id: string;
+          provider_placeholder?: string | null;
+          recording_placeholder?: string | null;
+          scheduled_end: string;
+          scheduled_start: string;
+          status?: string;
+          transcript_placeholder?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          actual_end?: string | null;
+          actual_start?: string | null;
+          appointment_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          host_url_placeholder?: string | null;
+          id?: string;
+          location_id?: string | null;
+          meeting_identifier_placeholder?: string | null;
+          meeting_url_placeholder?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          practitioner_id?: string;
+          provider_placeholder?: string | null;
+          recording_placeholder?: string | null;
+          scheduled_end?: string;
+          scheduled_start?: string;
+          status?: string;
+          transcript_placeholder?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'telehealth_sessions_appointment_id_organization_id_fkey';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_location_id_organization_id_fkey';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_patient_id_organization_id_fkey';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_practitioner_id_organization_id_fkey';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_sessions_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      telehealth_waiting_room: {
+        Row: {
+          admitted_at: string | null;
+          id: string;
+          left_at: string | null;
+          metadata: Json;
+          organization_id: string;
+          patient_id: string;
+          patient_joined_at: string | null;
+          provider_joined_at: string | null;
+          session_id: string;
+          status: string;
+        };
+        Insert: {
+          admitted_at?: string | null;
+          id?: string;
+          left_at?: string | null;
+          metadata?: Json;
+          organization_id: string;
+          patient_id: string;
+          patient_joined_at?: string | null;
+          provider_joined_at?: string | null;
+          session_id: string;
+          status?: string;
+        };
+        Update: {
+          admitted_at?: string | null;
+          id?: string;
+          left_at?: string | null;
+          metadata?: Json;
+          organization_id?: string;
+          patient_id?: string;
+          patient_joined_at?: string | null;
+          provider_joined_at?: string | null;
+          session_id?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'telehealth_waiting_room_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'telehealth_waiting_room_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_waiting_room_patient_id_organization_id_fkey';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'telehealth_waiting_room_session_id_organization_id_fkey';
+            columns: ['session_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'telehealth_sessions';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
     };
     Views: {
       vw_appointment_statistics: {
@@ -7044,6 +7505,7 @@ export type Database = {
         };
         Returns: string;
       };
+      admit_patient: { Args: { p_session_id: string }; Returns: boolean };
       allocate_payment: {
         Args: { p_amount: number; p_invoice_id: string; p_payment_id: string };
         Returns: boolean;
@@ -7144,6 +7606,10 @@ export type Database = {
       };
       cancel_request: {
         Args: { p_appointment_id: string; p_reason?: string };
+        Returns: boolean;
+      };
+      cancel_session: {
+        Args: { p_reason?: string; p_session_id: string };
         Returns: boolean;
       };
       cancel_staff_invitation: {
@@ -7397,6 +7863,19 @@ export type Database = {
           organization_name: string;
         }[];
       };
+      create_telehealth_session: {
+        Args: {
+          p_appointment_id: string;
+          p_location_id: string;
+          p_organization_id: string;
+          p_patient_id: string;
+          p_practitioner_id: string;
+          p_provider_placeholder?: string;
+          p_scheduled_end: string;
+          p_scheduled_start: string;
+        };
+        Returns: string;
+      };
       current_profile_id: { Args: never; Returns: string };
       documents_permission: {
         Args: { required_action: string; target_organization_id: string };
@@ -7406,6 +7885,7 @@ export type Database = {
         Args: { from_value: string; to_value: string };
         Returns: boolean;
       };
+      end_session: { Args: { p_session_id: string }; Returns: boolean };
       generate_receipt: { Args: { p_payment_id: string }; Returns: string };
       get_billing_summary: {
         Args: {
@@ -7489,6 +7969,7 @@ export type Database = {
           role_names: string[];
         }[];
       };
+      get_telehealth_session: { Args: { p_session_id: string }; Returns: Json };
       has_active_membership: {
         Args: { target_organization_id: string };
         Returns: boolean;
@@ -7514,6 +7995,7 @@ export type Database = {
         Returns: boolean;
       };
       issue_invoice: { Args: { p_invoice_id: string }; Returns: boolean };
+      join_waiting_room: { Args: { p_session_id: string }; Returns: boolean };
       link_practitioner_membership: {
         Args: { p_membership_id: string; p_practitioner_id: string };
         Returns: boolean;
@@ -7523,6 +8005,10 @@ export type Database = {
         Returns: Json;
       };
       list_patient_documents: { Args: { p_patient_id: string }; Returns: Json };
+      list_upcoming_sessions: {
+        Args: { p_from?: string; p_to?: string };
+        Returns: Json;
+      };
       mark_no_show: {
         Args: { p_appointment_id: string; p_reason?: string };
         Returns: string;
@@ -7614,6 +8100,10 @@ export type Database = {
           p_received_at?: string;
           p_reference: string;
         };
+        Returns: string;
+      };
+      record_session_event: {
+        Args: { p_event_type: string; p_metadata?: Json; p_session_id: string };
         Returns: string;
       };
       remove_practitioner_availability_schedule: {
@@ -7728,6 +8218,11 @@ export type Database = {
       start_appointment: {
         Args: { p_appointment_id: string };
         Returns: string;
+      };
+      start_session: { Args: { p_session_id: string }; Returns: boolean };
+      telehealth_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
       };
       unlink_practitioner_membership: {
         Args: { p_practitioner_id: string };
