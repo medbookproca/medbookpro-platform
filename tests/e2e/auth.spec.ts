@@ -155,4 +155,14 @@ test.describe('Authentication Routes', () => {
     await page.goto('/app/patients/00000000-0000-0000-0000-000000000001');
     await expect(page).toHaveURL(/\/sign-in\?next=/);
   });
+
+  test('appointment management routes remain protected', async ({ page }) => {
+    await page.goto('/app/appointments');
+    await expect(page).toHaveURL(/\/sign-in\?next=/);
+  });
+
+  test('appointment detail routes remain protected', async ({ page }) => {
+    await page.goto('/app/appointments/00000000-0000-0000-0000-000000000001');
+    await expect(page).toHaveURL(/\/sign-in\?next=/);
+  });
 });

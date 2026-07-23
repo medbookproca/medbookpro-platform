@@ -34,6 +34,344 @@ export type Database = {
   };
   public: {
     Tables: {
+      appointment_buffers: {
+        Row: {
+          appointment_id: string;
+          buffer_kind: string;
+          created_at: string;
+          id: string;
+          minutes: number;
+          organization_id: string;
+        };
+        Insert: {
+          appointment_id: string;
+          buffer_kind: string;
+          created_at?: string;
+          id?: string;
+          minutes: number;
+          organization_id: string;
+        };
+        Update: {
+          appointment_id?: string;
+          buffer_kind?: string;
+          created_at?: string;
+          id?: string;
+          minutes?: number;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointment_buffers_appointment_fk';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointment_buffers_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      appointment_recurrence_placeholders: {
+        Row: {
+          appointment_id: string;
+          created_at: string;
+          id: string;
+          organization_id: string;
+          recurrence_rule: string;
+          recurrence_timezone: string;
+          status: string;
+        };
+        Insert: {
+          appointment_id: string;
+          created_at?: string;
+          id?: string;
+          organization_id: string;
+          recurrence_rule: string;
+          recurrence_timezone: string;
+          status?: string;
+        };
+        Update: {
+          appointment_id?: string;
+          created_at?: string;
+          id?: string;
+          organization_id?: string;
+          recurrence_rule?: string;
+          recurrence_timezone?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointment_recurrence_appointment_fk';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointment_recurrence_placeholders_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      appointment_status_history: {
+        Row: {
+          appointment_id: string;
+          changed_by: string | null;
+          created_at: string;
+          from_status: string | null;
+          id: string;
+          organization_id: string;
+          reason: string | null;
+          to_status: string;
+        };
+        Insert: {
+          appointment_id: string;
+          changed_by?: string | null;
+          created_at?: string;
+          from_status?: string | null;
+          id?: string;
+          organization_id: string;
+          reason?: string | null;
+          to_status: string;
+        };
+        Update: {
+          appointment_id?: string;
+          changed_by?: string | null;
+          created_at?: string;
+          from_status?: string | null;
+          id?: string;
+          organization_id?: string;
+          reason?: string | null;
+          to_status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointment_status_history_appointment_fk';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointment_status_history_changed_by_fkey';
+            columns: ['changed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointment_status_history_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      appointment_waitlist_placeholders: {
+        Row: {
+          created_at: string;
+          id: string;
+          organization_id: string;
+          patient_id: string | null;
+          practitioner_id: string | null;
+          preferred_end: string | null;
+          preferred_start: string | null;
+          service_id: string | null;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          organization_id: string;
+          patient_id?: string | null;
+          practitioner_id?: string | null;
+          preferred_end?: string | null;
+          preferred_start?: string | null;
+          service_id?: string | null;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          organization_id?: string;
+          patient_id?: string | null;
+          practitioner_id?: string | null;
+          preferred_end?: string | null;
+          preferred_start?: string | null;
+          service_id?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointment_waitlist_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointment_waitlist_placeholders_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointment_waitlist_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointment_waitlist_service_fk';
+            columns: ['service_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'services';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      appointments: {
+        Row: {
+          actual_end: string | null;
+          actual_start: string | null;
+          appointment_type: string;
+          cancellation_reason: string | null;
+          completed_at: string | null;
+          created_at: string;
+          created_by: string | null;
+          delay_minutes: number | null;
+          duration_minutes: number;
+          id: string;
+          location_id: string;
+          notes: string | null;
+          organization_id: string;
+          patient_id: string;
+          post_buffer_minutes: number;
+          practitioner_id: string;
+          pre_buffer_minutes: number;
+          scheduled_end: string;
+          scheduled_start: string;
+          service_id: string;
+          status: string;
+          timezone: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          actual_end?: string | null;
+          actual_start?: string | null;
+          appointment_type?: string;
+          cancellation_reason?: string | null;
+          completed_at?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          delay_minutes?: number | null;
+          duration_minutes: number;
+          id?: string;
+          location_id: string;
+          notes?: string | null;
+          organization_id: string;
+          patient_id: string;
+          post_buffer_minutes?: number;
+          practitioner_id: string;
+          pre_buffer_minutes?: number;
+          scheduled_end: string;
+          scheduled_start: string;
+          service_id: string;
+          status?: string;
+          timezone: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          actual_end?: string | null;
+          actual_start?: string | null;
+          appointment_type?: string;
+          cancellation_reason?: string | null;
+          completed_at?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          delay_minutes?: number | null;
+          duration_minutes?: number;
+          id?: string;
+          location_id?: string;
+          notes?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          post_buffer_minutes?: number;
+          practitioner_id?: string;
+          pre_buffer_minutes?: number;
+          scheduled_end?: string;
+          scheduled_start?: string;
+          service_id?: string;
+          status?: string;
+          timezone?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'appointments_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointments_location_fk';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'appointments_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_practitioner_fk';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_service_fk';
+            columns: ['service_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'services';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'appointments_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       audit_events: {
         Row: {
           action: string;
@@ -3330,9 +3668,27 @@ export type Database = {
         };
         Returns: Json;
       };
+      appointment_conflict_window: {
+        Args: {
+          p_appointment: Database['public']['Tables']['appointments']['Row'];
+        };
+        Returns: unknown;
+      };
+      appointment_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
+      appointment_transition_allowed: {
+        Args: { from_value: string; to_value: string };
+        Returns: boolean;
+      };
       availability_permission: {
         Args: { required_action: string; target_organization_id: string };
         Returns: boolean;
+      };
+      cancel_appointment: {
+        Args: { p_appointment_id: string; p_reason?: string };
+        Returns: string;
       };
       cancel_practitioner_time_off: {
         Args: { p_time_off_id: string };
@@ -3341,6 +3697,14 @@ export type Database = {
       cancel_staff_invitation: {
         Args: { p_invitation_id: string; p_reason?: string };
         Returns: boolean;
+      };
+      change_appointment_status: {
+        Args: {
+          p_appointment_id: string;
+          p_reason?: string;
+          p_to_status: string;
+        };
+        Returns: string;
       };
       change_patient_status: {
         Args: { p_patient_id: string; p_reason?: string; p_status: string };
@@ -3353,6 +3717,36 @@ export type Database = {
           p_status: string;
         };
         Returns: boolean;
+      };
+      check_in_patient: { Args: { p_appointment_id: string }; Returns: string };
+      complete_appointment: {
+        Args: { p_appointment_id: string };
+        Returns: string;
+      };
+      confirm_appointment: {
+        Args: { p_appointment_id: string };
+        Returns: string;
+      };
+      create_appointment: {
+        Args: {
+          p_appointment_type: string;
+          p_duration_minutes: number;
+          p_location_id: string;
+          p_notes?: string;
+          p_organization_id: string;
+          p_patient_id: string;
+          p_post_buffer_minutes?: number;
+          p_practitioner_id: string;
+          p_pre_buffer_minutes?: number;
+          p_scheduled_start: string;
+          p_service_id: string;
+          p_status?: string;
+          p_timezone: string;
+        };
+        Returns: {
+          appointment_id: string;
+          conflict_count: number;
+        }[];
       };
       create_organization_with_first_location: {
         Args: {
@@ -3493,6 +3887,10 @@ export type Database = {
         Args: { p_membership_id: string; p_practitioner_id: string };
         Returns: boolean;
       };
+      mark_no_show: {
+        Args: { p_appointment_id: string; p_reason?: string };
+        Returns: string;
+      };
       normalize_organization_slug: {
         Args: { input_name: string };
         Returns: string;
@@ -3502,6 +3900,27 @@ export type Database = {
       patient_permission: {
         Args: { required_action: string; target_organization_id: string };
         Returns: boolean;
+      };
+      preview_conflicts: {
+        Args: {
+          p_appointment_type: string;
+          p_duration_minutes: number;
+          p_location_id: string;
+          p_organization_id: string;
+          p_patient_id: string;
+          p_post_buffer_minutes?: number;
+          p_practitioner_id: string;
+          p_pre_buffer_minutes?: number;
+          p_scheduled_start: string;
+          p_service_id: string;
+          p_timezone: string;
+        };
+        Returns: {
+          appointment_id: string;
+          conflict_end: string;
+          conflict_start: string;
+          conflict_type: string;
+        }[];
       };
       preview_duplicate_matches: {
         Args: {
@@ -3585,9 +4004,28 @@ export type Database = {
         Args: { p_practitioner_id: string; p_specialty_ids?: string[] };
         Returns: boolean;
       };
+      start_appointment: {
+        Args: { p_appointment_id: string };
+        Returns: string;
+      };
       unlink_practitioner_membership: {
         Args: { p_practitioner_id: string };
         Returns: boolean;
+      };
+      update_appointment: {
+        Args: {
+          p_appointment_id: string;
+          p_appointment_type: string;
+          p_duration_minutes: number;
+          p_location_id: string;
+          p_notes?: string;
+          p_post_buffer_minutes?: number;
+          p_pre_buffer_minutes?: number;
+          p_scheduled_start: string;
+          p_service_id: string;
+          p_timezone: string;
+        };
+        Returns: string;
       };
       update_membership_roles_and_access: {
         Args: {
@@ -3744,6 +4182,23 @@ export type Database = {
           p_visibility_status?: string;
         };
         Returns: boolean;
+      };
+      validate_appointment_booking: {
+        Args: {
+          p_appointment_type: string;
+          p_duration_minutes: number;
+          p_exclude_id?: string;
+          p_location_id: string;
+          p_organization_id: string;
+          p_patient_id: string;
+          p_post_buffer_minutes: number;
+          p_practitioner_id: string;
+          p_pre_buffer_minutes: number;
+          p_scheduled_start: string;
+          p_service_id: string;
+          p_timezone: string;
+        };
+        Returns: undefined;
       };
       verify_practitioner_credential: {
         Args: {
