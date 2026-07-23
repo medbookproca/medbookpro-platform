@@ -1564,6 +1564,323 @@ export type Database = {
           },
         ];
       };
+      notification_deliveries: {
+        Row: {
+          channel: string;
+          created_at: string;
+          delivered_at: string | null;
+          failure_reason: string | null;
+          id: string;
+          organization_id: string;
+          provider: string;
+          provider_message_id: string | null;
+          queue_id: string;
+          response_metadata: Json;
+          status: string;
+        };
+        Insert: {
+          channel: string;
+          created_at?: string;
+          delivered_at?: string | null;
+          failure_reason?: string | null;
+          id?: string;
+          organization_id: string;
+          provider?: string;
+          provider_message_id?: string | null;
+          queue_id: string;
+          response_metadata?: Json;
+          status: string;
+        };
+        Update: {
+          channel?: string;
+          created_at?: string;
+          delivered_at?: string | null;
+          failure_reason?: string | null;
+          id?: string;
+          organization_id?: string;
+          provider?: string;
+          provider_message_id?: string | null;
+          queue_id?: string;
+          response_metadata?: Json;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_deliveries_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_deliveries_queue_id_fkey';
+            columns: ['queue_id'];
+            isOneToOne: false;
+            referencedRelation: 'notification_queue';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      notification_events: {
+        Row: {
+          appointment_id: string | null;
+          channel: string | null;
+          created_by: string | null;
+          event_type: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+          patient_id: string | null;
+          queue_id: string | null;
+        };
+        Insert: {
+          appointment_id?: string | null;
+          channel?: string | null;
+          created_by?: string | null;
+          event_type: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+          patient_id?: string | null;
+          queue_id?: string | null;
+        };
+        Update: {
+          appointment_id?: string | null;
+          channel?: string | null;
+          created_by?: string | null;
+          event_type?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+          patient_id?: string | null;
+          queue_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_events_appointment_fk';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'notification_events_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_events_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'notification_events_queue_fk';
+            columns: ['queue_id'];
+            isOneToOne: false;
+            referencedRelation: 'notification_queue';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      notification_queue: {
+        Row: {
+          appointment_id: string | null;
+          attempt_count: number;
+          body: string;
+          channel: string;
+          created_at: string;
+          created_by: string | null;
+          failure_reason: string | null;
+          id: string;
+          organization_id: string;
+          patient_id: string;
+          payload: Json;
+          priority: number;
+          provider: string;
+          recipient_address: string;
+          scheduled_send_at: string;
+          status: string;
+          subject: string | null;
+          template_id: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          appointment_id?: string | null;
+          attempt_count?: number;
+          body: string;
+          channel: string;
+          created_at?: string;
+          created_by?: string | null;
+          failure_reason?: string | null;
+          id?: string;
+          organization_id: string;
+          patient_id: string;
+          payload?: Json;
+          priority?: number;
+          provider?: string;
+          recipient_address: string;
+          scheduled_send_at?: string;
+          status?: string;
+          subject?: string | null;
+          template_id?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          appointment_id?: string | null;
+          attempt_count?: number;
+          body?: string;
+          channel?: string;
+          created_at?: string;
+          created_by?: string | null;
+          failure_reason?: string | null;
+          id?: string;
+          organization_id?: string;
+          patient_id?: string;
+          payload?: Json;
+          priority?: number;
+          provider?: string;
+          recipient_address?: string;
+          scheduled_send_at?: string;
+          status?: string;
+          subject?: string | null;
+          template_id?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_queue_appointment_fk';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'notification_queue_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_queue_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_queue_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'notification_queue_template_fk';
+            columns: ['template_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'notification_templates';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'notification_queue_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      notification_templates: {
+        Row: {
+          body: string;
+          channel: string;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          language: string;
+          organization_id: string;
+          status: string;
+          subject: string | null;
+          template_key: string;
+          updated_at: string;
+          updated_by: string | null;
+          variables: Json;
+          version: number;
+        };
+        Insert: {
+          body: string;
+          channel: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          language?: string;
+          organization_id: string;
+          status?: string;
+          subject?: string | null;
+          template_key: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          variables?: Json;
+          version: number;
+        };
+        Update: {
+          body?: string;
+          channel?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          language?: string;
+          organization_id?: string;
+          status?: string;
+          subject?: string | null;
+          template_key?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          variables?: Json;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'notification_templates_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_templates_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'notification_templates_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       organization_holidays: {
         Row: {
           created_at: string;
@@ -1696,6 +2013,67 @@ export type Database = {
           {
             foreignKeyName: 'organization_memberships_removed_by_fkey';
             columns: ['removed_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      organization_notification_settings: {
+        Row: {
+          branding_placeholder: Json;
+          created_at: string;
+          created_by: string | null;
+          default_reminder_minutes: number;
+          default_sender: string | null;
+          id: string;
+          organization_id: string;
+          timezone: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          branding_placeholder?: Json;
+          created_at?: string;
+          created_by?: string | null;
+          default_reminder_minutes?: number;
+          default_sender?: string | null;
+          id?: string;
+          organization_id: string;
+          timezone?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          branding_placeholder?: Json;
+          created_at?: string;
+          created_by?: string | null;
+          default_reminder_minutes?: number;
+          default_sender?: string | null;
+          id?: string;
+          organization_id?: string;
+          timezone?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'organization_notification_settings_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'organization_notification_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: true;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'organization_notification_settings_updated_by_fkey';
+            columns: ['updated_by'];
             isOneToOne: false;
             referencedRelation: 'profiles';
             referencedColumns: ['id'];
@@ -2303,6 +2681,83 @@ export type Database = {
           },
           {
             foreignKeyName: 'patient_insurance_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      patient_notification_preferences: {
+        Row: {
+          appointment_reminders: boolean;
+          created_at: string;
+          created_by: string | null;
+          email_enabled: boolean;
+          id: string;
+          marketing_opt_in: boolean;
+          organization_id: string;
+          patient_id: string;
+          preferred_language: string;
+          quiet_hours: Json;
+          sms_enabled: boolean;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          appointment_reminders?: boolean;
+          created_at?: string;
+          created_by?: string | null;
+          email_enabled?: boolean;
+          id?: string;
+          marketing_opt_in?: boolean;
+          organization_id: string;
+          patient_id: string;
+          preferred_language?: string;
+          quiet_hours?: Json;
+          sms_enabled?: boolean;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          appointment_reminders?: boolean;
+          created_at?: string;
+          created_by?: string | null;
+          email_enabled?: boolean;
+          id?: string;
+          marketing_opt_in?: boolean;
+          organization_id?: string;
+          patient_id?: string;
+          preferred_language?: string;
+          quiet_hours?: Json;
+          sms_enabled?: boolean;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'patient_notification_preferences_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_notification_preferences_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'patient_notification_preferences_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'patient_notification_preferences_updated_by_fkey';
             columns: ['updated_by'];
             isOneToOne: false;
             referencedRelation: 'profiles';
@@ -4326,6 +4781,10 @@ export type Database = {
         Args: { p_appointment_id: string; p_reason?: string };
         Returns: string;
       };
+      cancel_notification: {
+        Args: { p_queue_id: string; p_reason?: string };
+        Returns: boolean;
+      };
       cancel_practitioner_time_off: {
         Args: { p_time_off_id: string };
         Returns: boolean;
@@ -4364,6 +4823,10 @@ export type Database = {
       };
       check_in_patient: { Args: { p_appointment_id: string }; Returns: string };
       clinical_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
+      communication_permission: {
         Args: { required_action: string; target_organization_id: string };
         Returns: boolean;
       };
@@ -4409,6 +4872,20 @@ export type Database = {
         Returns: {
           encounter_id: string;
         }[];
+      };
+      create_notification: {
+        Args: {
+          p_appointment_id: string;
+          p_body: string;
+          p_channel: string;
+          p_organization_id: string;
+          p_patient_id: string;
+          p_payload?: Json;
+          p_priority?: number;
+          p_scheduled_send_at?: string;
+          p_subject: string;
+        };
+        Returns: string;
       };
       create_organization_with_first_location: {
         Args: {
@@ -4610,6 +5087,7 @@ export type Database = {
         };
         Returns: Json;
       };
+      queue_notification: { Args: { p_queue_id: string }; Returns: boolean };
       remove_practitioner_availability_schedule: {
         Args: { p_template_id: string };
         Returns: boolean;
@@ -4630,6 +5108,8 @@ export type Database = {
           invitation_id: string;
         }[];
       };
+      retry_notification: { Args: { p_queue_id: string }; Returns: boolean };
+      send_mock_notification: { Args: { p_queue_id: string }; Returns: string };
       set_practitioner_languages: {
         Args: { p_language_codes?: string[]; p_practitioner_id: string };
         Returns: boolean;
@@ -4747,6 +5227,15 @@ export type Database = {
       };
       update_membership_status: {
         Args: { p_membership_id: string; p_reason?: string; p_status: string };
+        Returns: boolean;
+      };
+      update_notification_settings: {
+        Args: {
+          p_branding_placeholder: Json;
+          p_default_reminder_minutes: number;
+          p_default_sender: string;
+          p_timezone: string;
+        };
         Returns: boolean;
       };
       update_organization_holiday: {
@@ -4892,6 +5381,18 @@ export type Database = {
         };
         Returns: boolean;
       };
+      update_preferences: {
+        Args: {
+          p_appointment_reminders: boolean;
+          p_email_enabled: boolean;
+          p_marketing_opt_in: boolean;
+          p_patient_id: string;
+          p_preferred_language: string;
+          p_quiet_hours?: Json;
+          p_sms_enabled: boolean;
+        };
+        Returns: boolean;
+      };
       update_procedures: {
         Args: {
           p_code: string;
@@ -4910,6 +5411,20 @@ export type Database = {
           p_objective: string;
           p_plan: string;
           p_subjective: string;
+        };
+        Returns: string;
+      };
+      update_templates: {
+        Args: {
+          p_body: string;
+          p_channel: string;
+          p_language: string;
+          p_organization_id: string;
+          p_status?: string;
+          p_subject: string;
+          p_template_id: string;
+          p_template_key: string;
+          p_variables: Json;
         };
         Returns: string;
       };
