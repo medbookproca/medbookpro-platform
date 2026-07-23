@@ -1,5 +1,6 @@
 {
   "name": "medbookpro-platform",
+  "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@11.9.0",
   "engines": {
@@ -13,6 +14,8 @@
     "typecheck": "turbo typecheck",
     "test": "turbo test",
     "test:e2e": "playwright test",
+    "release:metadata": "node scripts/release-metadata.mjs",
+    "release:check": "node scripts/release-metadata.mjs --check",
     "format": "prettier --write .",
     "clean": "turbo clean && rm -rf node_modules"
   },
