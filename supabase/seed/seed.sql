@@ -118,7 +118,7 @@ select r.id, p.id
 from public.roles r
 cross join public.permissions p
 where r.key = 'practitioner'
-  and p.key in ('organizations.read', 'clinics.read', 'locations.read', 'appointments.read', 'appointments.manage', 'patients.read_demographics', 'patients.read_clinical', 'services.read')
+  and p.key in ('organizations.read', 'clinics.read', 'locations.read', 'appointments.read', 'appointments.manage', 'patients.read', 'patients.read_demographics', 'patients.read_clinical', 'services.read')
 on conflict do nothing;
 
 insert into public.role_permissions (role_id, permission_id)

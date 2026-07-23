@@ -1,10 +1,10 @@
 # MedBookPro
 
-MedBookPro is a Canadian-first, multi-tenant healthcare clinic operating system. This repository contains the application foundation, Supabase Auth boundary, organization onboarding, practitioner foundation, and the availability-only engine; it does not implement patient records, appointments, booking, billing, or production infrastructure.
+MedBookPro is a Canadian-first, multi-tenant healthcare clinic operating system. This repository contains the application foundation, Supabase Auth boundary, organization onboarding, practitioner/availability foundations, and the patient foundation; it does not implement appointments, clinical documentation, billing, or production infrastructure.
 
 ## Status
 
-Initial platform workspace with email/password Supabase Auth integration, cookie sessions, callback handling, organization/first-location onboarding, practitioner profiles, and a protected availability-only route. Hosted Supabase deployment remains intentionally excluded.
+Initial platform workspace with email/password Supabase Auth integration, cookie sessions, callback handling, organization/first-location onboarding, protected practitioner/availability routes, and protected patient identity routes. Hosted Supabase deployment remains intentionally excluded.
 
 ## Prerequisites
 
@@ -39,4 +39,4 @@ Do not use production data in local development. Auth requires a configured Supa
 
 ## Contribution
 
-Read [local setup](docs/development/local-setup.md), [environment variables](docs/development/environment-variables.md), [testing](docs/development/testing.md), [workspace structure](docs/architecture/workspace-structure.md), [staff invitations and memberships](docs/development/staff-invitations-memberships.md), [practitioner foundation](docs/development/practitioner-foundation.md), [practitioner availability engine](docs/development/practitioner-availability-engine.md), and the [Master Product Requirements Document](docs/product/medbookpro-master-prd.md) before contributing.
+Read [local setup](docs/development/local-setup.md), [environment variables](docs/development/environment-variables.md), [testing](docs/development/testing.md), [workspace structure](docs/architecture/workspace-structure.md), [staff invitations and memberships](docs/development/staff-invitations-memberships.md), [practitioner foundation](docs/development/practitioner-foundation.md), [practitioner availability engine](docs/development/practitioner-availability-engine.md), [patient foundation](docs/development/patient-foundation.md), and the [Master Product Requirements Document](docs/product/medbookpro-master-prd.md) before contributing.
