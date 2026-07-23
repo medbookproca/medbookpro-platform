@@ -1,0 +1,32 @@
+begin;
+
+create extension if not exists pgtap;
+
+select plan(25);
+select has_table('ai_providers','public');
+select has_table('ai_models','public');
+select has_table('ai_prompts','public');
+select has_table('ai_prompt_versions','public');
+select has_table('ai_requests','public');
+select has_table('ai_responses','public');
+select has_table('ai_feedback','public');
+select has_table('ai_usage_metrics','public');
+select has_table('ai_provider_settings','public');
+select has_table('ai_events','public');
+select has_function('public','create_prompt',array['text','text','text','text','jsonb']);
+select has_function('public','publish_prompt',array['uuid','uuid']);
+select has_function('public','create_ai_request',array['uuid','uuid','uuid','text','text','text']);
+select has_function('public','record_ai_response',array['uuid','text','integer','integer','integer','numeric','numeric','boolean']);
+select has_function('public','submit_feedback',array['uuid','uuid','integer','text']);
+select has_function('public','list_prompt_versions',array['uuid']);
+select has_function('public','get_usage_metrics',array['date','date']);
+select has_function('public','update_ai_provider_settings',array['text','boolean']);
+select ok((select relrowsecurity from pg_class where oid='public.ai_requests'::regclass),'AI requests enable RLS');
+select ok(exists(select 1 from pg_policies where schemaname='public' and tablename='ai_requests' and policyname='ai_requests_insert_denied'),'direct AI request inserts denied');
+select ok(exists(select 1 from pg_policies where schemaname='public' and tablename='ai_responses' and policyname='ai_responses_update_denied'),'direct AI response updates denied');
+select is((select count(*)::integer from public.ai_providers),7,'all approved provider placeholders are catalogued');
+select has_column('public','ai_requests','human_review_required','requests require human review');
+select has_column('public','ai_requests','clinical_disclaimer','requests carry a clinical disclaimer');
+select has_column('public','ai_events','organization_id','AI events are organization-scoped');
+select * from finish();
+rollback;

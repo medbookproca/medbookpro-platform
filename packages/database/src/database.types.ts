@@ -34,6 +34,708 @@ export type Database = {
   };
   public: {
     Tables: {
+      ai_events: {
+        Row: {
+          actor_profile_id: string | null;
+          event_type: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+          prompt_id: string | null;
+          request_id: string | null;
+        };
+        Insert: {
+          actor_profile_id?: string | null;
+          event_type: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+          prompt_id?: string | null;
+          request_id?: string | null;
+        };
+        Update: {
+          actor_profile_id?: string | null;
+          event_type?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+          prompt_id?: string | null;
+          request_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_events_actor_profile_id_fkey';
+            columns: ['actor_profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_events_prompt_id_organization_id_fkey';
+            columns: ['prompt_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_prompts';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_events_request_id_organization_id_fkey';
+            columns: ['request_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_requests';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      ai_feedback: {
+        Row: {
+          created_at: string;
+          feedback_placeholder: string | null;
+          id: string;
+          organization_id: string;
+          rating: number | null;
+          request_id: string;
+          response_id: string | null;
+          reviewed: boolean;
+          submitted_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          feedback_placeholder?: string | null;
+          id?: string;
+          organization_id: string;
+          rating?: number | null;
+          request_id: string;
+          response_id?: string | null;
+          reviewed?: boolean;
+          submitted_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          feedback_placeholder?: string | null;
+          id?: string;
+          organization_id?: string;
+          rating?: number | null;
+          request_id?: string;
+          response_id?: string | null;
+          reviewed?: boolean;
+          submitted_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_feedback_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_feedback_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_feedback_request_id_organization_id_fkey';
+            columns: ['request_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_requests';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_feedback_response_id_organization_id_fkey';
+            columns: ['response_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_responses';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_feedback_submitted_by_fkey';
+            columns: ['submitted_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      ai_models: {
+        Row: {
+          active: boolean;
+          created_at: string;
+          display_name: string;
+          id: string;
+          model_key: string;
+          model_metadata_placeholder: Json;
+          provider_id: string;
+        };
+        Insert: {
+          active?: boolean;
+          created_at?: string;
+          display_name: string;
+          id?: string;
+          model_key: string;
+          model_metadata_placeholder?: Json;
+          provider_id: string;
+        };
+        Update: {
+          active?: boolean;
+          created_at?: string;
+          display_name?: string;
+          id?: string;
+          model_key?: string;
+          model_metadata_placeholder?: Json;
+          provider_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_models_provider_id_fkey';
+            columns: ['provider_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_providers';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      ai_prompt_versions: {
+        Row: {
+          approval_state: string;
+          approved_at: string | null;
+          approved_by: string | null;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          organization_id: string;
+          prompt_id: string;
+          published_at: string | null;
+          status: string;
+          system_prompt: string;
+          user_template: string;
+          variables: Json;
+          version_number: number;
+        };
+        Insert: {
+          approval_state?: string;
+          approved_at?: string | null;
+          approved_by?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          organization_id: string;
+          prompt_id: string;
+          published_at?: string | null;
+          status?: string;
+          system_prompt?: string;
+          user_template?: string;
+          variables?: Json;
+          version_number: number;
+        };
+        Update: {
+          approval_state?: string;
+          approved_at?: string | null;
+          approved_by?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          organization_id?: string;
+          prompt_id?: string;
+          published_at?: string | null;
+          status?: string;
+          system_prompt?: string;
+          user_template?: string;
+          variables?: Json;
+          version_number?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_prompt_versions_approved_by_fkey';
+            columns: ['approved_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_prompt_versions_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_prompt_versions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_prompt_versions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_prompt_versions_prompt_id_organization_id_fkey';
+            columns: ['prompt_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_prompts';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      ai_prompts: {
+        Row: {
+          approval_state: string;
+          category: string;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          approval_state?: string;
+          category: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          approval_state?: string;
+          category?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_prompts_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_prompts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_prompts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_prompts_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      ai_provider_settings: {
+        Row: {
+          configuration_placeholder: Json;
+          created_by: string | null;
+          enabled: boolean;
+          human_review_required: boolean;
+          id: string;
+          organization_id: string;
+          provider_id: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          configuration_placeholder?: Json;
+          created_by?: string | null;
+          enabled?: boolean;
+          human_review_required?: boolean;
+          id?: string;
+          organization_id: string;
+          provider_id: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          configuration_placeholder?: Json;
+          created_by?: string | null;
+          enabled?: boolean;
+          human_review_required?: boolean;
+          id?: string;
+          organization_id?: string;
+          provider_id?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_provider_settings_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_provider_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_provider_settings_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_provider_settings_provider_id_fkey';
+            columns: ['provider_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_providers';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_provider_settings_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      ai_providers: {
+        Row: {
+          active: boolean;
+          capabilities_placeholder: Json;
+          created_at: string;
+          display_name: string;
+          id: string;
+          provider_key: string;
+          provider_type: string;
+        };
+        Insert: {
+          active?: boolean;
+          capabilities_placeholder?: Json;
+          created_at?: string;
+          display_name: string;
+          id?: string;
+          provider_key: string;
+          provider_type: string;
+        };
+        Update: {
+          active?: boolean;
+          capabilities_placeholder?: Json;
+          created_at?: string;
+          display_name?: string;
+          id?: string;
+          provider_key?: string;
+          provider_type?: string;
+        };
+        Relationships: [];
+      };
+      ai_requests: {
+        Row: {
+          approved_by: string | null;
+          blocked: boolean;
+          clinical_disclaimer: string;
+          confidence_placeholder: number | null;
+          cost_placeholder: number | null;
+          created_by: string | null;
+          encounter_id: string | null;
+          human_review_required: boolean;
+          id: string;
+          input_tokens_placeholder: number | null;
+          latency_ms: number | null;
+          model_id: string | null;
+          organization_id: string;
+          output_tokens_placeholder: number | null;
+          patient_id: string | null;
+          prompt_version_id: string | null;
+          provider_id: string | null;
+          request_type: string;
+          requested_at: string;
+          responded_at: string | null;
+          reviewed_at: string | null;
+          status: string;
+        };
+        Insert: {
+          approved_by?: string | null;
+          blocked?: boolean;
+          clinical_disclaimer?: string;
+          confidence_placeholder?: number | null;
+          cost_placeholder?: number | null;
+          created_by?: string | null;
+          encounter_id?: string | null;
+          human_review_required?: boolean;
+          id?: string;
+          input_tokens_placeholder?: number | null;
+          latency_ms?: number | null;
+          model_id?: string | null;
+          organization_id: string;
+          output_tokens_placeholder?: number | null;
+          patient_id?: string | null;
+          prompt_version_id?: string | null;
+          provider_id?: string | null;
+          request_type: string;
+          requested_at?: string;
+          responded_at?: string | null;
+          reviewed_at?: string | null;
+          status?: string;
+        };
+        Update: {
+          approved_by?: string | null;
+          blocked?: boolean;
+          clinical_disclaimer?: string;
+          confidence_placeholder?: number | null;
+          cost_placeholder?: number | null;
+          created_by?: string | null;
+          encounter_id?: string | null;
+          human_review_required?: boolean;
+          id?: string;
+          input_tokens_placeholder?: number | null;
+          latency_ms?: number | null;
+          model_id?: string | null;
+          organization_id?: string;
+          output_tokens_placeholder?: number | null;
+          patient_id?: string | null;
+          prompt_version_id?: string | null;
+          provider_id?: string | null;
+          request_type?: string;
+          requested_at?: string;
+          responded_at?: string | null;
+          reviewed_at?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_requests_approved_by_fkey';
+            columns: ['approved_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_requests_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_requests_encounter_id_organization_id_fkey';
+            columns: ['encounter_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'encounters';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_requests_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_requests_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_requests_patient_id_organization_id_fkey';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_requests_prompt_version_id_organization_id_fkey';
+            columns: ['prompt_version_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_prompt_versions';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      ai_responses: {
+        Row: {
+          approved_by: string | null;
+          blocked: boolean;
+          confidence_placeholder: number | null;
+          cost_placeholder: number | null;
+          created_by: string | null;
+          human_review_required: boolean;
+          id: string;
+          input_tokens_placeholder: number | null;
+          latency_ms: number | null;
+          organization_id: string;
+          output_tokens_placeholder: number | null;
+          request_id: string;
+          responded_at: string;
+          response_placeholder: string;
+          reviewed_at: string | null;
+        };
+        Insert: {
+          approved_by?: string | null;
+          blocked?: boolean;
+          confidence_placeholder?: number | null;
+          cost_placeholder?: number | null;
+          created_by?: string | null;
+          human_review_required?: boolean;
+          id?: string;
+          input_tokens_placeholder?: number | null;
+          latency_ms?: number | null;
+          organization_id: string;
+          output_tokens_placeholder?: number | null;
+          request_id: string;
+          responded_at?: string;
+          response_placeholder?: string;
+          reviewed_at?: string | null;
+        };
+        Update: {
+          approved_by?: string | null;
+          blocked?: boolean;
+          confidence_placeholder?: number | null;
+          cost_placeholder?: number | null;
+          created_by?: string | null;
+          human_review_required?: boolean;
+          id?: string;
+          input_tokens_placeholder?: number | null;
+          latency_ms?: number | null;
+          organization_id?: string;
+          output_tokens_placeholder?: number | null;
+          request_id?: string;
+          responded_at?: string;
+          response_placeholder?: string;
+          reviewed_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_responses_approved_by_fkey';
+            columns: ['approved_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_responses_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_responses_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_responses_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'ai_responses_request_id_organization_id_fkey';
+            columns: ['request_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'ai_requests';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      ai_usage_metrics: {
+        Row: {
+          blocked_count: number;
+          completed_count: number;
+          cost_placeholder: number;
+          id: string;
+          input_tokens_placeholder: number;
+          metric_date: string;
+          organization_id: string;
+          output_tokens_placeholder: number;
+          request_count: number;
+        };
+        Insert: {
+          blocked_count?: number;
+          completed_count?: number;
+          cost_placeholder?: number;
+          id?: string;
+          input_tokens_placeholder?: number;
+          metric_date: string;
+          organization_id: string;
+          output_tokens_placeholder?: number;
+          request_count?: number;
+        };
+        Update: {
+          blocked_count?: number;
+          completed_count?: number;
+          cost_placeholder?: number;
+          id?: string;
+          input_tokens_placeholder?: number;
+          metric_date?: string;
+          organization_id?: string;
+          output_tokens_placeholder?: number;
+          request_count?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'ai_usage_metrics_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'ai_usage_metrics_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
       api_clients: {
         Row: {
           created_at: string;
@@ -8131,6 +8833,10 @@ export type Database = {
         Returns: string;
       };
       admit_patient: { Args: { p_session_id: string }; Returns: boolean };
+      ai_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
       allocate_payment: {
         Args: { p_amount: number; p_invoice_id: string; p_payment_id: string };
         Returns: boolean;
@@ -8285,6 +8991,17 @@ export type Database = {
       complete_encounter: { Args: { p_encounter_id: string }; Returns: string };
       confirm_appointment: {
         Args: { p_appointment_id: string };
+        Returns: string;
+      };
+      create_ai_request: {
+        Args: {
+          p_encounter_id: string;
+          p_model_key?: string;
+          p_patient_id: string;
+          p_prompt_version_id: string;
+          p_provider_key?: string;
+          p_request_type: string;
+        };
         Returns: string;
       };
       create_api_key: {
@@ -8482,6 +9199,16 @@ export type Database = {
         };
         Returns: string;
       };
+      create_prompt: {
+        Args: {
+          p_category: string;
+          p_name: string;
+          p_system_prompt: string;
+          p_user_template: string;
+          p_variables?: Json;
+        };
+        Returns: string;
+      };
       create_staff_invitation: {
         Args: {
           p_access_mode: string;
@@ -8513,6 +9240,7 @@ export type Database = {
         };
         Returns: string;
       };
+      current_ai_organization: { Args: never; Returns: string };
       current_integration_organization: { Args: never; Returns: string };
       current_profile_id: { Args: never; Returns: string };
       documents_permission: {
@@ -8608,6 +9336,10 @@ export type Database = {
         }[];
       };
       get_telehealth_session: { Args: { p_session_id: string }; Returns: Json };
+      get_usage_metrics: {
+        Args: { p_from_date?: string; p_to_date?: string };
+        Returns: Json;
+      };
       has_active_membership: {
         Args: { target_organization_id: string };
         Returns: boolean;
@@ -8648,6 +9380,7 @@ export type Database = {
       };
       list_integrations: { Args: never; Returns: Json };
       list_patient_documents: { Args: { p_patient_id: string }; Returns: Json };
+      list_prompt_versions: { Args: { p_prompt_id: string }; Returns: Json };
       list_upcoming_sessions: {
         Args: { p_from?: string; p_to?: string };
         Returns: Json;
@@ -8723,6 +9456,10 @@ export type Database = {
         };
         Returns: Json;
       };
+      publish_prompt: {
+        Args: { p_prompt_id: string; p_version_id: string };
+        Returns: boolean;
+      };
       queue_job: {
         Args: {
           p_connection_id?: string;
@@ -8733,6 +9470,19 @@ export type Database = {
         Returns: string;
       };
       queue_notification: { Args: { p_queue_id: string }; Returns: boolean };
+      record_ai_response: {
+        Args: {
+          p_blocked?: boolean;
+          p_confidence_placeholder?: number;
+          p_cost_placeholder?: number;
+          p_input_tokens_placeholder?: number;
+          p_latency_ms?: number;
+          p_output_tokens_placeholder?: number;
+          p_request_id: string;
+          p_response_placeholder: string;
+        };
+        Returns: string;
+      };
       record_document_access: {
         Args: {
           p_access_action: string;
@@ -8888,6 +9638,15 @@ export type Database = {
         Returns: string;
       };
       start_session: { Args: { p_session_id: string }; Returns: boolean };
+      submit_feedback: {
+        Args: {
+          p_feedback_placeholder: string;
+          p_rating: number;
+          p_request_id: string;
+          p_response_id: string;
+        };
+        Returns: string;
+      };
       telehealth_permission: {
         Args: { required_action: string; target_organization_id: string };
         Returns: boolean;
@@ -8895,6 +9654,10 @@ export type Database = {
       unlink_practitioner_membership: {
         Args: { p_practitioner_id: string };
         Returns: boolean;
+      };
+      update_ai_provider_settings: {
+        Args: { p_enabled: boolean; p_provider_key: string };
+        Returns: string;
       };
       update_appointment: {
         Args: {
