@@ -188,6 +188,12 @@ export default async function PractitionerDetailPage({
             >
               Edit profile
             </Link>
+            <Link
+              href={`/app/practitioners/${practitionerId}/availability`}
+              className="rounded border border-blue-300 px-4 py-2 font-medium text-blue-800"
+            >
+              Availability
+            </Link>
           </div>
         </div>
         <div className="mt-8">
