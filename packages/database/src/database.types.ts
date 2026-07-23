@@ -180,17 +180,42 @@ export type Database = {
           },
         ]
       }
+      invitation_location_scopes: {
+        Row: { clinic_id: string; created_at: string; id: string; invitation_id: string; location_id: string; organization_id: string }
+        Insert: { clinic_id: string; created_at?: string; id?: string; invitation_id: string; location_id: string; organization_id: string }
+        Update: { clinic_id?: string; created_at?: string; id?: string; invitation_id?: string; location_id?: string; organization_id?: string }
+        Relationships: [
+          { foreignKeyName: "invitation_location_scopes_invitation_fk"; columns: ["invitation_id", "organization_id"]; isOneToOne: false; referencedRelation: "invitations"; referencedColumns: ["id", "organization_id"] },
+          { foreignKeyName: "invitation_location_scopes_location_fk"; columns: ["location_id", "clinic_id", "organization_id"]; isOneToOne: false; referencedRelation: "locations"; referencedColumns: ["id", "clinic_id", "organization_id"] },
+          { foreignKeyName: "invitation_location_scopes_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] },
+        ]
+      }
+      invitation_role_assignments: {
+        Row: { created_at: string; id: string; invitation_id: string; organization_id: string; role_id: string }
+        Insert: { created_at?: string; id?: string; invitation_id: string; organization_id: string; role_id: string }
+        Update: { created_at?: string; id?: string; invitation_id?: string; organization_id?: string; role_id?: string }
+        Relationships: [
+          { foreignKeyName: "invitation_role_assignments_invitation_fk"; columns: ["invitation_id", "organization_id"]; isOneToOne: false; referencedRelation: "invitations"; referencedColumns: ["id", "organization_id"] },
+          { foreignKeyName: "invitation_role_assignments_organization_id_fkey"; columns: ["organization_id"]; isOneToOne: false; referencedRelation: "organizations"; referencedColumns: ["id"] },
+          { foreignKeyName: "invitation_role_assignments_role_id_fkey"; columns: ["role_id"]; isOneToOne: false; referencedRelation: "roles"; referencedColumns: ["id"] },
+        ]
+      }
       invitations: {
         Row: {
           accepted_at: string | null
           accepted_by: string | null
+          cancelled_at: string | null
+          cancelled_by: string | null
           created_at: string
           email_normalized: string
           expires_at: string
           id: string
+          idempotency_key: string | null
           invited_by: string
+          last_sent_at: string | null
           organization_id: string
           proposed_access: Json
+          resend_count: number
           revoked_at: string | null
           status: string
           target_profile_id: string | null
@@ -200,13 +225,18 @@ export type Database = {
         Insert: {
           accepted_at?: string | null
           accepted_by?: string | null
+          cancelled_at?: string | null
+          cancelled_by?: string | null
           created_at?: string
           email_normalized: string
           expires_at: string
           id?: string
+          idempotency_key?: string | null
           invited_by: string
+          last_sent_at?: string | null
           organization_id: string
           proposed_access?: Json
+          resend_count?: number
           revoked_at?: string | null
           status?: string
           target_profile_id?: string | null
@@ -216,13 +246,18 @@ export type Database = {
         Update: {
           accepted_at?: string | null
           accepted_by?: string | null
+          cancelled_at?: string | null
+          cancelled_by?: string | null
           created_at?: string
           email_normalized?: string
           expires_at?: string
           id?: string
+          idempotency_key?: string | null
           invited_by?: string
+          last_sent_at?: string | null
           organization_id?: string
           proposed_access?: Json
+          resend_count?: number
           revoked_at?: string | null
           status?: string
           target_profile_id?: string | null
@@ -233,6 +268,13 @@ export type Database = {
           {
             foreignKeyName: "invitations_accepted_by_fkey"
             columns: ["accepted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invitations_cancelled_by_fkey"
+            columns: ["cancelled_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -570,6 +612,8 @@ export type Database = {
           invited_at: string | null
           organization_id: string
           profile_id: string
+          removed_at: string | null
+          removed_by: string | null
           revoked_at: string | null
           status: string
           status_reason: string | null
@@ -583,6 +627,8 @@ export type Database = {
           invited_at?: string | null
           organization_id: string
           profile_id: string
+          removed_at?: string | null
+          removed_by?: string | null
           revoked_at?: string | null
           status?: string
           status_reason?: string | null
@@ -596,6 +642,8 @@ export type Database = {
           invited_at?: string | null
           organization_id?: string
           profile_id?: string
+          removed_at?: string | null
+          removed_by?: string | null
           revoked_at?: string | null
           status?: string
           status_reason?: string | null
@@ -603,6 +651,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "organization_memberships_removed_by_fkey"
+            columns: ["removed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "organization_memberships_organization_id_fkey"
             columns: ["organization_id"]
@@ -914,6 +969,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_staff_invitation: { Args: { p_token: string }; Returns: { membership_id: string; organization_id: string; organization_name: string }[] }
       append_audit_event: {
         Args: {
           action: string
@@ -949,7 +1005,13 @@ export type Database = {
           request_id: string
         }[]
       }
+      cancel_staff_invitation: { Args: { p_invitation_id: string; p_reason?: string }; Returns: boolean }
+      create_staff_invitation: {
+        Args: { p_access_mode: string; p_email: string; p_idempotency_key?: string; p_location_ids?: string[]; p_organization_id: string; p_role_keys: string[] }
+        Returns: { acceptance_token: string; already_exists: boolean; expires_at: string; invitation_id: string; invited_email: string; organization_name: string }[]
+      }
       current_profile_id: { Args: never; Returns: string }
+      get_staff_invitation_preview: { Args: { p_token: string }; Returns: { access_mode: string; expires_at: string; invitation_id: string; invited_email: string; organization_name: string; role_names: string[] }[] }
       has_active_membership: {
         Args: { target_organization_id: string }
         Returns: boolean
@@ -974,6 +1036,10 @@ export type Database = {
         Args: { input_name: string }
         Returns: string
       }
+      is_organization_owner: { Args: { target_organization_id: string; target_profile_id?: string }; Returns: boolean }
+      resend_staff_invitation: { Args: { p_invitation_id: string }; Returns: { acceptance_token: string; expires_at: string; invitation_id: string }[] }
+      update_membership_roles_and_access: { Args: { p_access_mode: string; p_location_ids?: string[]; p_membership_id: string; p_role_keys: string[] }; Returns: boolean }
+      update_membership_status: { Args: { p_membership_id: string; p_reason?: string; p_status: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

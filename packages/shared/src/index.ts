@@ -3,3 +3,4 @@ export function nonEmpty(value: string): string | undefined { const trimmed = va
 
 export * from './auth-schemas';
 export * from './onboarding-schemas';
+export * from './staff-schemas';

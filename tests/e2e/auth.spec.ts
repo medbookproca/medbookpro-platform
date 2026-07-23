@@ -56,18 +56,12 @@ test.describe('Authentication Routes', () => {
 
   test('invitations accept page loads', async ({ page }) => {
     await page.goto('/invitations/accept');
-    await expect(page.locator('h1')).toContainText('Accept Invitation');
+    await expect(page.locator('h1')).toContainText('Accept staff invitation');
   });
 
-  test('invitation acceptance flow submits and shows success state', async ({ page }) => {
+  test('invitation acceptance rejects missing token safely', async ({ page }) => {
     await page.goto('/invitations/accept');
-    await page.getByLabel('First Name').fill('Alex');
-    await page.getByLabel('Last Name').fill('Carey');
-    const passwordInputs = page.locator('input[type="password"]');
-    await passwordInputs.nth(0).fill('ValidPassword123!');
-    await passwordInputs.nth(1).fill('ValidPassword123!');
-    await page.locator('button[type="submit"]').click();
-    await expect(page.getByText('Invitation accepted')).toBeVisible();
+    await expect(page.getByText('This invitation is missing, expired, revoked, or not available for the signed-in account.')).toBeVisible();
   });
 
   test('sign-in form validation', async ({ page }) => {
