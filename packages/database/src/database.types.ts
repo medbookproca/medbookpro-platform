@@ -1278,6 +1278,567 @@ export type Database = {
           },
         ];
       };
+      document_access_log: {
+        Row: {
+          access_action: string;
+          actor_patient_id: string | null;
+          actor_profile_id: string | null;
+          document_id: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+        };
+        Insert: {
+          access_action: string;
+          actor_patient_id?: string | null;
+          actor_profile_id?: string | null;
+          document_id: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+        };
+        Update: {
+          access_action?: string;
+          actor_patient_id?: string | null;
+          actor_profile_id?: string | null;
+          document_id?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_access_log_actor_patient_id_organization_id_fkey';
+            columns: ['actor_patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'document_access_log_actor_profile_id_fkey';
+            columns: ['actor_profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_access_log_document_id_organization_id_fkey';
+            columns: ['document_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'documents';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'document_access_log_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_access_log_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      document_categories: {
+        Row: {
+          active: boolean;
+          category_key: string;
+          created_at: string;
+          created_by: string | null;
+          description: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          active?: boolean;
+          category_key: string;
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          active?: boolean;
+          category_key?: string;
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_categories_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_categories_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_categories_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      document_events: {
+        Row: {
+          actor_profile_id: string | null;
+          document_id: string;
+          event_type: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+        };
+        Insert: {
+          actor_profile_id?: string | null;
+          document_id: string;
+          event_type: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+        };
+        Update: {
+          actor_profile_id?: string | null;
+          document_id?: string;
+          event_type?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_events_actor_profile_id_fkey';
+            columns: ['actor_profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_events_document_id_organization_id_fkey';
+            columns: ['document_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'documents';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'document_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      document_retention_rules: {
+        Row: {
+          active: boolean;
+          archived: boolean;
+          category_id: string | null;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          legal_hold_placeholder: boolean;
+          name: string;
+          organization_id: string;
+          retention_days: number | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          active?: boolean;
+          archived?: boolean;
+          category_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          legal_hold_placeholder?: boolean;
+          name: string;
+          organization_id: string;
+          retention_days?: number | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          active?: boolean;
+          archived?: boolean;
+          category_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          legal_hold_placeholder?: boolean;
+          name?: string;
+          organization_id?: string;
+          retention_days?: number | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_retention_rules_category_id_organization_id_fkey';
+            columns: ['category_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'document_categories';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'document_retention_rules_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_retention_rules_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_retention_rules_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'document_retention_rules_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      document_shares_placeholder: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          document_id: string;
+          expires_at: string | null;
+          id: string;
+          organization_id: string;
+          recipient_placeholder: string;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          document_id: string;
+          expires_at?: string | null;
+          id?: string;
+          organization_id: string;
+          recipient_placeholder: string;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          document_id?: string;
+          expires_at?: string | null;
+          id?: string;
+          organization_id?: string;
+          recipient_placeholder?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_shares_placeholder_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_shares_placeholder_document_id_organization_id_fkey';
+            columns: ['document_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'documents';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'document_shares_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_shares_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      document_versions: {
+        Row: {
+          checksum_placeholder: string | null;
+          created_at: string;
+          created_by: string | null;
+          description: string | null;
+          document_id: string;
+          file_size_bytes: number | null;
+          id: string;
+          is_current: boolean;
+          mime_type: string | null;
+          organization_id: string;
+          previous_version_id: string | null;
+          storage_path_placeholder: string | null;
+          storage_provider_placeholder: string | null;
+          title: string | null;
+          version_number: number;
+        };
+        Insert: {
+          checksum_placeholder?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          document_id: string;
+          file_size_bytes?: number | null;
+          id?: string;
+          is_current?: boolean;
+          mime_type?: string | null;
+          organization_id: string;
+          previous_version_id?: string | null;
+          storage_path_placeholder?: string | null;
+          storage_provider_placeholder?: string | null;
+          title?: string | null;
+          version_number: number;
+        };
+        Update: {
+          checksum_placeholder?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          document_id?: string;
+          file_size_bytes?: number | null;
+          id?: string;
+          is_current?: boolean;
+          mime_type?: string | null;
+          organization_id?: string;
+          previous_version_id?: string | null;
+          storage_path_placeholder?: string | null;
+          storage_provider_placeholder?: string | null;
+          title?: string | null;
+          version_number?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'document_versions_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_versions_document_id_organization_id_fkey';
+            columns: ['document_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'documents';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'document_versions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'document_versions_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'document_versions_previous_version_id_organization_id_fkey';
+            columns: ['previous_version_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'document_versions';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      documents: {
+        Row: {
+          archived: boolean;
+          archived_at: string | null;
+          category_id: string | null;
+          checksum_placeholder: string | null;
+          created_at: string;
+          created_by: string | null;
+          deleted: boolean;
+          description: string | null;
+          encounter_id: string | null;
+          file_size_bytes: number | null;
+          id: string;
+          location_id: string | null;
+          mime_type: string | null;
+          organization_id: string;
+          patient_id: string | null;
+          practitioner_id: string | null;
+          retention_status: string;
+          scheduled_deletion_at: string | null;
+          storage_path_placeholder: string | null;
+          storage_provider_placeholder: string | null;
+          title: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          archived?: boolean;
+          archived_at?: string | null;
+          category_id?: string | null;
+          checksum_placeholder?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          deleted?: boolean;
+          description?: string | null;
+          encounter_id?: string | null;
+          file_size_bytes?: number | null;
+          id?: string;
+          location_id?: string | null;
+          mime_type?: string | null;
+          organization_id: string;
+          patient_id?: string | null;
+          practitioner_id?: string | null;
+          retention_status?: string;
+          scheduled_deletion_at?: string | null;
+          storage_path_placeholder?: string | null;
+          storage_provider_placeholder?: string | null;
+          title: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          archived?: boolean;
+          archived_at?: string | null;
+          category_id?: string | null;
+          checksum_placeholder?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          deleted?: boolean;
+          description?: string | null;
+          encounter_id?: string | null;
+          file_size_bytes?: number | null;
+          id?: string;
+          location_id?: string | null;
+          mime_type?: string | null;
+          organization_id?: string;
+          patient_id?: string | null;
+          practitioner_id?: string | null;
+          retention_status?: string;
+          scheduled_deletion_at?: string | null;
+          storage_path_placeholder?: string | null;
+          storage_provider_placeholder?: string | null;
+          title?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'documents_category_id_organization_id_fkey';
+            columns: ['category_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'document_categories';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'documents_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'documents_encounter_id_organization_id_fkey';
+            columns: ['encounter_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'encounters';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'documents_location_id_organization_id_fkey';
+            columns: ['location_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'locations';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'documents_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'documents_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'documents_patient_id_organization_id_fkey';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'documents_practitioner_id_organization_id_fkey';
+            columns: ['practitioner_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'practitioners';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'documents_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       encounter_status_history: {
         Row: {
           changed_by: string | null;
@@ -6540,6 +7101,10 @@ export type Database = {
         Args: { from_value: string; to_value: string };
         Returns: boolean;
       };
+      archive_document: {
+        Args: { p_document_id: string; p_reason?: string };
+        Returns: boolean;
+      };
       archive_encounter: {
         Args: { p_encounter_id: string; p_reason?: string };
         Returns: string;
@@ -6658,6 +7223,37 @@ export type Database = {
           p_invoice_id: string;
           p_kind: string;
           p_reason: string;
+        };
+        Returns: string;
+      };
+      create_document_metadata: {
+        Args: {
+          p_category_key: string;
+          p_checksum_placeholder?: string;
+          p_description: string;
+          p_encounter_id?: string;
+          p_file_size_bytes?: number;
+          p_location_id?: string;
+          p_mime_type?: string;
+          p_organization_id: string;
+          p_patient_id?: string;
+          p_practitioner_id?: string;
+          p_storage_path_placeholder?: string;
+          p_storage_provider_placeholder?: string;
+          p_title: string;
+        };
+        Returns: string;
+      };
+      create_document_version: {
+        Args: {
+          p_checksum_placeholder: string;
+          p_description: string;
+          p_document_id: string;
+          p_file_size_bytes: number;
+          p_mime_type: string;
+          p_storage_path_placeholder: string;
+          p_storage_provider_placeholder: string;
+          p_title: string;
         };
         Returns: string;
       };
@@ -6802,6 +7398,10 @@ export type Database = {
         }[];
       };
       current_profile_id: { Args: never; Returns: string };
+      documents_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
       encounter_transition_allowed: {
         Args: { from_value: string; to_value: string };
         Returns: boolean;
@@ -6918,6 +7518,11 @@ export type Database = {
         Args: { p_membership_id: string; p_practitioner_id: string };
         Returns: boolean;
       };
+      list_encounter_documents: {
+        Args: { p_encounter_id: string };
+        Returns: Json;
+      };
+      list_patient_documents: { Args: { p_patient_id: string }; Returns: Json };
       mark_no_show: {
         Args: { p_appointment_id: string; p_reason?: string };
         Returns: string;
@@ -6990,6 +7595,14 @@ export type Database = {
         Returns: Json;
       };
       queue_notification: { Args: { p_queue_id: string }; Returns: boolean };
+      record_document_access: {
+        Args: {
+          p_access_action: string;
+          p_document_id: string;
+          p_metadata?: Json;
+        };
+        Returns: string;
+      };
       record_payment: {
         Args: {
           p_amount: number;
@@ -7059,6 +7672,7 @@ export type Database = {
           invitation_id: string;
         }[];
       };
+      restore_document: { Args: { p_document_id: string }; Returns: boolean };
       retry_notification: { Args: { p_queue_id: string }; Returns: boolean };
       save_report_filter: {
         Args: {
@@ -7168,6 +7782,31 @@ export type Database = {
           p_value: number;
         };
         Returns: string;
+      };
+      update_document_metadata: {
+        Args: {
+          p_category_key: string;
+          p_checksum_placeholder: string;
+          p_description: string;
+          p_document_id: string;
+          p_file_size_bytes: number;
+          p_location_id: string;
+          p_mime_type: string;
+          p_practitioner_id: string;
+          p_storage_path_placeholder: string;
+          p_storage_provider_placeholder: string;
+          p_title: string;
+        };
+        Returns: boolean;
+      };
+      update_document_retention: {
+        Args: {
+          p_document_id: string;
+          p_legal_hold?: boolean;
+          p_retention_status: string;
+          p_scheduled_deletion_at?: string;
+        };
+        Returns: boolean;
       };
       update_encounter: {
         Args: {

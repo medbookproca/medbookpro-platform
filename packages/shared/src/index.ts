@@ -16,3 +16,4 @@ export * from './communications-schemas';
 export * from './billing-schemas';
 export * from './reporting-schemas';
 export * from './patient-portal-schemas';
+export * from './document-schemas';
