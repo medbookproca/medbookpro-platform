@@ -39,4 +39,4 @@ Do not use production data in local development. Auth requires a configured Supa
 
 ## Contribution
 
-Read [local setup](docs/development/local-setup.md), [environment variables](docs/development/environment-variables.md), [testing](docs/development/testing.md), [workspace structure](docs/architecture/workspace-structure.md), [staff invitations and memberships](docs/development/staff-invitations-memberships.md), and the [Master Product Requirements Document](docs/product/medbookpro-master-prd.md) before contributing.
+Read [local setup](docs/development/local-setup.md), [environment variables](docs/development/environment-variables.md), [testing](docs/development/testing.md), [workspace structure](docs/architecture/workspace-structure.md), [staff invitations and memberships](docs/development/staff-invitations-memberships.md), [practitioner foundation](docs/development/practitioner-foundation.md), and the [Master Product Requirements Document](docs/product/medbookpro-master-prd.md) before contributing.

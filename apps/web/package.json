@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@medbookpro/database": "workspace:*",
     "@medbookpro/shared": "workspace:*",
     "@medbookpro/ui": "workspace:*",
     "@supabase/ssr": "^0.7.0",
