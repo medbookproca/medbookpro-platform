@@ -14,13 +14,16 @@ import { redirect } from 'next/navigation';
 import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
+import { getSafeActionError } from '@/lib/action-errors';
 
 export type PatientActionResult = { error?: string; success?: string };
 
 function safeError(error: unknown) {
-  return error instanceof Error
-    ? error.message
-    : 'The patient request could not be completed.';
+  return getSafeActionError(
+    error,
+    'patient.mutation.failed',
+    'The patient request could not be completed.',
+  );
 }
 
 async function requireOrganization() {
@@ -37,6 +40,7 @@ function text(formData: FormData, key: string) {
 export async function createPatientAction(
   formData: FormData,
 ): Promise<PatientActionResult> {
+  let patientId: string | undefined;
   try {
     const organization = await requireOrganization();
     const input = patientCreationSchema.parse({
@@ -87,12 +91,18 @@ export async function createPatientAction(
       p_phone: input.phone || undefined,
     });
     if (error) throw error;
-    const patientId = data?.[0]?.patient_id;
+    patientId = data?.[0]?.patient_id;
     if (!patientId) throw new Error('The patient was not created.');
-    redirect(`/app/patients/${patientId}`);
   } catch (error) {
-    return { error: safeError(error) };
+    return {
+      error: getSafeActionError(
+        error,
+        'patient.create.failed',
+        'The patient could not be created. Review the information and try again.',
+      ),
+    };
   }
+  redirect(`/app/patients/${patientId}`);
 }
 
 export async function updatePatientAction(
@@ -144,7 +154,13 @@ export async function updatePatientAction(
     revalidatePath(`/app/patients/${input.patientId}`);
     return { success: 'Patient profile updated.' };
   } catch (error) {
-    return { error: safeError(error) };
+    return {
+      error: getSafeActionError(
+        error,
+        'patient.update.failed',
+        'The patient profile could not be updated.',
+      ),
+    };
   }
 }
 
