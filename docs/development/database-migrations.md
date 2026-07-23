@@ -4,4 +4,4 @@ Identity migrations are timestamped, ordered, and immutable after reaching a sha
 
 Apply locally with `supabase db reset`. Review the generated SQL and inspect the resulting schema before sharing a migration. Never edit an applied migration in place; create a corrective migration.
 
-The current migrations create the documented identity, practitioner, availability, patient, appointment, clinical, and communications foundation tables. Billing, CRM, and AI workflows remain out of scope. Local seed data is separate from migrations and contains no real people or credentials.
+The current migrations create the documented identity, practitioner, availability, patient, appointment, clinical, communications, and billing foundation tables. CRM and AI workflows remain out of scope. Local seed data is separate from migrations and contains no real people or credentials.

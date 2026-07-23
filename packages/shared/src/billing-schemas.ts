@@ -1,0 +1,11 @@
+import { z } from 'zod';
+
+export const invoiceStatusSchema = z.enum(['draft', 'issued', 'partially_paid', 'paid', 'cancelled', 'void', 'overdue']);
+export const paymentMethodSchema = z.enum(['cash', 'card_placeholder', 'e_transfer_placeholder', 'insurance_placeholder', 'manual_adjustment']);
+export const invoiceItemSchema = z.object({ description: z.string().trim().min(1).max(500), quantity: z.number().positive(), unitPrice: z.number().nonnegative(), taxRate: z.number().min(0).max(100).default(0), discount: z.number().nonnegative().default(0) });
+export const invoiceSchema = z.object({ id: z.string().uuid().optional(), patientId: z.string().uuid(), appointmentId: z.string().uuid().nullable().optional(), encounterId: z.string().uuid().nullable().optional(), currency: z.enum(['CAD', 'USD']).default('CAD'), dueDate: z.string().date().nullable().optional(), discount: z.number().nonnegative().default(0), notes: z.string().max(2000).nullable().optional(), items: z.array(invoiceItemSchema).min(1), status: invoiceStatusSchema.default('draft') });
+export const paymentSchema = z.object({ patientId: z.string().uuid(), method: paymentMethodSchema, amount: z.number().positive(), currency: z.enum(['CAD', 'USD']).default('CAD'), reference: z.string().max(200).nullable().optional(), receivedAt: z.string().datetime().optional(), notes: z.string().max(2000).nullable().optional() });
+export const receiptSchema = z.object({ id: z.string().uuid(), receiptNumber: z.string().min(1), paymentId: z.string().uuid(), issuedAt: z.string().datetime() });
+export const creditNoteSchema = z.object({ invoiceId: z.string().uuid(), amount: z.number().positive(), kind: z.enum(['partial', 'full']), reason: z.string().trim().min(1).max(500) });
+export const taxProfileSchema = z.object({ id: z.string().uuid().optional(), name: z.string().trim().min(1).max(120), jurisdiction: z.string().min(1).max(32), rates: z.array(z.object({ name: z.string().min(1), rate: z.number().min(0).max(100) })), isDefault: z.boolean(), status: z.enum(['active', 'inactive']) });
+export const discountRuleSchema = z.object({ id: z.string().uuid().optional(), name: z.string().trim().min(1).max(120), discountType: z.enum(['fixed', 'percentage']), value: z.number().positive(), currency: z.enum(['CAD', 'USD']).default('CAD'), status: z.enum(['active', 'inactive']) });

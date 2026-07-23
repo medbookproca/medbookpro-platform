@@ -1,0 +1,6 @@
+import { Card } from '@medbookpro/ui';
+import { getActiveOrganizationContext } from '@/lib/organization-context';
+import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
+import { createClient } from '@/lib/supabase/server';
+
+export default async function ReceiptsPage() { const user = await requireAuthenticatedUser('/app/billing/receipts'); const org = await getActiveOrganizationContext(user.id); if (!org) return null; const supabase = await createClient(); const { data: receipts } = await supabase.from('receipts').select('id, receipt_number, payment_id, issued_at').order('issued_at', { ascending: false }); return <main className="min-h-screen bg-slate-50 px-6 py-12 text-slate-950"><div className="mx-auto max-w-4xl"><Card><h1 className="text-3xl font-semibold">Receipts</h1><p className="mt-3 text-slate-600">Receipt records are available for review. PDF generation is out of scope.</p><div className="mt-6 space-y-3">{(receipts ?? []).map((receipt) => <p className="rounded border p-3" key={receipt.id}>{receipt.receipt_number} · payment {receipt.payment_id} · {receipt.issued_at}</p>)}{!receipts?.length && <p className="text-sm text-slate-600">No receipts generated.</p>}</div></Card></div></main>; }
