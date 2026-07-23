@@ -34,6 +34,135 @@ export type Database = {
   };
   public: {
     Tables: {
+      api_clients: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          description: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+          status: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+          status?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'api_clients_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'api_clients_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'api_clients_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      api_keys: {
+        Row: {
+          api_client_id: string | null;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          key_prefix_placeholder: string;
+          last_used_at: string | null;
+          name: string;
+          organization_id: string;
+          permissions: Json;
+          revoked: boolean;
+          revoked_at: string | null;
+          rotation_date: string | null;
+          status: string;
+        };
+        Insert: {
+          api_client_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          key_prefix_placeholder?: string;
+          last_used_at?: string | null;
+          name: string;
+          organization_id: string;
+          permissions?: Json;
+          revoked?: boolean;
+          revoked_at?: string | null;
+          rotation_date?: string | null;
+          status?: string;
+        };
+        Update: {
+          api_client_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          key_prefix_placeholder?: string;
+          last_used_at?: string | null;
+          name?: string;
+          organization_id?: string;
+          permissions?: Json;
+          revoked?: boolean;
+          revoked_at?: string | null;
+          rotation_date?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'api_keys_api_client_id_organization_id_fkey';
+            columns: ['api_client_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'api_clients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'api_keys_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'api_keys_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'api_keys_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
       appointment_buffers: {
         Row: {
           appointment_id: string;
@@ -2002,6 +2131,450 @@ export type Database = {
           },
         ];
       };
+      integration_connections: {
+        Row: {
+          configuration_placeholder: Json;
+          created_at: string;
+          created_by: string | null;
+          external_account_placeholder: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+          provider_id: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          configuration_placeholder?: Json;
+          created_at?: string;
+          created_by?: string | null;
+          external_account_placeholder?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+          provider_id: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          configuration_placeholder?: Json;
+          created_at?: string;
+          created_by?: string | null;
+          external_account_placeholder?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          provider_id?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'integration_connections_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_connections_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_connections_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_connections_provider_id_fkey';
+            columns: ['provider_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_providers';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_connections_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      integration_credentials_placeholder: {
+        Row: {
+          connection_id: string | null;
+          created_at: string;
+          credential_type: string;
+          expires_at: string | null;
+          id: string;
+          organization_id: string;
+          secret_reference_placeholder: string | null;
+          status: string;
+        };
+        Insert: {
+          connection_id?: string | null;
+          created_at?: string;
+          credential_type?: string;
+          expires_at?: string | null;
+          id?: string;
+          organization_id: string;
+          secret_reference_placeholder?: string | null;
+          status?: string;
+        };
+        Update: {
+          connection_id?: string | null;
+          created_at?: string;
+          credential_type?: string;
+          expires_at?: string | null;
+          id?: string;
+          organization_id?: string;
+          secret_reference_placeholder?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'integration_credentials_place_connection_id_organization_i_fkey';
+            columns: ['connection_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_connections';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_credentials_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_credentials_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      integration_events: {
+        Row: {
+          connection_id: string | null;
+          created_by: string | null;
+          event_type: string;
+          id: string;
+          occurred_at: string;
+          organization_id: string;
+          payload_metadata: Json;
+        };
+        Insert: {
+          connection_id?: string | null;
+          created_by?: string | null;
+          event_type: string;
+          id?: string;
+          occurred_at?: string;
+          organization_id: string;
+          payload_metadata?: Json;
+        };
+        Update: {
+          connection_id?: string | null;
+          created_by?: string | null;
+          event_type?: string;
+          id?: string;
+          occurred_at?: string;
+          organization_id?: string;
+          payload_metadata?: Json;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'integration_events_connection_id_organization_id_fkey';
+            columns: ['connection_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_connections';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_events_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      integration_jobs: {
+        Row: {
+          completed_at: string | null;
+          connection_id: string | null;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          job_type: string;
+          last_error_placeholder: string | null;
+          organization_id: string;
+          payload_metadata: Json;
+          retry_count: number;
+          run_after: string;
+          started_at: string | null;
+          status: string;
+          updated_at: string;
+        };
+        Insert: {
+          completed_at?: string | null;
+          connection_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          job_type: string;
+          last_error_placeholder?: string | null;
+          organization_id: string;
+          payload_metadata?: Json;
+          retry_count?: number;
+          run_after?: string;
+          started_at?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Update: {
+          completed_at?: string | null;
+          connection_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          job_type?: string;
+          last_error_placeholder?: string | null;
+          organization_id?: string;
+          payload_metadata?: Json;
+          retry_count?: number;
+          run_after?: string;
+          started_at?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'integration_jobs_connection_id_organization_id_fkey';
+            columns: ['connection_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_connections';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_jobs_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_jobs_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_jobs_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      integration_logs: {
+        Row: {
+          connection_id: string | null;
+          id: string;
+          job_id: string | null;
+          level: string;
+          message_placeholder: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+        };
+        Insert: {
+          connection_id?: string | null;
+          id?: string;
+          job_id?: string | null;
+          level: string;
+          message_placeholder: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+        };
+        Update: {
+          connection_id?: string | null;
+          id?: string;
+          job_id?: string | null;
+          level?: string;
+          message_placeholder?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'integration_logs_connection_id_organization_id_fkey';
+            columns: ['connection_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_connections';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_logs_job_id_organization_id_fkey';
+            columns: ['job_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_jobs';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_logs_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_logs_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
+      integration_providers: {
+        Row: {
+          active: boolean;
+          capabilities_placeholder: Json;
+          created_at: string;
+          display_name: string;
+          id: string;
+          provider_key: string;
+          provider_type: string;
+        };
+        Insert: {
+          active?: boolean;
+          capabilities_placeholder?: Json;
+          created_at?: string;
+          display_name: string;
+          id?: string;
+          provider_key: string;
+          provider_type: string;
+        };
+        Update: {
+          active?: boolean;
+          capabilities_placeholder?: Json;
+          created_at?: string;
+          display_name?: string;
+          id?: string;
+          provider_key?: string;
+          provider_type?: string;
+        };
+        Relationships: [];
+      };
+      integration_webhooks: {
+        Row: {
+          connection_id: string | null;
+          created_at: string;
+          created_by: string | null;
+          delivery_attempts: number;
+          direction: string;
+          endpoint_placeholder: string | null;
+          event_type: string;
+          id: string;
+          last_attempt_at: string | null;
+          organization_id: string;
+          payload_placeholder: Json;
+          retry_count: number;
+          signature_placeholder: string | null;
+          status: string;
+        };
+        Insert: {
+          connection_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          delivery_attempts?: number;
+          direction: string;
+          endpoint_placeholder?: string | null;
+          event_type: string;
+          id?: string;
+          last_attempt_at?: string | null;
+          organization_id: string;
+          payload_placeholder?: Json;
+          retry_count?: number;
+          signature_placeholder?: string | null;
+          status?: string;
+        };
+        Update: {
+          connection_id?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          delivery_attempts?: number;
+          direction?: string;
+          endpoint_placeholder?: string | null;
+          event_type?: string;
+          id?: string;
+          last_attempt_at?: string | null;
+          organization_id?: string;
+          payload_placeholder?: Json;
+          retry_count?: number;
+          signature_placeholder?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'integration_webhooks_connection_id_organization_id_fkey';
+            columns: ['connection_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_connections';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'integration_webhooks_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_webhooks_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'integration_webhooks_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
+          },
+        ];
+      };
       invitation_location_scopes: {
         Row: {
           clinic_id: string;
@@ -3078,6 +3651,58 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'profiles';
             referencedColumns: ['id'];
+          },
+        ];
+      };
+      oauth_connections_placeholder: {
+        Row: {
+          authorization_status: string;
+          connection_id: string | null;
+          created_at: string;
+          id: string;
+          organization_id: string;
+          provider: string;
+          token_reference_placeholder: string | null;
+        };
+        Insert: {
+          authorization_status?: string;
+          connection_id?: string | null;
+          created_at?: string;
+          id?: string;
+          organization_id: string;
+          provider: string;
+          token_reference_placeholder?: string | null;
+        };
+        Update: {
+          authorization_status?: string;
+          connection_id?: string | null;
+          created_at?: string;
+          id?: string;
+          organization_id?: string;
+          provider?: string;
+          token_reference_placeholder?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'oauth_connections_placeholder_connection_id_organization_i_fkey';
+            columns: ['connection_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'integration_connections';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'oauth_connections_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'oauth_connections_placeholder_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'vw_dashboard_summary';
+            referencedColumns: ['organization_id'];
           },
         ];
       };
@@ -7662,6 +8287,10 @@ export type Database = {
         Args: { p_appointment_id: string };
         Returns: string;
       };
+      create_api_key: {
+        Args: { p_name: string; p_permissions: Json; p_rotation_date?: string };
+        Returns: string;
+      };
       create_appointment: {
         Args: {
           p_appointment_type: string;
@@ -7682,6 +8311,14 @@ export type Database = {
           appointment_id: string;
           conflict_count: number;
         }[];
+      };
+      create_connection_placeholder: {
+        Args: {
+          p_external_account_placeholder?: string;
+          p_name: string;
+          p_provider_key: string;
+        };
+        Returns: string;
       };
       create_credit_note: {
         Args: {
@@ -7876,6 +8513,7 @@ export type Database = {
         };
         Returns: string;
       };
+      current_integration_organization: { Args: never; Returns: string };
       current_profile_id: { Args: never; Returns: string };
       documents_permission: {
         Args: { required_action: string; target_organization_id: string };
@@ -7990,6 +8628,10 @@ export type Database = {
         Args: { required_permission: string; target_organization_id: string };
         Returns: boolean;
       };
+      integrations_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
       is_organization_owner: {
         Args: { target_organization_id: string; target_profile_id?: string };
         Returns: boolean;
@@ -8004,6 +8646,7 @@ export type Database = {
         Args: { p_encounter_id: string };
         Returns: Json;
       };
+      list_integrations: { Args: never; Returns: Json };
       list_patient_documents: { Args: { p_patient_id: string }; Returns: Json };
       list_upcoming_sessions: {
         Args: { p_from?: string; p_to?: string };
@@ -8080,6 +8723,15 @@ export type Database = {
         };
         Returns: Json;
       };
+      queue_job: {
+        Args: {
+          p_connection_id?: string;
+          p_job_type: string;
+          p_payload_metadata?: Json;
+          p_run_after?: string;
+        };
+        Returns: string;
+      };
       queue_notification: { Args: { p_queue_id: string }; Returns: boolean };
       record_document_access: {
         Args: {
@@ -8104,6 +8756,16 @@ export type Database = {
       };
       record_session_event: {
         Args: { p_event_type: string; p_metadata?: Json; p_session_id: string };
+        Returns: string;
+      };
+      record_webhook: {
+        Args: {
+          p_connection_id: string;
+          p_direction: string;
+          p_endpoint_placeholder?: string;
+          p_event_type: string;
+          p_payload_placeholder?: Json;
+        };
         Returns: string;
       };
       remove_practitioner_availability_schedule: {
@@ -8163,7 +8825,13 @@ export type Database = {
         }[];
       };
       restore_document: { Args: { p_document_id: string }; Returns: boolean };
+      retry_job: { Args: { p_job_id: string }; Returns: boolean };
       retry_notification: { Args: { p_queue_id: string }; Returns: boolean };
+      revoke_api_key: { Args: { p_api_key_id: string }; Returns: boolean };
+      rotate_key: {
+        Args: { p_api_key_id: string; p_rotation_date?: string };
+        Returns: string;
+      };
       save_report_filter: {
         Args: {
           p_filters: Json;
