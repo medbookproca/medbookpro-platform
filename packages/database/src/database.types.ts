@@ -464,6 +464,128 @@ export type Database = {
           },
         ];
       };
+      billing_events: {
+        Row: {
+          created_by: string | null;
+          entity_id: string;
+          entity_type: string;
+          event_type: string;
+          id: string;
+          metadata: Json;
+          occurred_at: string;
+          organization_id: string;
+        };
+        Insert: {
+          created_by?: string | null;
+          entity_id: string;
+          entity_type: string;
+          event_type: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id: string;
+        };
+        Update: {
+          created_by?: string | null;
+          entity_id?: string;
+          entity_type?: string;
+          event_type?: string;
+          id?: string;
+          metadata?: Json;
+          occurred_at?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'billing_events_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'billing_events_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      billing_profiles: {
+        Row: {
+          address: string | null;
+          created_at: string;
+          created_by: string | null;
+          currency: string;
+          default_tax_profile_id: string | null;
+          id: string;
+          invoice_prefix: string;
+          legal_name: string | null;
+          organization_id: string;
+          payment_terms_days: number;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          address?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          default_tax_profile_id?: string | null;
+          id?: string;
+          invoice_prefix?: string;
+          legal_name?: string | null;
+          organization_id: string;
+          payment_terms_days?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          address?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          default_tax_profile_id?: string | null;
+          id?: string;
+          invoice_prefix?: string;
+          legal_name?: string | null;
+          organization_id?: string;
+          payment_terms_days?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'billing_profiles_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'billing_profiles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: true;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'billing_profiles_tax_profile_fk';
+            columns: ['default_tax_profile_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'tax_profiles';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'billing_profiles_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       care_plans: {
         Row: {
           created_at: string;
@@ -916,6 +1038,134 @@ export type Database = {
           },
         ];
       };
+      credit_notes: {
+        Row: {
+          amount: number;
+          created_at: string;
+          created_by: string | null;
+          credit_note_number: string;
+          id: string;
+          invoice_id: string;
+          issued_at: string | null;
+          kind: string;
+          organization_id: string;
+          reason: string;
+          status: string;
+        };
+        Insert: {
+          amount: number;
+          created_at?: string;
+          created_by?: string | null;
+          credit_note_number: string;
+          id?: string;
+          invoice_id: string;
+          issued_at?: string | null;
+          kind: string;
+          organization_id: string;
+          reason: string;
+          status?: string;
+        };
+        Update: {
+          amount?: number;
+          created_at?: string;
+          created_by?: string | null;
+          credit_note_number?: string;
+          id?: string;
+          invoice_id?: string;
+          issued_at?: string | null;
+          kind?: string;
+          organization_id?: string;
+          reason?: string;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'credit_notes_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'credit_notes_invoice_fk';
+            columns: ['invoice_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'invoices';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'credit_notes_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      discount_rules: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          currency: string;
+          discount_type: string;
+          id: string;
+          name: string;
+          organization_id: string;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+          value: number;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          discount_type: string;
+          id?: string;
+          name: string;
+          organization_id: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          value: number;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          discount_type?: string;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          value?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'discount_rules_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'discount_rules_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'discount_rules_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       encounter_status_history: {
         Row: {
           changed_by: string | null;
@@ -1256,6 +1506,178 @@ export type Database = {
           {
             foreignKeyName: 'invitations_target_profile_id_fkey';
             columns: ['target_profile_id'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      invoice_items: {
+        Row: {
+          created_at: string;
+          description: string;
+          discount: number;
+          id: string;
+          invoice_id: string;
+          line_total: number;
+          organization_id: string;
+          quantity: number;
+          tax_rate: number;
+          unit_price: number;
+        };
+        Insert: {
+          created_at?: string;
+          description: string;
+          discount?: number;
+          id?: string;
+          invoice_id: string;
+          line_total: number;
+          organization_id: string;
+          quantity: number;
+          tax_rate?: number;
+          unit_price: number;
+        };
+        Update: {
+          created_at?: string;
+          description?: string;
+          discount?: number;
+          id?: string;
+          invoice_id?: string;
+          line_total?: number;
+          organization_id?: string;
+          quantity?: number;
+          tax_rate?: number;
+          unit_price?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'invoice_items_invoice_fk';
+            columns: ['invoice_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'invoices';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'invoice_items_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      invoices: {
+        Row: {
+          appointment_id: string | null;
+          balance: number;
+          cancelled_at: string | null;
+          created_at: string;
+          created_by: string | null;
+          currency: string;
+          discount: number;
+          due_date: string | null;
+          encounter_id: string | null;
+          id: string;
+          invoice_number: string;
+          issued_at: string | null;
+          notes: string | null;
+          organization_id: string;
+          patient_id: string;
+          status: string;
+          subtotal: number;
+          tax: number;
+          total: number;
+          updated_at: string;
+          updated_by: string | null;
+          voided_at: string | null;
+        };
+        Insert: {
+          appointment_id?: string | null;
+          balance?: number;
+          cancelled_at?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          discount?: number;
+          due_date?: string | null;
+          encounter_id?: string | null;
+          id?: string;
+          invoice_number: string;
+          issued_at?: string | null;
+          notes?: string | null;
+          organization_id: string;
+          patient_id: string;
+          status?: string;
+          subtotal?: number;
+          tax?: number;
+          total?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+          voided_at?: string | null;
+        };
+        Update: {
+          appointment_id?: string | null;
+          balance?: number;
+          cancelled_at?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          discount?: number;
+          due_date?: string | null;
+          encounter_id?: string | null;
+          id?: string;
+          invoice_number?: string;
+          issued_at?: string | null;
+          notes?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          status?: string;
+          subtotal?: number;
+          tax?: number;
+          total?: number;
+          updated_at?: string;
+          updated_by?: string | null;
+          voided_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'billing_invoices_encounter_fk';
+            columns: ['encounter_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'encounters';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'invoices_appointment_fk';
+            columns: ['appointment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'appointments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'invoices_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invoices_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'invoices_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'invoices_updated_by_fkey';
+            columns: ['updated_by'];
             isOneToOne: false;
             referencedRelation: 'profiles';
             referencedColumns: ['id'];
@@ -3043,6 +3465,135 @@ export type Database = {
           },
         ];
       };
+      payment_allocations: {
+        Row: {
+          allocated_at: string;
+          allocated_by: string | null;
+          amount: number;
+          id: string;
+          invoice_id: string;
+          organization_id: string;
+          payment_id: string;
+        };
+        Insert: {
+          allocated_at?: string;
+          allocated_by?: string | null;
+          amount: number;
+          id?: string;
+          invoice_id: string;
+          organization_id: string;
+          payment_id: string;
+        };
+        Update: {
+          allocated_at?: string;
+          allocated_by?: string | null;
+          amount?: number;
+          id?: string;
+          invoice_id?: string;
+          organization_id?: string;
+          payment_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'payment_allocations_allocated_by_fkey';
+            columns: ['allocated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payment_allocations_invoice_fk';
+            columns: ['invoice_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'invoices';
+            referencedColumns: ['id', 'organization_id'];
+          },
+          {
+            foreignKeyName: 'payment_allocations_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payment_allocations_payment_fk';
+            columns: ['payment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'payments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
+      payments: {
+        Row: {
+          amount: number;
+          created_at: string;
+          created_by: string | null;
+          currency: string;
+          id: string;
+          method: string;
+          notes: string | null;
+          organization_id: string;
+          patient_id: string;
+          provider: string;
+          received_at: string;
+          reference: string | null;
+          status: string;
+        };
+        Insert: {
+          amount: number;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          id?: string;
+          method: string;
+          notes?: string | null;
+          organization_id: string;
+          patient_id: string;
+          provider?: string;
+          received_at?: string;
+          reference?: string | null;
+          status?: string;
+        };
+        Update: {
+          amount?: number;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          id?: string;
+          method?: string;
+          notes?: string | null;
+          organization_id?: string;
+          patient_id?: string;
+          provider?: string;
+          received_at?: string;
+          reference?: string | null;
+          status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'payments_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payments_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payments_patient_fk';
+            columns: ['patient_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'patients';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
       permissions: {
         Row: {
           action: string;
@@ -4317,6 +4868,58 @@ export type Database = {
         };
         Relationships: [];
       };
+      receipts: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          issued_at: string;
+          organization_id: string;
+          payment_id: string;
+          receipt_number: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          issued_at?: string;
+          organization_id: string;
+          payment_id: string;
+          receipt_number: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          issued_at?: string;
+          organization_id?: string;
+          payment_id?: string;
+          receipt_number?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'receipts_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'receipts_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'receipts_payment_fk';
+            columns: ['payment_id', 'organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'payments';
+            referencedColumns: ['id', 'organization_id'];
+          },
+        ];
+      };
       role_permissions: {
         Row: {
           created_at: string;
@@ -4619,6 +5222,70 @@ export type Database = {
           },
         ];
       };
+      tax_profiles: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          is_default: boolean;
+          jurisdiction: string;
+          name: string;
+          organization_id: string;
+          rates: Json;
+          status: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          is_default?: boolean;
+          jurisdiction?: string;
+          name: string;
+          organization_id: string;
+          rates?: Json;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          is_default?: boolean;
+          jurisdiction?: string;
+          name?: string;
+          organization_id?: string;
+          rates?: Json;
+          status?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'tax_profiles_created_by_fkey';
+            columns: ['created_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'tax_profiles_organization_id_fkey';
+            columns: ['organization_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'tax_profiles_updated_by_fkey';
+            columns: ['updated_by'];
+            isOneToOne: false;
+            referencedRelation: 'profiles';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -4716,6 +5383,10 @@ export type Database = {
         };
         Returns: string;
       };
+      allocate_payment: {
+        Args: { p_amount: number; p_invoice_id: string; p_payment_id: string };
+        Returns: boolean;
+      };
       amend_encounter: {
         Args: { p_encounter_id: string; p_reason?: string };
         Returns: string;
@@ -4777,9 +5448,26 @@ export type Database = {
         Args: { required_action: string; target_organization_id: string };
         Returns: boolean;
       };
+      billing_invoice_totals: {
+        Args: { p_discount: number; p_items: Json };
+        Returns: {
+          discount: number;
+          subtotal: number;
+          tax: number;
+          total: number;
+        }[];
+      };
+      billing_permission: {
+        Args: { required_action: string; target_organization_id: string };
+        Returns: boolean;
+      };
       cancel_appointment: {
         Args: { p_appointment_id: string; p_reason?: string };
         Returns: string;
+      };
+      cancel_invoice: {
+        Args: { p_invoice_id: string; p_reason?: string };
+        Returns: boolean;
       };
       cancel_notification: {
         Args: { p_queue_id: string; p_reason?: string };
@@ -4860,6 +5548,15 @@ export type Database = {
           conflict_count: number;
         }[];
       };
+      create_credit_note: {
+        Args: {
+          p_amount: number;
+          p_invoice_id: string;
+          p_kind: string;
+          p_reason: string;
+        };
+        Returns: string;
+      };
       create_encounter: {
         Args: {
           p_appointment_id?: string;
@@ -4872,6 +5569,20 @@ export type Database = {
         Returns: {
           encounter_id: string;
         }[];
+      };
+      create_invoice: {
+        Args: {
+          p_appointment_id: string;
+          p_currency: string;
+          p_discount: number;
+          p_due_date: string;
+          p_encounter_id: string;
+          p_items: Json;
+          p_notes: string;
+          p_organization_id: string;
+          p_patient_id: string;
+        };
+        Returns: string;
       };
       create_notification: {
         Args: {
@@ -4991,6 +5702,7 @@ export type Database = {
         Args: { from_value: string; to_value: string };
         Returns: boolean;
       };
+      generate_receipt: { Args: { p_payment_id: string }; Returns: string };
       get_staff_invitation_preview: {
         Args: { p_token: string };
         Returns: {
@@ -5026,6 +5738,7 @@ export type Database = {
         Args: { target_organization_id: string; target_profile_id?: string };
         Returns: boolean;
       };
+      issue_invoice: { Args: { p_invoice_id: string }; Returns: boolean };
       link_practitioner_membership: {
         Args: { p_membership_id: string; p_practitioner_id: string };
         Returns: boolean;
@@ -5088,6 +5801,19 @@ export type Database = {
         Returns: Json;
       };
       queue_notification: { Args: { p_queue_id: string }; Returns: boolean };
+      record_payment: {
+        Args: {
+          p_amount: number;
+          p_currency: string;
+          p_method: string;
+          p_notes?: string;
+          p_organization_id: string;
+          p_patient_id: string;
+          p_received_at?: string;
+          p_reference: string;
+        };
+        Returns: string;
+      };
       remove_practitioner_availability_schedule: {
         Args: { p_template_id: string };
         Returns: boolean;
@@ -5196,6 +5922,18 @@ export type Database = {
         };
         Returns: string;
       };
+      update_discount_rules: {
+        Args: {
+          p_currency: string;
+          p_discount_type: string;
+          p_id: string;
+          p_name: string;
+          p_organization_id: string;
+          p_status: string;
+          p_value: number;
+        };
+        Returns: string;
+      };
       update_encounter: {
         Args: {
           p_encounter_id: string;
@@ -5215,6 +5953,16 @@ export type Database = {
           p_version: string;
         };
         Returns: string;
+      };
+      update_invoice: {
+        Args: {
+          p_discount: number;
+          p_due_date: string;
+          p_invoice_id: string;
+          p_items: Json;
+          p_notes: string;
+        };
+        Returns: boolean;
       };
       update_membership_roles_and_access: {
         Args: {
@@ -5414,6 +6162,18 @@ export type Database = {
         };
         Returns: string;
       };
+      update_tax_profile: {
+        Args: {
+          p_id: string;
+          p_is_default: boolean;
+          p_jurisdiction: string;
+          p_name: string;
+          p_organization_id: string;
+          p_rates: Json;
+          p_status: string;
+        };
+        Returns: string;
+      };
       update_templates: {
         Args: {
           p_body: string;
@@ -5460,6 +6220,10 @@ export type Database = {
           p_notes?: string;
           p_verification_status: string;
         };
+        Returns: boolean;
+      };
+      void_invoice: {
+        Args: { p_invoice_id: string; p_reason?: string };
         Returns: boolean;
       };
     };

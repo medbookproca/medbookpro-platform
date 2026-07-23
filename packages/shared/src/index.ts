@@ -13,3 +13,4 @@ export * from './appointment-schemas';
 export * from './clinical-schemas';
 export * from './patient-schemas';
 export * from './communications-schemas';
+export * from './billing-schemas';
