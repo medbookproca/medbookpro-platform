@@ -5,8 +5,8 @@ import {
   changeEncounterStatusAction,
   updateCarePlanAction,
   updateFormAction,
-  updateSoapAction,
 } from '../actions';
+import { SoapNoteForm } from './soap-note-form';
 import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
@@ -138,31 +138,15 @@ export default async function EncounterDetailPage({
           <Card className="lg:col-span-2">
             <h2 className="text-xl font-semibold">SOAP note</h2>
             {editable ? (
-              <form
-                action={updateSoapAction}
-                className="mt-5 grid gap-4 md:grid-cols-2"
-              >
-                <input type="hidden" name="encounterId" value={encounter.id} />
-                {(
-                  ['subjective', 'objective', 'assessment', 'plan'] as const
-                ).map((section) => (
-                  <label
-                    key={section}
-                    className="grid gap-2 text-sm font-medium capitalize"
-                  >
-                    {section}
-                    <textarea
-                      name={section}
-                      defaultValue={soap?.[section] ?? ''}
-                      rows={5}
-                      className={fieldClass}
-                    />
-                  </label>
-                ))}
-                <button className="rounded bg-slate-900 px-4 py-2 font-medium text-white md:col-span-2">
-                  Save SOAP note
-                </button>
-              </form>
+              <SoapNoteForm
+                encounterId={encounter.id}
+                values={{
+                  subjective: soap?.subjective ?? '',
+                  objective: soap?.objective ?? '',
+                  assessment: soap?.assessment ?? '',
+                  plan: soap?.plan ?? '',
+                }}
+              />
             ) : (
               <dl className="mt-5 grid gap-4 md:grid-cols-2">
                 {(

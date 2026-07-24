@@ -4,7 +4,7 @@ import { Card } from '@medbookpro/ui';
 import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
-import { updateAppointmentAction } from '../../actions';
+import { AppointmentEditForm } from './appointment-edit-form';
 
 export default async function EditAppointmentPage({
   params,
@@ -58,135 +58,11 @@ export default async function EditAppointmentPage({
           </Link>
         </div>
         <Card className="mt-8">
-          <form
-            action={updateAppointmentAction}
-            className="grid gap-5 md:grid-cols-2"
-          >
-            <input type="hidden" name="appointmentId" value={appointment.id} />
-            <input
-              type="hidden"
-              name="patientId"
-              value={appointment.patient_id}
-            />
-            <input
-              type="hidden"
-              name="practitionerId"
-              value={appointment.practitioner_id}
-            />
-            <label className="grid gap-2 font-medium">
-              Location
-              <select
-                name="locationId"
-                defaultValue={appointment.location_id}
-                required
-                className="rounded border border-slate-300 px-3 py-2"
-              >
-                {(locations ?? []).map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-2 font-medium">
-              Service
-              <select
-                name="serviceId"
-                defaultValue={appointment.service_id}
-                required
-                className="rounded border border-slate-300 px-3 py-2"
-              >
-                {(services ?? []).map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="grid gap-2 font-medium">
-              Appointment type
-              <select
-                name="appointmentType"
-                defaultValue={appointment.appointment_type}
-                className="rounded border border-slate-300 px-3 py-2"
-              >
-                <option value="in_person">In person</option>
-                <option value="virtual">Virtual</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
-            </label>
-            <label className="grid gap-2 font-medium">
-              Start
-              <input
-                name="scheduledStart"
-                type="datetime-local"
-                defaultValue={new Date(appointment.scheduled_start)
-                  .toISOString()
-                  .slice(0, 16)}
-                required
-                className="rounded border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <label className="grid gap-2 font-medium">
-              Duration (minutes)
-              <input
-                name="durationMinutes"
-                type="number"
-                min="1"
-                max="1440"
-                defaultValue={appointment.duration_minutes}
-                required
-                className="rounded border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <label className="grid gap-2 font-medium">
-              Timezone
-              <input
-                name="timezone"
-                defaultValue={appointment.timezone}
-                required
-                className="rounded border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <label className="grid gap-2 font-medium">
-              Pre-buffer (minutes)
-              <input
-                name="preBufferMinutes"
-                type="number"
-                min="0"
-                max="1440"
-                defaultValue={appointment.pre_buffer_minutes}
-                className="rounded border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <label className="grid gap-2 font-medium">
-              Post-buffer (minutes)
-              <input
-                name="postBufferMinutes"
-                type="number"
-                min="0"
-                max="1440"
-                defaultValue={appointment.post_buffer_minutes}
-                className="rounded border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <label className="grid gap-2 font-medium md:col-span-2">
-              Notes
-              <textarea
-                name="notes"
-                maxLength={1000}
-                rows={3}
-                defaultValue={appointment.notes ?? ''}
-                className="rounded border border-slate-300 px-3 py-2"
-              />
-            </label>
-            <button
-              type="submit"
-              className="rounded bg-blue-700 px-4 py-2 font-medium text-white md:col-span-2"
-            >
-              Validate and save
-            </button>
-          </form>
+          <AppointmentEditForm
+            appointment={appointment}
+            locations={locations ?? []}
+            services={services ?? []}
+          />
         </Card>
       </div>
     </main>

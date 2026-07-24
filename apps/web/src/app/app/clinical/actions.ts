@@ -16,6 +16,8 @@ import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
 import { getSafeActionError } from '@/lib/action-errors';
 
+export type ClinicalActionResult = { error?: string; success?: string };
+
 function value(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim();
 }
@@ -35,7 +37,10 @@ async function clinicalOrganization(path = '/app/clinical') {
   return organization;
 }
 
-export async function createEncounterAction(formData: FormData) {
+export async function createEncounterAction(
+  _previousState: ClinicalActionResult,
+  formData: FormData,
+): Promise<ClinicalActionResult> {
   let encounterId: string | undefined;
   try {
     const organization = await clinicalOrganization('/app/clinical/new');
@@ -60,7 +65,7 @@ export async function createEncounterAction(formData: FormData) {
     if (!encounterId) throw new Error('The encounter was not created.');
     revalidatePath('/app/clinical');
   } catch (error) {
-    throw new Error(safeError(error));
+    return { error: safeError(error) };
   }
   redirect(`/app/clinical/${encounterId}`);
 }
@@ -108,7 +113,10 @@ export async function changeEncounterStatusAction(formData: FormData) {
   }
 }
 
-export async function updateSoapAction(formData: FormData) {
+export async function updateSoapAction(
+  _previousState: ClinicalActionResult,
+  formData: FormData,
+): Promise<ClinicalActionResult> {
   try {
     await clinicalOrganization();
     const input = soapNoteSchema.parse({
@@ -128,8 +136,9 @@ export async function updateSoapAction(formData: FormData) {
     });
     if (error) throw error;
     revalidatePath(`/app/clinical/${input.encounterId}`);
+    return { success: 'SOAP note saved.' };
   } catch (error) {
-    throw new Error(safeError(error));
+    return { error: safeError(error) };
   }
 }
 
