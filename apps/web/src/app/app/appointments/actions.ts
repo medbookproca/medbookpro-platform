@@ -89,7 +89,10 @@ export async function createAppointmentAction(
   redirect(`/app/appointments/${appointmentId}`);
 }
 
-export async function updateAppointmentAction(formData: FormData) {
+export async function updateAppointmentAction(
+  _previousState: AppointmentActionResult,
+  formData: FormData,
+): Promise<AppointmentActionResult> {
   let appointmentId: string | undefined;
   try {
     const organization = await appointmentOrganization();
@@ -114,7 +117,7 @@ export async function updateAppointmentAction(formData: FormData) {
     revalidatePath('/app/appointments');
     revalidatePath(`/app/appointments/${appointmentId}`);
   } catch (error) {
-    throw new Error(safeError(error));
+    return { error: safeError(error) };
   }
   redirect(`/app/appointments/${appointmentId}`);
 }

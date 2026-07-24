@@ -1,6 +1,7 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { FormAlert } from '@medbookpro/ui';
 import { PendingSubmitButton } from '@/components/pending-submit-button';
 import {
@@ -9,11 +10,16 @@ import {
 } from './actions';
 
 export function DocumentMetadataForm() {
+  const router = useRouter();
   const [state, formAction] = useActionState<DocumentActionResult, FormData>(
     (previousState, formData) =>
       createDocumentMetadataAction(previousState, formData),
     {},
   );
+
+  useEffect(() => {
+    if (state.success) router.refresh();
+  }, [router, state.success]);
 
   return (
     <form action={formAction} className="mt-4 grid gap-4 md:grid-cols-2">
