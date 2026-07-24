@@ -21,6 +21,15 @@ const reportRoles = [
   'read.only.auditor',
 ];
 
+const serviceRoles = [
+  ...administratorRoles,
+  'location.manager',
+  'receptionist',
+  'practitioner',
+  'billing.specialist',
+  'data.migration.specialist',
+];
+
 export const appNavigation: AppNavigationItem[] = [
   { label: 'Dashboard', href: '/app', description: 'Clinic overview' },
   {
@@ -34,6 +43,12 @@ export const appNavigation: AppNavigationItem[] = [
     href: '/app/appointments',
     description: 'Scheduling and availability',
     roles: reportRoles,
+  },
+  {
+    label: 'Services',
+    href: '/app/services',
+    description: 'Bookable clinic services',
+    roles: serviceRoles,
   },
   {
     label: 'Practitioners',

@@ -14,15 +14,18 @@ import { redirect } from 'next/navigation';
 import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
+import { getSafeActionError } from '@/lib/action-errors';
 
 function value(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim();
 }
 
 function safeError(error: unknown) {
-  return error instanceof Error
-    ? error.message
-    : 'The clinical request could not be completed.';
+  return getSafeActionError(
+    error,
+    'clinical.mutation.failed',
+    'The clinical request could not be completed.',
+  );
 }
 
 async function clinicalOrganization(path = '/app/clinical') {
@@ -33,6 +36,7 @@ async function clinicalOrganization(path = '/app/clinical') {
 }
 
 export async function createEncounterAction(formData: FormData) {
+  let encounterId: string | undefined;
   try {
     const organization = await clinicalOrganization('/app/clinical/new');
     const input = encounterCreateSchema.parse({
@@ -52,13 +56,13 @@ export async function createEncounterAction(formData: FormData) {
       p_status: input.status,
     });
     if (error) throw error;
-    const encounterId = data?.[0]?.encounter_id;
+    encounterId = data?.[0]?.encounter_id;
     if (!encounterId) throw new Error('The encounter was not created.');
     revalidatePath('/app/clinical');
-    redirect(`/app/clinical/${encounterId}`);
   } catch (error) {
     throw new Error(safeError(error));
   }
+  redirect(`/app/clinical/${encounterId}`);
 }
 
 export async function updateEncounterAction(formData: FormData) {

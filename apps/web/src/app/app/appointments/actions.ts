@@ -10,15 +10,18 @@ import { redirect } from 'next/navigation';
 import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
+import { getSafeActionError } from '@/lib/action-errors';
 
 function value(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim();
 }
 
 function safeError(error: unknown) {
-  return error instanceof Error
-    ? error.message
-    : 'The appointment request could not be completed.';
+  return getSafeActionError(
+    error,
+    'appointment.mutation.failed',
+    'The appointment request could not be completed.',
+  );
 }
 
 async function appointmentOrganization() {
@@ -46,6 +49,7 @@ function parseInput(formData: FormData) {
 }
 
 export async function createAppointmentAction(formData: FormData) {
+  let appointmentId: string | undefined;
   try {
     const organization = await appointmentOrganization();
     const input = parseInput(formData);
@@ -66,22 +70,23 @@ export async function createAppointmentAction(formData: FormData) {
       p_notes: input.notes,
     });
     if (error) throw error;
-    const appointmentId = data?.[0]?.appointment_id;
+    appointmentId = data?.[0]?.appointment_id;
     if (!appointmentId) throw new Error('The appointment was not created.');
     revalidatePath('/app/appointments');
-    redirect(`/app/appointments/${appointmentId}`);
   } catch (error) {
     throw new Error(safeError(error));
   }
+  redirect(`/app/appointments/${appointmentId}`);
 }
 
 export async function updateAppointmentAction(formData: FormData) {
+  let appointmentId: string | undefined;
   try {
     const organization = await appointmentOrganization();
     const input = appointmentUpdateSchema.parse({
       ...parseInput(formData),
     });
-    const appointmentId = value(formData, 'appointmentId');
+    appointmentId = value(formData, 'appointmentId');
     const supabase = await createClient();
     const { error } = await supabase.rpc('update_appointment', {
       p_appointment_id: appointmentId,
@@ -98,13 +103,14 @@ export async function updateAppointmentAction(formData: FormData) {
     if (error) throw error;
     revalidatePath('/app/appointments');
     revalidatePath(`/app/appointments/${appointmentId}`);
-    redirect(`/app/appointments/${appointmentId}`);
   } catch (error) {
     throw new Error(safeError(error));
   }
+  redirect(`/app/appointments/${appointmentId}`);
 }
 
 export async function changeAppointmentStatusAction(formData: FormData) {
+  let appointmentId: string | undefined;
   try {
     const organization = await appointmentOrganization();
     const input = appointmentStatusUpdateSchema.parse({
@@ -112,6 +118,7 @@ export async function changeAppointmentStatusAction(formData: FormData) {
       status: value(formData, 'status'),
       reason: value(formData, 'reason') || undefined,
     });
+    appointmentId = input.appointmentId;
     const supabase = await createClient();
     const { error } = await supabase.rpc('change_appointment_status', {
       p_appointment_id: input.appointmentId,
@@ -122,8 +129,8 @@ export async function changeAppointmentStatusAction(formData: FormData) {
     void organization;
     revalidatePath('/app/appointments');
     revalidatePath(`/app/appointments/${input.appointmentId}`);
-    redirect(`/app/appointments/${input.appointmentId}`);
   } catch (error) {
     throw new Error(safeError(error));
   }
+  redirect(`/app/appointments/${appointmentId}`);
 }

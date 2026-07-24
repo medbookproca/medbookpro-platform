@@ -9621,6 +9621,19 @@ export type Database = {
         };
         Returns: boolean;
       };
+      archive_service: {
+        Args: { p_service_id: string };
+        Returns: boolean;
+      };
+      create_service: {
+        Args: {
+          p_description?: string;
+          p_display_order?: number;
+          p_name: string;
+          p_organization_id: string;
+        };
+        Returns: { service_id: string }[];
+      };
       set_practitioner_services: {
         Args: {
           p_location_id?: string;
@@ -9658,6 +9671,15 @@ export type Database = {
       update_ai_provider_settings: {
         Args: { p_enabled: boolean; p_provider_key: string };
         Returns: string;
+      };
+      update_service: {
+        Args: {
+          p_description?: string;
+          p_display_order?: number;
+          p_name: string;
+          p_service_id: string;
+        };
+        Returns: boolean;
       };
       update_appointment: {
         Args: {
