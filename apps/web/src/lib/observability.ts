@@ -32,6 +32,7 @@ export function getSafeErrorDetails(error: unknown): {
   code?: string;
   status?: number;
   message?: string;
+  constraint?: string;
 } {
   const record =
     error && typeof error === 'object'
@@ -44,5 +45,7 @@ export function getSafeErrorDetails(error: unknown): {
     ?.replace(/bearer\s+[^\s]+/gi, 'Bearer [REDACTED]')
     .replace(/(?:sb_(?:publishable|secret)|eyJ)[A-Za-z0-9_.-]+/g, '[REDACTED]')
     .slice(0, 240);
-  return { code, status, message };
+  const constraint =
+    typeof record.constraint === 'string' ? record.constraint : undefined;
+  return { code, status, message, constraint };
 }
