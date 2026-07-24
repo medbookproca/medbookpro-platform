@@ -32,4 +32,13 @@ describe('appointment schemas', () => {
       }),
     ).toThrow();
   });
+
+  it('rejects invalid appointment dates without relying on Date serialization', () => {
+    expect(() =>
+      appointmentCreateSchema.parse({
+        ...validAppointment,
+        scheduledStart: 'not-a-date',
+      }),
+    ).toThrow('A valid appointment time is required.');
+  });
 });

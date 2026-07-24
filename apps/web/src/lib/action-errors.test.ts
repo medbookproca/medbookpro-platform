@@ -32,4 +32,28 @@ describe('getSafeActionError', () => {
       ),
     ).toBe('Fallback');
   });
+
+  it('explains safe appointment conflicts without exposing database details', () => {
+    expect(
+      getSafeActionError(
+        Object.assign(new Error('APPOINTMENT_PRACTITIONER_UNAVAILABLE'), {
+          code: '23P01',
+        }),
+        'appointment.failed',
+        'Fallback',
+      ),
+    ).toBe('The practitioner is not available at that time.');
+  });
+
+  it('explains invalid document categories inline', () => {
+    expect(
+      getSafeActionError(
+        Object.assign(new Error('DOCUMENT_CATEGORY_NOT_FOUND'), {
+          code: '22023',
+        }),
+        'document.failed',
+        'Fallback',
+      ),
+    ).toBe('Choose an active document category and try again.');
+  });
 });

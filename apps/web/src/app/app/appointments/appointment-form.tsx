@@ -1,5 +1,11 @@
-import { SubmitButton } from '@medbookpro/ui';
-import { createAppointmentAction } from './actions';
+'use client';
+
+import { useActionState } from 'react';
+import { FormAlert, SubmitButton } from '@medbookpro/ui';
+import {
+  createAppointmentAction,
+  type AppointmentActionResult,
+} from './actions';
 
 export function AppointmentForm({
   patients,
@@ -12,11 +18,22 @@ export function AppointmentForm({
   locations: Array<{ id: string; label: string }>;
   services: Array<{ id: string; label: string }>;
 }) {
+  const [state, formAction] = useActionState<AppointmentActionResult, FormData>(
+    (previousState, formData) =>
+      createAppointmentAction(previousState, formData),
+    {},
+  );
   return (
-    <form
-      action={createAppointmentAction}
-      className="grid gap-5 md:grid-cols-2"
-    >
+    <form action={formAction} className="grid gap-5 md:grid-cols-2">
+      {state.error ? (
+        <div className="md:col-span-2">
+          <FormAlert
+            type="error"
+            title="Appointment could not be created"
+            message={state.error}
+          />
+        </div>
+      ) : null}
       <label className="grid gap-2 font-medium">
         Patient
         <select

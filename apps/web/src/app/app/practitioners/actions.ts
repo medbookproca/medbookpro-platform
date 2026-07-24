@@ -20,6 +20,7 @@ import { getActiveOrganizationContext } from '@/lib/organization-context';
 import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
 import { getSafeActionError } from '@/lib/action-errors';
+import { getSafeErrorDetails } from '@/lib/observability';
 
 export type PractitionerActionResult = { error?: string; success?: string };
 
@@ -28,6 +29,21 @@ function safeError(error: unknown) {
     error,
     'practitioner.mutation.failed',
     'The practitioner request could not be completed.',
+  );
+}
+
+function practitionerCreateError(error: unknown) {
+  const details = getSafeErrorDetails(error);
+  if (
+    details.constraint?.includes('practitioners_membership_unique') ||
+    details.message?.includes('linked_membership_id')
+  ) {
+    return 'This staff membership is already linked to a practitioner. Choose another membership or leave the linkage empty.';
+  }
+  return getSafeActionError(
+    error,
+    'practitioner.create.failed',
+    'The practitioner could not be created. Review the information and try again.',
   );
 }
 
@@ -70,11 +86,7 @@ export async function createPractitionerAction(
     practitionerId = data?.[0]?.practitioner_id;
   } catch (error) {
     return {
-      error: getSafeActionError(
-        error,
-        'practitioner.create.failed',
-        'The practitioner could not be created. Review the information and try again.',
-      ),
+      error: practitionerCreateError(error),
     };
   }
   if (!practitionerId) return { error: 'The practitioner was not created.' };

@@ -12,6 +12,8 @@ import { requireAuthenticatedUser } from '@/lib/supabase/auth-helpers';
 import { createClient } from '@/lib/supabase/server';
 import { getSafeActionError } from '@/lib/action-errors';
 
+export type AppointmentActionResult = { error?: string };
+
 function value(formData: FormData, key: string) {
   return String(formData.get(key) ?? '').trim();
 }
@@ -31,6 +33,11 @@ async function appointmentOrganization() {
   return organization;
 }
 
+function parseScheduledStart(value: string) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? value : date.toISOString();
+}
+
 function parseInput(formData: FormData) {
   return appointmentCreateSchema.parse({
     patientId: value(formData, 'patientId'),
@@ -38,7 +45,7 @@ function parseInput(formData: FormData) {
     locationId: value(formData, 'locationId'),
     serviceId: value(formData, 'serviceId'),
     appointmentType: value(formData, 'appointmentType'),
-    scheduledStart: new Date(value(formData, 'scheduledStart')).toISOString(),
+    scheduledStart: parseScheduledStart(value(formData, 'scheduledStart')),
     durationMinutes: Number(value(formData, 'durationMinutes')),
     timezone: value(formData, 'timezone'),
     preBufferMinutes: Number(value(formData, 'preBufferMinutes') || 0),
@@ -48,7 +55,10 @@ function parseInput(formData: FormData) {
   });
 }
 
-export async function createAppointmentAction(formData: FormData) {
+export async function createAppointmentAction(
+  _previousState: AppointmentActionResult,
+  formData: FormData,
+): Promise<AppointmentActionResult> {
   let appointmentId: string | undefined;
   try {
     const organization = await appointmentOrganization();
@@ -74,7 +84,7 @@ export async function createAppointmentAction(formData: FormData) {
     if (!appointmentId) throw new Error('The appointment was not created.');
     revalidatePath('/app/appointments');
   } catch (error) {
-    throw new Error(safeError(error));
+    return { error: safeError(error) };
   }
   redirect(`/app/appointments/${appointmentId}`);
 }
